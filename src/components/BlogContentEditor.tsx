@@ -162,7 +162,16 @@ export const BlogContentEditor: React.FC<BlogContentEditorProps> = ({
                         <input
                             type="text"
                             value={section.heading}
-                            onChange={(e) => updateSection(index, 'heading', e.target.value)}
+                            onChange={(e) => {
+                                const val = e.target.value
+                                const updated = [...sections]
+                                updated[index].heading = val
+                                // Auto-fill alt text if empty or if it perfectly matches the previous heading
+                                if (!updated[index].imageAlt || updated[index].imageAlt === section.heading) {
+                                    updated[index].imageAlt = val
+                                }
+                                onSectionsChange(updated)
+                            }}
                             placeholder="Section Heading"
                             className="section-heading-input"
                         />
@@ -181,14 +190,48 @@ export const BlogContentEditor: React.FC<BlogContentEditorProps> = ({
                                 <>
                                     <div className="input-group-compact">
                                         <label style={{ fontSize: '12px', color: '#666', marginBottom: '5px', display: 'block' }}>Section Image (Promo/Visual)</label>
-                                        <div className="input-with-action">
+                                        <div className="input-with-action" style={{ display: 'flex' }}>
                                             <input
                                                 type="text"
                                                 value={section.image || ''}
                                                 onChange={(e) => updateSection(index, 'image', e.target.value)}
-                                                placeholder="https://images.unsplash.com/..."
-                                                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }}
+                                                placeholder="Image URL or upload..."
+                                                style={{ flex: 1, padding: '8px', border: '1px solid #ddd', borderRadius: '4px 0 0 4px', borderRight: 'none' }}
                                             />
+                                            <input 
+                                                type="file" 
+                                                accept="image/*"
+                                                style={{ display: 'none' }}
+                                                id={`section-image-upload-${index}`}
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0]
+                                                    if (file) {
+                                                        const reader = new FileReader()
+                                                        reader.onload = (ev) => {
+                                                            if (ev.target?.result) {
+                                                                updateSection(index, 'image', ev.target!.result as string)
+                                                            }
+                                                        }
+                                                        reader.readAsDataURL(file)
+                                                    }
+                                                }}
+                                            />
+                                            <label 
+                                                htmlFor={`section-image-upload-${index}`}
+                                                title="Upload Local Image"
+                                                style={{
+                                                    padding: '8px 12px',
+                                                    background: '#555',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    fontSize: '11px'
+                                                }}
+                                            >
+                                                📁
+                                            </label>
                                             <button
                                                 type="button"
                                                 className="action-input-btn"

@@ -7,12 +7,9 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const ROOT_DIR = path.resolve(__dirname, '..')
-const BASE_URL = process.env.SITEMAP_BASE_URL || 'https://mangala-living.com'
+const BASE_URL = process.env.SITEMAP_BASE_URL || 'https://kartika.id'
 
-const BLOG_FILE = path.join(ROOT_DIR, 'src', 'data', 'blog.ts')
-const PRODUCTS_FILE = path.join(ROOT_DIR, 'src', 'data', 'products.ts')
-const CATEGORY_FILE = path.join(ROOT_DIR, 'src', 'data', 'categories.ts')
-const SEO_FILE = path.join(ROOT_DIR, 'src', 'utils', 'seo.ts')
+const BLOG_FILE = path.join(ROOT_DIR, 'src', 'data', 'kartika-blog.ts')
 const OUTPUT_DIR = path.join(ROOT_DIR, 'public')
 
 const formatDate = (date) => {
@@ -81,208 +78,6 @@ const parseBlogPosts = (source) => {
   return posts
 }
 
-const extractObjectLiteral = (source, identifier) => {
-  const startIndex = source.indexOf(identifier)
-  if (startIndex === -1) {
-    return ''
-  }
-
-  const equalsIndex = source.indexOf('=', startIndex)
-  if (equalsIndex === -1) {
-    return ''
-  }
-
-  const braceStart = source.indexOf('{', equalsIndex)
-  if (braceStart === -1) {
-    return ''
-  }
-
-  let depth = 0
-  for (let i = braceStart; i < source.length; i++) {
-    const char = source[i]
-    if (char === '{') depth++
-    if (char === '}') {
-      depth--
-      if (depth === 0) {
-        return source.slice(braceStart + 1, i)
-      }
-    }
-  }
-
-  return ''
-}
-
-const parseProductImageMap = (source) => {
-  const map = {}
-  const objectLiteral = extractObjectLiteral(source, 'const PRODUCT_IMAGE_MAP')
-  if (!objectLiteral) {
-    return map
-  }
-
-  const regex = /'([^']+)'\s*:\s*'([^']+)'/g
-  let match
-  while ((match = regex.exec(objectLiteral))) {
-    const [, slug, filename] = match
-    map[slug] = filename
-  }
-
-  return map
-}
-
-const parseProducts = (source, imageMap) => {
-  const products = []
-  const regex = /{[^}]*?id:\s*(\d+)[^}]*?slug:\s*'([^']+)'[^}]*?name:\s*'([^']+)'[^}]*?image:\s*([a-zA-Z0-9_]+)[^}]*?}/g
-  let match
-  while ((match = regex.exec(source))) {
-    const [, id, slug, name] = match
-    const filename = imageMap[slug]
-    const imageUrl = filename ? `${BASE_URL}/assets/${filename}` : ''
-
-    products.push({
-      id: parseInt(id),
-      slug,
-      name: escapeXml(name),
-      rawName: name,
-      loc: `${BASE_URL}/product/${slug}`,
-      changefreq: 'monthly',
-      priority: 0.6,
-      image: imageUrl ? escapeXml(imageUrl) : ''
-    })
-  }
-  return products
-}
-
-const curatedSearchKeywords = [
-  'industrial furniture',
-  'industrial furniture indonesia',
-  'industrial furniture bekasi',
-  'industrial furniture jakarta',
-  'industrial furniture custom',
-  'custom furniture cafe',
-  'custom furniture restoran',
-  'custom furniture hotel',
-  'custom furniture kantor',
-  'industrial dining table',
-  'industrial dining set',
-  'industrial lounge set',
-  'industrial bar set',
-  'industrial bar table',
-  'industrial sofa bench',
-  'industrial coffee table',
-  'industrial outdoor furniture',
-  'industrial daybed',
-  'industrial storage rack',
-  'industrial kitchen cabinet',
-  'industrial bookshelf',
-  'industrial display rack',
-  'industrial coat rack',
-  'industrial hanging shelf',
-  'industrial workstation desk',
-  'industrial conference table',
-  'industrial office furniture',
-  'furniture cafe industrial',
-  'furniture restoran industrial',
-  'furniture hotel industrial',
-  'furniture kantor industrial',
-  'furniture minimalis industrial',
-  'furniture scandinavian industrial',
-  'furniture custom bekasi',
-  'furniture custom jabodetabek',
-  'industrial bench corner',
-  'industrial barstool',
-  'industrial bar chair',
-  'industrial pipe furniture',
-  'custom dining table steel',
-  'custom dining set steel',
-  'metal frame furniture',
-  'welding furniture bekasi',
-  'furniture besi industrial',
-  'furniture besi custom',
-  'furniture mangala living',
-  'mangala living catalog',
-  'mangala living dining set',
-  'mangala living lounge set',
-  'mangala living bar set',
-  'mangala living outdoor furniture',
-  'mangala living daybed'
-]
-
-const toTitleCase = (str) => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase())
-
-const buildSearchQueryEntries = (products, lastModified) => {
-  const map = new Map()
-
-  const addQuery = (query) => {
-    if (!query) return
-    const trimmed = query.trim()
-    if (!trimmed) return
-    const key = trimmed.toLowerCase()
-    if (!map.has(key)) {
-      map.set(key, trimmed)
-    }
-  }
-
-  curatedSearchKeywords.forEach(addQuery)
-
-  products.forEach((product) => {
-    const unescapedName = product.rawName || product.name.replace(/&amp;/g, '&').replace(/&apos;/g, "'")
-    const slugWords = product.slug.replace(/-/g, ' ')
-    const titleSlug = toTitleCase(slugWords)
-
-    addQuery(unescapedName)
-    addQuery(`${unescapedName} price`)
-    addQuery(`${unescapedName} Mangala Living`)
-    addQuery(`${titleSlug} furniture`)
-    addQuery(`industrial ${slugWords}`)
-    addQuery(`${slugWords} custom furniture`)
-  })
-
-  const queries = Array.from(map.values()).slice(0, 60)
-
-  // Only include canonical URLs (without lang parameter) in sitemap
-  // This ensures sitemap only contains canonical URLs
-  const entries = []
-  queries.forEach((query, index) => {
-    const baseParams = new URLSearchParams({ q: query })
-
-    // Only include canonical version (without lang parameter)
-    entries.push({
-      query,
-      loc: `${BASE_URL}/search?${baseParams.toString()}`,
-      changefreq: index < 20 ? 'weekly' : 'monthly',
-      priority: index < 10 ? 0.50 : 0.40,
-      lastmod: lastModified,
-      explicitAlternates: [
-        { hrefLang: 'id-ID', href: `${BASE_URL}/search?${baseParams.toString()}&lang=id` },
-        { hrefLang: 'en', href: `${BASE_URL}/search?${baseParams.toString()}` },
-        { hrefLang: 'ar', href: `${BASE_URL}/search?${baseParams.toString()}&lang=ar` },
-        { hrefLang: 'zh-CN', href: `${BASE_URL}/search?${baseParams.toString()}&lang=zh` },
-        { hrefLang: 'ja-JP', href: `${BASE_URL}/search?${baseParams.toString()}&lang=ja` },
-        { hrefLang: 'es-ES', href: `${BASE_URL}/search?${baseParams.toString()}&lang=es` },
-        { hrefLang: 'fr-FR', href: `${BASE_URL}/search?${baseParams.toString()}&lang=fr` },
-        { hrefLang: 'ko-KR', href: `${BASE_URL}/search?${baseParams.toString()}&lang=ko` },
-        { hrefLang: 'x-default', href: `${BASE_URL}/search?${baseParams.toString()}` }
-      ]
-    })
-  })
-
-  return entries
-}
-
-const parseCategorySlugs = (source) => {
-  const categories = []
-  const regex = /'([^']+)':\s*'([^']+)'/g
-  let match
-  while ((match = regex.exec(source))) {
-    const [, key, value] = match
-    categories.push({
-      slug: key,
-      name: escapeXml(value)
-    })
-  }
-  return categories
-}
-
 const getFileLastModified = async (relativePath) => {
   try {
     const stats = await fs.stat(path.join(ROOT_DIR, relativePath))
@@ -296,18 +91,8 @@ const getFileLastModified = async (relativePath) => {
 const buildStaticPages = async () => {
   const staticPages = [
     { loc: `${BASE_URL}/`, file: 'src/pages/Home.tsx', changefreq: 'weekly', priority: 1.0 },
-    { loc: `${BASE_URL}/shop`, file: 'src/pages/Shop.tsx', changefreq: 'weekly', priority: 0.9 },
-    { loc: `${BASE_URL}/blog`, file: 'src/pages/Blog.tsx', changefreq: 'daily', priority: 0.9 },
-    { loc: `${BASE_URL}/about`, file: 'src/pages/About.tsx', changefreq: 'monthly', priority: 0.7 },
-    { loc: `${BASE_URL}/contact-us`, file: 'src/pages/Contact.tsx', changefreq: 'monthly', priority: 0.7 },
-    { loc: `${BASE_URL}/custom-order`, file: 'src/pages/CustomOrder.tsx', changefreq: 'monthly', priority: 0.7 },
-    { loc: `${BASE_URL}/partnership`, file: 'src/pages/Partnership.tsx', changefreq: 'monthly', priority: 0.7 },
-    { loc: `${BASE_URL}/terms-of-service`, file: 'src/pages/TermsOfService.tsx', changefreq: 'yearly', priority: 0.4 },
-    { loc: `${BASE_URL}/shipping-information`, file: 'src/pages/ShippingInformation.tsx', changefreq: 'yearly', priority: 0.4 },
-    { loc: `${BASE_URL}/search`, file: 'src/pages/SearchResults.tsx', changefreq: 'monthly', priority: 0.4 },
-    { loc: `${BASE_URL}/product-tag/best-seller`, file: 'src/pages/BestSellers.tsx', changefreq: 'weekly', priority: 0.6 },
-    { loc: `${BASE_URL}/furniture-besi-custom-bekasi`, file: 'src/pages/FurnitureBesiCustomBekasi.tsx', changefreq: 'monthly', priority: 0.75 },
-    { loc: `${BASE_URL}/image-license`, file: 'src/pages/ImageLicense.tsx', changefreq: 'yearly', priority: 0.3 }
+    { loc: `${BASE_URL}/blog`, file: 'src/pages/KartikaBlog.tsx', changefreq: 'daily', priority: 0.9 },
+    { loc: `${BASE_URL}/about`, file: 'src/pages/Home.tsx', changefreq: 'monthly', priority: 0.7 },
   ]
 
   return Promise.all(staticPages.map(async (page) => ({
@@ -316,60 +101,18 @@ const buildStaticPages = async () => {
   })))
 }
 
-const buildCategoryPages = async (categorySlugs) => {
-  const entries = []
-  for (const category of categorySlugs) {
-    entries.push({
-      slug: category.slug,
-      name: category.name,
-      loc: `${BASE_URL}/product-category/${category.slug}`,
-      changefreq: 'weekly',
-      priority: 0.65,
-      lastmod: await getFileLastModified('src/data/products.ts')
-    })
-  }
-  return entries
-}
-
 const buildLanguageAlternates = (loc, explicitAlternates) => {
   if (explicitAlternates && explicitAlternates.length > 0) {
     return explicitAlternates
   }
-
-  try {
-    const buildUrl = (lang) => {
-      const cloned = new URL(loc)
-      cloned.searchParams.delete('lang')
-      if (lang && lang !== 'en') {
-        cloned.searchParams.set('lang', lang)
-      }
-      return cloned.toString()
-    }
-
-    const defaultUrl = buildUrl(null)
-    // Include all 8 supported languages
-    return [
-      { hrefLang: 'id-ID', href: buildUrl('id') },
-      { hrefLang: 'en', href: buildUrl('en') },
-      { hrefLang: 'ar', href: buildUrl('ar') },
-      { hrefLang: 'zh-CN', href: buildUrl('zh') },
-      { hrefLang: 'ja-JP', href: buildUrl('ja') },
-      { hrefLang: 'es-ES', href: buildUrl('es') },
-      { hrefLang: 'fr-FR', href: buildUrl('fr') },
-      { hrefLang: 'ko-KR', href: buildUrl('ko') },
-      { hrefLang: 'x-default', href: defaultUrl }
-    ]
-  } catch (error) {
-    console.warn('[sitemap] Failed to build alternates for', loc, error.message)
-    return []
-  }
+  return [] // Simplified for Kartika.id, no multi-lang query params required currently
 }
 
 // Generate sitemap index (main sitemap.xml)
 const generateSitemapIndex = (sitemaps) => {
   const header = '<?xml version="1.0" encoding="UTF-8"?>'
   const stylesheet = '<?xml-stylesheet type="text/xsl" href="/sitemap-index.xsl"?>'
-  const comment = '<!-- Generated by Mangala Living Sitemap Generator, this is an XML Sitemap Index, meant for consumption by search engines. -->'
+  const comment = '<!-- Generated by Kartika.id Sitemap Generator, this is an XML Sitemap Index, meant for consumption by search engines. -->'
   const openTag = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
   const closeTag = '</sitemapindex>'
 
@@ -456,69 +199,8 @@ const generatePageSitemap = (pages) => {
   return [header, stylesheet, openTag, ...entries, closeTag, ''].join('\n')
 }
 
-// Generate category sitemap
-const generateCategorySitemap = (categories) => {
-  const header = '<?xml version="1.0" encoding="UTF-8"?>'
-  const stylesheet = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>'
-  const openTag = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'
-  const closeTag = '</urlset>'
-
-  const entries = categories.map((category) => {
-    const parts = [
-      '  <url>',
-      `    <loc>${escapeXml(category.loc)}</loc>`,
-      `    <lastmod>${formatDate(category.lastmod)}</lastmod>`,
-      `    <changefreq>${category.changefreq}</changefreq>`,
-      `    <priority>${category.priority.toFixed(2)}</priority>`
-    ]
-
-    // Add language alternates
-    const alternates = buildLanguageAlternates(category.loc, category.alternates)
-    alternates.forEach((alternate) => {
-      if (alternate?.href && alternate?.hrefLang) {
-        parts.push(`    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.hrefLang)}" href="${escapeXml(alternate.href)}" />`)
-      }
-    })
-
-    parts.push('  </url>')
-    return parts.join('\n')
-  })
-
-  return [header, stylesheet, openTag, ...entries, closeTag, ''].join('\n')
-}
-
-const generateSearchSitemap = (entries) => {
-  const header = '<?xml version="1.0" encoding="UTF-8"?>'
-  const stylesheet = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>'
-  const openTag = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'
-  const closeTag = '</urlset>'
-
-  const urls = entries.map((entry) => {
-    const parts = [
-      '  <url>',
-      `    <loc>${escapeXml(entry.loc)}</loc>`,
-      `    <lastmod>${formatDate(entry.lastmod)}</lastmod>`,
-      `    <changefreq>${entry.changefreq}</changefreq>`,
-      `    <priority>${entry.priority.toFixed(2)}</priority>`
-    ]
-
-    // Use explicit alternates if provided, otherwise build them
-    const alternates = entry.explicitAlternates || buildLanguageAlternates(entry.loc, entry.alternates)
-    alternates.forEach((alternate) => {
-      if (alternate?.href && alternate?.hrefLang) {
-        parts.push(`    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.hrefLang)}" href="${escapeXml(alternate.href)}" />`)
-      }
-    })
-
-    parts.push('  </url>')
-    return parts.join('\n')
-  })
-
-  return [header, stylesheet, openTag, ...urls, closeTag, ''].join('\n')
-}
-
-// Generate attachment sitemap (images from products and blog)
-const generateAttachmentSitemap = (products, posts) => {
+// Generate attachment sitemap (images from blog)
+const generateAttachmentSitemap = (posts) => {
   const header = '<?xml version="1.0" encoding="UTF-8"?>'
   const stylesheet = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>'
   const openTag = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
@@ -527,37 +209,6 @@ const generateAttachmentSitemap = (products, posts) => {
   const entries = []
   const now = new Date()
 
-  // Add product images
-  products.forEach((product) => {
-    if (product.image) {
-      entries.push([
-        '  <url>',
-        `    <loc>${escapeXml(product.loc)}</loc>`,
-        `    <lastmod>${formatDate(now)}</lastmod>`,
-        '    <changefreq>monthly</changefreq>',
-        '    <priority>0.50</priority>',
-        '    <image:image>',
-        `      <image:loc>${product.image}</image:loc>`,
-        `      <image:title>${product.name}</image:title>`,
-        `      <image:caption>${product.name} - Furniture Industrial Custom Bekasi</image:caption>`,
-        '    </image:image>',
-        '  </url>'
-      ].join('\n'))
-    }
-  })
-
-  // Add blog post images
-  posts.forEach((post) => {
-    if (post.image) {
-      entries.push([
-        '  <url>',
-        `    <loc>${escapeXml(post.loc)}</loc>`,
-        `    <lastmod>${formatDate(post.lastmod)}</lastmod>`,
-        '    <changefreq>monthly</changefreq>',
-        '    <priority>0.50</priority>',
-        '    <image:image>',
-        `      <image:loc>${post.image}</image:loc>`,
-        `      <image:title>${post.title}</image:title>`,
         `      <image:caption>${post.title}</image:caption>`,
         '    </image:image>',
         '  </url>'
@@ -568,64 +219,19 @@ const generateAttachmentSitemap = (products, posts) => {
   return [header, stylesheet, openTag, ...entries, closeTag, ''].join('\n')
 }
 
-// Generate product sitemap (individual product detail pages)
-const generateProductSitemap = (products) => {
-  const header = '<?xml version="1.0" encoding="UTF-8"?>'
-  const stylesheet = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>'
-  const openTag = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'
-  const closeTag = '</urlset>'
-
-  const entries = products.map((product) => {
-    const parts = [
-      '  <url>',
-      `    <loc>${escapeXml(product.loc)}</loc>`,
-      `    <lastmod>${formatDate(product.lastmod)}</lastmod>`,
-      `    <changefreq>${product.changefreq}</changefreq>`,
-      `    <priority>${product.priority.toFixed(2)}</priority>`
-    ]
-
-    const alternates = buildLanguageAlternates(product.loc, product.alternates)
-    alternates.forEach((alternate) => {
-      if (alternate?.href && alternate?.hrefLang) {
-        parts.push(`    <xhtml:link rel="alternate" hreflang="${escapeXml(alternate.hrefLang)}" href="${escapeXml(alternate.href)}" />`)
-      }
-    })
-
-    parts.push('  </url>')
-    return parts.join('\n')
-  })
-
-  return [header, stylesheet, openTag, ...entries, closeTag, ''].join('\n')
-}
-
 const main = async () => {
   console.log('[sitemap] Starting sitemap generation...')
 
   // Read source files
-  const [blogSource, productSource, categorySource, seoSource] = await Promise.all([
-    readFileSafe(BLOG_FILE),
-    readFileSafe(PRODUCTS_FILE),
-    readFileSafe(CATEGORY_FILE),
-    readFileSafe(SEO_FILE)
+  const [blogSource] = await Promise.all([
+    readFileSafe(BLOG_FILE)
   ])
-
-  const productImageMap = parseProductImageMap(seoSource)
 
   // Parse data
-  const [staticPages, blogPosts, rawProducts, categorySlugs] = await Promise.all([
+  const [staticPages, blogPosts] = await Promise.all([
     buildStaticPages(),
-    Promise.resolve(parseBlogPosts(blogSource)),
-    Promise.resolve(parseProducts(productSource, productImageMap)),
-    Promise.resolve(parseCategorySlugs(categorySource))
+    Promise.resolve(parseBlogPosts(blogSource))
   ])
-
-  const categoryPages = await buildCategoryPages(categorySlugs)
-  const productsLastModified = await getFileLastModified('src/data/products.ts')
-  const products = rawProducts.map((product) => ({
-    ...product,
-    lastmod: productsLastModified
-  }))
-  const searchEntries = buildSearchQueryEntries(rawProducts, productsLastModified)
 
   // Get latest dates for each sitemap
   const latestBlogDate = blogPosts.reduce((latest, entry) => {
@@ -634,11 +240,6 @@ const main = async () => {
   }, 0)
 
   const latestPageDate = staticPages.reduce((latest, entry) => {
-    const time = entry.lastmod.getTime()
-    return time > latest ? time : latest
-  }, 0)
-
-  const latestCategoryDate = categoryPages.reduce((latest, entry) => {
     const time = entry.lastmod.getTime()
     return time > latest ? time : latest
   }, 0)
@@ -660,20 +261,8 @@ const main = async () => {
   const pageSitemapXml = generatePageSitemap(staticPages.sort((a, b) => a.loc.localeCompare(b.loc)))
   await fs.writeFile(path.join(OUTPUT_DIR, 'page-sitemap.xml'), pageSitemapXml, 'utf8')
 
-  console.log('[sitemap] Generating category-sitemap.xml...')
-  const categorySitemapXml = generateCategorySitemap(categoryPages.sort((a, b) => a.loc.localeCompare(b.loc)))
-  await fs.writeFile(path.join(OUTPUT_DIR, 'category-sitemap.xml'), categorySitemapXml, 'utf8')
-
-  console.log('[sitemap] Generating product-sitemap.xml...')
-  const productSitemapXml = generateProductSitemap(products)
-  await fs.writeFile(path.join(OUTPUT_DIR, 'product-sitemap.xml'), productSitemapXml, 'utf8')
-
-  console.log('[sitemap] Generating search-sitemap.xml...')
-  const searchSitemapXml = generateSearchSitemap(searchEntries)
-  await fs.writeFile(path.join(OUTPUT_DIR, 'search-sitemap.xml'), searchSitemapXml, 'utf8')
-
   console.log('[sitemap] Generating attachment-sitemap.xml...')
-  const attachmentSitemapXml = generateAttachmentSitemap(products, blogPosts)
+  const attachmentSitemapXml = generateAttachmentSitemap(blogPosts)
   await fs.writeFile(path.join(OUTPUT_DIR, 'attachment-sitemap.xml'), attachmentSitemapXml, 'utf8')
 
   // Generate sitemap index
@@ -688,18 +277,6 @@ const main = async () => {
       lastmod: new Date(latestPageDate || now)
     },
     {
-      loc: `${BASE_URL}/category-sitemap.xml`,
-      lastmod: new Date(latestCategoryDate || now)
-    },
-    {
-      loc: `${BASE_URL}/product-sitemap.xml`,
-      lastmod: productsLastModified
-    },
-    {
-      loc: `${BASE_URL}/search-sitemap.xml`,
-      lastmod: productsLastModified
-    },
-    {
       loc: `${BASE_URL}/attachment-sitemap.xml`,
       lastmod: now
     }
@@ -708,14 +285,11 @@ const main = async () => {
   const indexXml = generateSitemapIndex(sitemapIndex)
   await fs.writeFile(path.join(OUTPUT_DIR, 'sitemap.xml'), indexXml, 'utf8')
 
-  console.log('[sitemap] ? Generated sitemap index with 6 sitemaps')
-  console.log(`[sitemap] ? post-sitemap.xml: ${blogPosts.length} blog posts`)
-  console.log(`[sitemap] ? page-sitemap.xml: ${staticPages.length} pages`)
-  console.log(`[sitemap] ? category-sitemap.xml: ${categoryPages.length} categories`)
-  console.log(`[sitemap] ? product-sitemap.xml: ${products.length} products`)
-  console.log(`[sitemap] ? search-sitemap.xml: ${searchEntries.length} search queries`)
-  console.log(`[sitemap] ? attachment-sitemap.xml: ${products.length + blogPosts.length} images`)
-  console.log('[sitemap] ? All sitemaps generated successfully!')
+  console.log('[sitemap] ✓ Generated sitemap index with 3 sitemaps')
+  console.log(`[sitemap] ✓ post-sitemap.xml: ${blogPosts.length} blog posts`)
+  console.log(`[sitemap] ✓ page-sitemap.xml: ${staticPages.length} pages`)
+  console.log(`[sitemap] ✓ attachment-sitemap.xml: ${blogPosts.length} images`)
+  console.log('[sitemap] ✓ All sitemaps generated successfully!')
 }
 
 main().catch((error) => {

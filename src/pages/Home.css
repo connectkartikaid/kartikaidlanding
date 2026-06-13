@@ -1,0 +1,169 @@
+/* ============================================================
+   Home.css — Scoping overrides for the Kartika.id Home page.
+   These rules ensure style.css (Kartika) takes priority over
+   App.css (Mangala Living) when the Home page is rendered.
+   ============================================================ */
+
+/* Override App.css global .container (max-width:1400px, padding:0 40px)
+   to match Kartika's original .container (max-width:1200px, padding:0 20px) */
+.kartika-home .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    position: relative;
+}
+
+/* Override App.css generic section padding (60px 0) */
+.kartika-home section {
+    padding: 0;
+}
+
+/* Reset the App.css body styles that interfere */
+.kartika-home {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #333;
+}
+
+/* Ensure the Kartika background shows on the home page */
+.kartika-home-active body::before,
+body.kartika-home-active::before {
+    background-image: url('/images/asset-background.webp') !important;
+}
+
+/* Override section-header styles from App.css */
+.kartika-home .section-header {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.kartika-home .section-header h2 {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.kartika-home .section-header h2::after {
+    display: none;
+}
+
+/* Ensure the logo has proper sizing */
+.kartika-home .logo {
+    max-width: 180px;
+}
+
+/* Make sure header doesn't get extra padding from App.css */
+.kartika-home header {
+    padding: 5px 0;
+}
+
+/* Fix about-us section getting wrong container sizing */
+.kartika-home .about-us-content-container {
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* Ensure hero section padding is from style.css not App.css */
+.kartika-home .hero {
+    padding: 0;
+    height: auto; /* Override App.css 100vh */
+    flex-direction: column !important; /* Force column layout */
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: visible !important;
+}
+
+/* Force header nav to display correctly */
+.kartika-home .nav {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: 100%;
+}
+
+/* Fix logo width collapse in flex container and force to left */
+.kartika-home .logo {
+    width: 180px;
+    max-width: 180px;
+    flex-shrink: 0;
+    margin-right: auto !important; /* Push everything else right */
+    order: 1 !important;
+    float: none !important;
+}
+
+/* Guarantee logo image is visible */
+.kartika-home .logo img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Force nav links to the right */
+.kartika-home .nav-links {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 15px !important;
+    order: 2 !important;
+    float: none !important;
+}
+
+/* Hide Mangala's global WhatsApp button on Kartika page */
+body.kartika-home-active .whatsapp-container {
+    display: none !important;
+}
+
+/* Ensure no hero styles from index.html override this */
+.kartika-home .hero-content {
+    position: relative !important;
+    z-index: 10 !important;
+    padding: 0 20px !important;
+    max-width: none !important;
+}
+
+.kartika-home .about-us {
+    padding: 50px 0;
+}
+
+.kartika-home .our-missions-section {
+    padding: 80px 0;
+}
+
+.kartika-home .first-generation-section {
+    padding: 40px 0;
+}
+
+.kartika-home .our-partners-section {
+    padding: 40px 0;
+}
+
+.kartika-home .our-speakers-section {
+    padding: 80px 0;
+}
+
+.kartika-home .poster-section {
+    padding: 40px 0;
+}
+
+.kartika-home .join-us-section {
+    padding: 0;
+}
+
+/* Footer should keep its own styling */
+.kartika-home footer {
+    padding: 60px 0 30px;
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .kartika-home .container {
+        padding: 0 15px;
+    }
+}

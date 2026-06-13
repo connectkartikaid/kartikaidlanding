@@ -1,366 +1,409 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useLocation } from 'react-router-dom'
+import '../../public/style.css'
+import './Home.css'
+import { getLandingConfig, getLandingDraft } from '../data/landingConfig'
 
-// Components
-import AnnouncementBar from '../components/AnnouncementBar'
-import Header from '../components/Header'
-import Hero from '../components/Hero'
-import CatalogModal from '../components/CatalogModal'
-import CategoriesSection from '../components/CategoriesSection'
-import BestSellersSection from '../components/BestSellersSection'
-import OurProductsSection from '../components/OurProductsSection'
-import MessageSection from '../components/MessageSection'
-import Footer from '../components/Footer'
-import AISearchOptimizedContent from '../components/AISearchOptimizedContent'
-import AISearchFeatures from '../components/AISearchFeatures'
+const Home = () => {
+  const [missionType, setMissionType] = useState('women-empowerment');
+  const [teamType, setTeamType] = useState('coreteam');
+  const [activeProgram, setActiveProgram] = useState('kartishare');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [heroMarginTop, setHeroMarginTop] = useState('0px');
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const requestRef = useRef<number>(0);
+  const scrollAmount = useRef(0);
+  const headerRef = useRef<HTMLElement>(null);
+  const [config, setConfig] = useState(window.location.pathname === '/sandbox' ? getLandingDraft() : getLandingConfig());
 
-// Utils
-import { generateAIOptimizedStructuredData, generateFAQStructuredData, generateWebSiteStructuredData } from '../utils/aiSearchOptimization'
-import { ALL_PRODUCTS } from '../data/products'
-import { generateLanguageSpecificMeta, generateLocalizedUrls, getProductImageUrl } from '../utils/seo'
-import { getCurrentLanguage, getStoredLanguage, getLanguageFromLocation } from '../utils/languageManager'
-
-const Home: React.FC = () => {
-  const location = useLocation()
-
-  // Initialize language with consistent priority: URL > Stored > Browser
-  const [language, setLanguage] = useState<'en' | 'id' | 'ar' | 'zh' | 'ja' | 'es' | 'fr' | 'ko'>(() => {
-    return getCurrentLanguage(location.pathname, location.search)
-  })
-
-  // Update language when URL changes (makes language switcher work without refresh!)
+  // Listen for config changes from Editor
   useEffect(() => {
-    const currentLang = getCurrentLanguage(location.pathname, location.search)
-    if (currentLang !== language) {
-      setLanguage(currentLang)
-    }
-  }, [location.pathname, location.search, language])
+    const handleStorage = () => {
+      if (window.location.pathname === '/sandbox') setConfig(getLandingDraft());
+      else setConfig(getLandingConfig());
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
-  // Only do IP detection on first visit (no stored preference) and no URL language
+  // Auto cycle missions
   useEffect(() => {
-    // Skip IP detection if:
-    // 1. User already has stored preference (they've chosen before)
-    // 2. Language is set from URL (query param or path prefix)
-    const stored = getStoredLanguage()
-    const urlLang = getLanguageFromLocation(location.pathname, location.search)
+    const missions = ['women-empowerment', 'networking', 'development'];
+    const interval = setInterval(() => {
+      setMissionType(prev => {
+        const currentIndex = missions.indexOf(prev);
+        return missions[(currentIndex + 1) % missions.length];
+      });
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-    if (stored || urlLang) {
-      return // User has chosen language, don't override
-    }
+  // Auto cycle programs
+  useEffect(() => {
+    const programs = ['kartishare', 'kartiship', 'kartinection'];
+    const interval = setInterval(() => {
+      setActiveProgram(prev => {
+        const currentIndex = programs.indexOf(prev);
+        return programs[(currentIndex + 1) % programs.length];
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
-    // Only detect from IP on first visit (no stored preference)
-    const detectLocation = async () => {
-      try {
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Timeout')), 2000)
-        })
-
-        const fetchPromise = fetch('https://ipapi.co/json/')
-          .then(response => response.json())
-
-        const data = await Promise.race([fetchPromise, timeoutPromise]) as any
-        const countryCode = data.country_code
-
-        const frenchCountries = ['FR', 'BE', 'CH', 'LU', 'MC', 'CA', 'HT', 'CI', 'SN', 'ML', 'NE', 'BF', 'TG', 'BJ', 'CD', 'CG', 'GA', 'CM', 'CF', 'TD', 'MG', 'RE', 'MU', 'SC', 'KM', 'YT', 'DJ']
-        const spanishCountries = ['ES', 'MX', 'AR', 'CO', 'VE', 'PE', 'CL', 'EC', 'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY']
-        const chineseCountries = ['CN', 'TW', 'HK', 'SG', 'MO']
-        const arabicCountries = ['SA', 'AE', 'KW', 'QA', 'OM', 'BH', 'EG', 'JO', 'LB', 'SY', 'IQ', 'YE', 'MA', 'DZ', 'TN', 'LY', 'SD', 'PS']
-
-        let detectedLang: 'en' | 'id' | 'ar' | 'zh' | 'ja' | 'es' | 'fr' | 'ko' = 'en'
-
-        if (countryCode === 'ID') {
-          detectedLang = 'id'
-        } else if (countryCode === 'KR') {
-          detectedLang = 'ko'
-        } else if (countryCode === 'JP') {
-          detectedLang = 'ja'
-        } else if (frenchCountries.includes(countryCode)) {
-          detectedLang = 'fr'
-        } else if (spanishCountries.includes(countryCode)) {
-          detectedLang = 'es'
-        } else if (chineseCountries.includes(countryCode)) {
-          detectedLang = 'zh'
-        } else if (arabicCountries.includes(countryCode)) {
-          detectedLang = 'ar'
-        }
-
-        // Only update if no stored preference exists
-        if (!stored) {
-          setLanguage(detectedLang)
-        }
-      } catch (error) {
-        // Silently fail
-        console.log('IP detection skipped or failed')
+  // Header scroll and margin adjustment
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
       }
+    };
+
+    const adjustHeroMargin = () => {
+      if (headerRef.current) {
+        setHeroMarginTop(`${headerRef.current.offsetHeight}px`);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', adjustHeroMargin);
+    
+    // Slight delay to ensure header has rendered and measured correctly
+    setTimeout(adjustHeroMargin, 50);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', adjustHeroMargin);
+    };
+  }, []);
+
+  // Toggle body class for Kartika background
+  useEffect(() => {
+    document.body.classList.add('kartika-home-active');
+    return () => {
+      document.body.classList.remove('kartika-home-active');
+    };
+  }, []);
+
+  // Carousel scroll
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const scrollSpeed = 1;
+
+    const autoScroll = () => {
+      if (!carousel) return;
+      scrollAmount.current += scrollSpeed;
+      if (scrollAmount.current >= carousel.scrollWidth - carousel.clientWidth) {
+        scrollAmount.current = 0;
+      }
+      carousel.scrollLeft = scrollAmount.current;
+      requestRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    requestRef.current = requestAnimationFrame(autoScroll);
+
+    const handleMouseEnter = () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+
+    const handleMouseLeave = () => {
+      requestRef.current = requestAnimationFrame(autoScroll);
+    };
+
+    carousel.addEventListener('mouseenter', handleMouseEnter);
+    carousel.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      if (carousel) {
+        carousel.removeEventListener('mouseenter', handleMouseEnter);
+        carousel.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, []);
+
+  const handleNavClick = (e: any, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      const headerOffset = 100;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
+  };
 
-    detectLocation()
-  }, []) // Only run once on mount
-
-  const isIndonesian = language === 'id'
-
-  const localeMeta = generateLanguageSpecificMeta(isIndonesian)
-  const localizedUrls = generateLocalizedUrls(location.pathname, location.search)
-
-  // Multi-language translations - SEO Optimized with Priority Keywords
-  const translations = {
-    title: language === 'id'
-      ? "Furniture Industrial Indonesia | Manufacturer Besi Custom Bekasi Sejak 1999"
-      : language === 'ar'
-        ? "أثاث صناعي من الحديد - طقم بار وطقم صالة ورفوف تخزين | مانجالا ليفينج"
-        : language === 'zh'
-          ? "工业家具吧台套装休息区套装储物架新品 | 曼加拉生活"
-          : language === 'ja'
-            ? "インダストリアル家具バーセットラウンジセット収納新着 | マンガラリビング"
-            : language === 'es'
-              ? "Muebles Industriales Set de Bar Set de Sala Almacenamiento Novedades | Mangala Living"
-              : language === 'fr'
-                ? "Mobilier Industriel Set de Bar Set de Salon Rangement Nouveautés | Mangala Living"
-                : "Industrial Furniture Indonesia | Custom Steel Furniture Manufacturer Bekasi Since 1999",
-    description: language === 'id'
-      ? "Furniture industrial & scandinavian premium sejak 1999. Melayani coffee shop, restoran, dan bisnis di seluruh Indonesia. Pesanan custom tersedia. Garansi 1 tahun."
-      : language === 'ar'
-        ? "أثاث صناعي واسكندنافي فاخر منذ عام 1999. نخدم المقاهي والمطاعم والأعمال في جميع أنحاء إندونيسيا. نرحب بالطلبات المخصصة."
-        : language === 'zh'
-          ? "自1999年以来的优质工业和斯堪的纳维亚家具。为印度尼西亚的咖啡馆、餐厅和企业提供服务。欢迎定制家具订单。"
-          : language === 'ja'
-            ? "1999年以来のプレミアム家具。インドネシア全土のカフェ、レストラン、ビジネスに対応。カスタムオーダーも承ります。"
-            : language === 'es'
-              ? "Muebles industriales y escandinavos premium desde 1999. Sirviendo a cafeterías, restaurantes y negocios en toda Indonesia. Pedidos personalizados bienvenidos."
-              : language === 'fr'
-                ? "Meubles industriels et scandinaves premium depuis 1999. Au service des cafés, restaurants et entreprises en Indonésie. Commandes personnalisées bienvenues."
-                : "Premium industrial & scandinavian furniture since 1999. Serving coffee shops, restaurants, and businesses across Indonesia. Custom furniture orders welcome.",
-    ogTitle: language === 'id'
-      ? "Furniture Industrial Besi Custom Bekasi | Cafe & Restoran"
-      : language === 'ar'
-        ? "أثاث صناعي من الحديد مخصص بيكاسي | للمقاهي والمطاعم"
-        : language === 'zh'
-          ? "勿加泗定制工业铁艺家具 | 咖啡馆和餐厅"
-          : language === 'ja'
-            ? "ブカシ カスタムインダストリアル鉄家具 | カフェ＆レストラン"
-            : language === 'es'
-              ? "Muebles Industriales de Hierro Personalizados Bekasi | Café y Restaurante"
-              : language === 'fr'
-                ? "Mobilier Industriel en Fer Sur Mesure Bekasi | Café & Restaurant"
-                : "Industrial Furniture Besi Custom Bekasi | Cafe & Restoran",
-    ogDescription: language === 'id'
-      ? "Manufacturer furniture industrial: bar set outdoor, lounge set, sofa bench, storage rack, new arrivals untuk cafe restoran hotel. Workshop Bekasi 25+ tahun. Harga pabrik."
-      : language === 'ar'
-        ? "مصنع الأثاث الصناعي: طقم بار خارجي، طقم صالة، أريكة، رفوف تخزين للمقاهي والمطاعم والفنادق. ورشة بيكاسي 25+ عام. أسعار المصنع."
-        : language === 'zh'
-          ? "工业家具制造商：户外吧台套装、休息区套装、沙发长椅、储物架，适用于咖啡馆、餐厅、酒店。勿加泗工作坊25年以上。工厂价格。"
-          : language === 'ja'
-            ? "インダストリアル家具メーカー：屋外バーセット、ラウンジセット、ソファベンチ、収納ラック、カフェ・レストラン・ホテル向け。ブカシ工房25年以上。工場価格。"
-            : language === 'es'
-              ? "Fabricante de muebles industriales: set de bar exterior, set de sala, sofá banco, estantería de almacenamiento para cafés, restaurantes, hoteles. Taller Bekasi 25+ años. Precios de fábrica."
-              : language === 'fr'
-                ? "Fabricant de meubles industriels : set de bar extérieur, set de salon, banc canapé, étagère de rangement pour cafés, restaurants, hôtels. Atelier Bekasi 25+ ans. Prix d'usine."
-                : "Manufacturer industrial furniture: bar set outdoor, lounge set, sofa bench, storage rack, new arrivals for cafes restaurants hotels. Bekasi workshop 25+ years. Factory prices."
-  }
+  const checkLongText = (text: string) => {
+    return text.length > 120 ? 'testimonial-text long' : 'testimonial-text';
+  };
 
   return (
-    <div className="home">
-      <CatalogModal />
-      <Helmet htmlAttributes={{ lang: language === 'ar' ? 'ar' : (language === 'zh' ? 'zh' : (language === 'ja' ? 'ja' : (language === 'es' ? 'es' : (language === 'fr' ? 'fr' : (language === 'ko' ? 'ko' : localeMeta.lang))))), dir: language === 'ar' ? 'rtl' : 'ltr', 'data-language': language }}>
-        <title>{translations.title}</title>
-        <meta name="description" content={translations.description} />
-        <meta name="keywords" content="furniture industrial indonesia, furniture besi custom, furniture bekasi, furniture industrial jakarta, meja industrial, kursi bar industrial, furniture cafe, furniture restoran, manufacturer furniture industrial, furniture besi custom bekasi, workshop furniture bekasi, furniture industrial jabodetabek, bar set outdoor, lounge set, sofa bench, storage rack, display rack, meja kursi cafe, mangala living" />
-        <meta httpEquiv="content-language" content={localeMeta.lang} />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={translations.ogTitle} />
-        <meta property="og:description" content={translations.ogDescription} />
-        <meta property="og:image" content="https://mangala-living.com/og-image.jpg" />
-        <meta property="og:url" content={localizedUrls.canonical} />
-        <meta property="og:locale" content={localeMeta.locale} />
-        <meta property="og:locale:alternate" content="id_ID" />
-        <meta property="og:locale:alternate" content="en_US" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Furniture Industrial Bar Set Lounge Set Storage - Mangala Living" />
-        <meta name="twitter:description" content="Bar set outdoor, lounge set sofa bench, storage rack, new arrivals furniture industrial untuk cafe restoran hotel. Workshop Bekasi 25+ tahun." />
-        <meta name="twitter:image" content="https://mangala-living.com/og-image.jpg" />
-
-        {/* Additional SEO tags */}
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="geo.region" content="ID-JB" />
-        <meta name="geo.placename" content="Bekasi" />
-        <meta name="geo.position" content="-6.2088;107.1602" />
-        {/* Canonical and Hreflang */}
-        <link rel="canonical" href={localizedUrls.canonical} />
-        {localizedUrls.alternates.map((alternate) => (
-          <link key={`home-hreflang-${alternate.hrefLang}`} rel="alternate" hrefLang={alternate.hrefLang} href={alternate.href} />
-        ))}
-
-        {/* Structured Data - Product Catalog */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "name": "Furniture Industrial Mangala Living",
-            "description": "Koleksi furniture industrial besi custom untuk cafe, restoran, dan hotel",
-            "numberOfItems": ALL_PRODUCTS.length,
-            "itemListElement": ALL_PRODUCTS.map((product, index) => {
-              const imageUrl = getProductImageUrl(product.image, product.slug)
-              const priceNumeric = product.price.replace(/[^\d]/g, '')
-              const description = `Industrial furniture ${product.name} by Mangala Living. Premium quality furniture made in Indonesia since 1999.`
-
-              return {
-                "@type": "ListItem",
-                "position": index + 1,
-                "item": {
-                  "@type": "Product",
-                  "name": product.name,
-                  "description": description,
-                  "image": imageUrl,
-                  "url": `https://mangala-living.com/product/${product.slug}`,
-                  "brand": {
-                    "@type": "Brand",
-                    "name": "Mangala Living"
-                  },
-                  "offers": {
-                    "@type": "Offer",
-                    "price": priceNumeric,
-                    "priceCurrency": "IDR",
-                    "availability": "https://schema.org/InStock",
-                    "priceValidUntil": "2026-12-31",
-                    "url": `https://mangala-living.com/product/${product.slug}`,
-                    "hasMerchantReturnPolicy": {
-                      "@type": "MerchantReturnPolicy",
-                      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-                      "merchantReturnDays": 30,
-                      "returnMethod": "https://schema.org/ReturnByMail",
-                      "returnFees": "https://schema.org/FreeReturn",
-                      "applicableCountry": "ID"
-                    },
-                    "shippingDetails": {
-                      "@type": "OfferShippingDetails",
-                      "shippingRate": {
-                        "@type": "MonetaryAmount",
-                        "value": "0",
-                        "currency": "IDR"
-                      },
-                      "shippingDestination": {
-                        "@type": "DefinedRegion",
-                        "addressCountry": "ID"
-                      },
-                      "deliveryTime": {
-                        "@type": "ShippingDeliveryTime",
-                        "businessDays": {
-                          "@type": "OpeningHoursSpecification",
-                          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-                        },
-                        "cutoffTime": "14:00",
-                        "handlingTime": {
-                          "@type": "QuantitativeValue",
-                          "minValue": 3,
-                          "maxValue": 5,
-                          "unitCode": "DAY"
-                        },
-                        "transitTime": {
-                          "@type": "QuantitativeValue",
-                          "minValue": 1,
-                          "maxValue": 3,
-                          "unitCode": "DAY"
-                        }
-                      }
-                    },
-                    "seller": {
-                      "@type": "Organization",
-                      "name": "Mangala Living",
-                      "url": "https://mangala-living.com",
-                      "logo": "https://mangala-living.com/logo.png",
-                      "image": "https://mangala-living.com/og-image.jpg",
-                      "description": "Premium Industrial Scandinavian Furniture for Coffee Shops, Restaurants & Offices. Custom Solutions Since 1999."
-                    }
-                  },
-                  "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "4.8",
-                    "ratingCount": "127",
-                    "reviewCount": "127",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                  }
-                }
-              }
-            })
-          })}
-        </script>
-
-        {/* Local Business Schema */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "Mangala Living",
-              "image": "https://mangala-living.com/og-image.jpg",
-              "@id": "https://mangala-living.com",
-              "url": "https://mangala-living.com",
-              "telephone": "+6288801146881",
-              "email": "lifewithmangala@gmail.com",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Jl. Raya Setu Cibitung - Bekasi, Telajung",
-                "addressLocality": "Bekasi",
-                "addressRegion": "Jawa Barat",
-                "postalCode": "17320",
-                "addressCountry": "ID"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": -6.2088,
-                "longitude": 107.1602
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                "opens": "08:00",
-                "closes": "17:00"
-              },
-              "priceRange": "Rp$$-$$$"
-            }
-          `}
-        </script>
-
-        {/* AI-Optimized Merchant Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateAIOptimizedStructuredData())}
-        </script>
-
-        {/* FAQ Schema for AI Understanding */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateFAQStructuredData())}
-        </script>
-
-        {/* WebSite Schema with Search Action */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateWebSiteStructuredData())}
-        </script>
+    <div className="kartika-home">
+      <Helmet>
+        <title>Kartika.id</title>
+        <link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&amp;family=Josefin+Sans:wght@600&amp;display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </Helmet>
-      <AnnouncementBar language={language} isIndonesian={isIndonesian} />
-      <Header isIndonesian={isIndonesian} language={language} />
-      <Hero isIndonesian={isIndonesian} language={language} />
 
+      <header ref={headerRef} className={isScrolled ? 'scrolled' : ''} style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'transparent' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '10px 20px', width: '100%', boxSizing: 'border-box', flexDirection: 'row' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '280px', flexShrink: 0 }}>
+                <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <p style={{ margin: '5px 0 0 0', color: '#FEFAE4', fontFamily: '"Josefin Sans", sans-serif', fontSize: '0.95em', fontWeight: 'normal' }}>{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
+            </div>
+            <div className="nav-links" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '15px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                <a href="#about-us" onClick={(e) => handleNavClick(e, '#about-us')}>About Us</a>
+                <a href="#our-programs" onClick={(e) => handleNavClick(e, '#our-programs')}>Our Programs</a>
+                <a href="#our-team" onClick={(e) => handleNavClick(e, '#our-team')}>Our Team</a>
+                <a href="/blog">Blog</a>
+                <a href="#join-us" className="btn" onClick={(e) => handleNavClick(e, '#join-us')}>Join Now</a>
+            </div>
+        </div>
+      </header>
 
-      <CategoriesSection isIndonesian={isIndonesian} language={language} />
-      <BestSellersSection isIndonesian={isIndonesian} language={language} />
-      <OurProductsSection isIndonesian={isIndonesian} language={language} />
-      <MessageSection isIndonesian={isIndonesian} language={language} />
-      <Footer isIndonesian={isIndonesian} language={language} />
+      <section className="hero" style={{ marginTop: heroMarginTop }}>
+        <div className="container hero-content-container">
+            <div className="hero-content">
+                <h1 style={{ whiteSpace: 'pre-line' }}>{config.heroTitle}</h1>
+                <p>{config.heroSubtitle}</p>
+            </div>
+        </div>
+        <div className="hero-image">
+            <img src={config.heroImage} alt="Kartika Engineers" />
+        </div>
+      </section>
 
-      {/* AI Search Optimized Content */}
-      <AISearchOptimizedContent isIndonesian={isIndonesian} />
+      <section className="about-us" id="about-us">
+        <div className="container about-us-content-container">
+            <div className="about-us-content">
+                <h1>About Us</h1>
+                <p style={{ whiteSpace: 'pre-line' }}>{config.aboutText}</p>
+            </div>
+            <div className="about-us-image">
+                <img src={config.aboutImage} alt="Kartika.id Team" />
+            </div>
+        </div>
+      </section>
 
-      {/* AI Search Features */}
-      <AISearchFeatures isIndonesian={isIndonesian} />
+      <section className="our-missions-section" id="our-missions">
+        <div className="container our-missions-content-container">
+            <div className="our-missions-header">
+                <h1>{config.missionsHeading || 'Our Missions'}</h1>
+            </div>
+            <div className="our-missions-main-content">
+                <div className="missions-nav">
+                    {config.missions.map(m => (
+                        <button key={m.id} className={`mission-btn ${missionType === m.id ? 'active' : ''}`} onClick={() => setMissionType(m.id)}>{m.title}</button>
+                    ))}
+                </div>
+                <div className="missions-content-display">
+                    {config.missions.map(m => (
+                        <div key={m.id} id={m.id} className={`mission-text-content ${missionType === m.id ? 'active' : ''}`}>
+                            <p style={{ whiteSpace: 'pre-line' }}>{m.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="about-us" id="our-programs">
+        <div className="container about-us-content-container">
+            <div className="about-us-content">
+                <h1>{config.programsHeading || 'Our Programs'}</h1>
+                <div className="programs-grid">
+                    {config.programs.map((p, i) => {
+                        const icons = ['fa-share-alt', 'fa-handshake', 'fa-network-wired'];
+                        return (
+                            <div key={p.id} className={`program-item ${activeProgram === p.id ? 'active' : ''}`} id={p.id}>
+                                <div className="program-icon">
+                                    <i className={`fas ${icons[i % icons.length]}`}></i>
+                                </div>
+                                <h3>{p.title}</h3>
+                                <p className="subtitle">{p.subtitle}</p>
+                                <p style={{ whiteSpace: 'pre-line' }}>{p.desc}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="first-generation-section" id="first-generation">
+        <div className="container first-generation-content-container">
+            <h1 className="section-title">{config.statsGroupTitle || 'Kartika.id First Generation'}</h1>
+            <div className="impact-metrics-grid">
+                <div className="metric-item">
+                    <span className="metric-number">{config.stats.events}</span>
+                    <p className="metric-description">{config.stats.eventsLabel || 'Events (Kartishare, Kartinection and Kartiship)'}</p>
+                </div>
+                <div className="metric-item">
+                    <span className="metric-number">{config.stats.students}</span>
+                    <p className="metric-description">{config.stats.studentsLabel || 'Female Engineering Students Involved'}</p>
+                </div>
+                <div className="metric-item">
+                    <span className="metric-number">{config.stats.satisfaction}</span>
+                    <p className="metric-description">{config.stats.satisfactionLabel || 'Overall Satisfaction'}</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="our-partners-section" id="our-partners">
+        <div className="container our-partners-content-container">
+            <h1 className="section-title">{config.partnersHeading || 'Our Past Partners'}</h1>
+            <div className="partners-grid">
+                {(config.partners || [
+                    { id: 'p1', logo: '/images/unilever-logo.png', alt: 'Unilever Logo', description: 'Kartishare x Inspiring Unileader' },
+                    { id: 'p2', logo: '/images/SWE-JKT-Logo.png', alt: 'SWE Jakarta Logo', description: 'Kartishare x Society of Women Engineers' },
+                    { id: 'p3', logo: '/images/aapg-logo.png', alt: 'AAPG Logo', description: 'Kartishare with AAPG Indonesia' },
+                ]).map(partner => (
+                    <div key={partner.id} className="partner-item">
+                        <img src={partner.logo} alt={partner.alt} className="partner-logo" />
+                        <p className="partner-description">{partner.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </section>
+
+      <section className="our-speakers-section" id="our-speakers">
+        <div className="container our-speakers-content-container">
+            <h1 className="section-title" style={{ whiteSpace: 'pre-line' }}>{config.speakersTitle || 'Our Speakers\nKartika.id First Generation'}</h1>
+            <div className="speaker-image-wrapper">
+                <img src={config.speakersImage} alt="Kartika.id First Generation Speakers" className="speaker-image" />
+            </div>
+        </div>
+      </section>
+
+      <section className="about-us" id="our-team">
+        <div className="container about-us-content-container">
+            <div className="about-us-content">
+                <h1>Our Team</h1>
+                <div className="team-nav">
+                    <button className={`team-btn ${teamType === 'coreteam' ? 'active' : ''}`} onClick={() => setTeamType('coreteam')}>Coreteam <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                    <button className={`team-btn ${teamType === 'mentors' ? 'active' : ''}`} onClick={() => setTeamType('mentors')}>Mentors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                    <button className={`team-btn ${teamType === 'members' ? 'active' : ''}`} onClick={() => setTeamType('members')}>Members <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                </div>
+                <div className="team-gallery-container">
+                    <div id="coreteam-gallery" className={`team-gallery ${teamType === 'coreteam' ? 'active' : ''}`}>
+                        <div className="team-member">
+                            <img src={config.coreteamImage} alt="Kartika.id Core Team" />
+                        </div>
+                    </div>
+                    <div id="mentors-gallery" className={`team-gallery ${teamType === 'mentors' ? 'active' : ''}`}>
+                        <div className="team-member">
+                            <img src={config.mentorsImage} alt="Kartika.id Mentors" />
+                        </div>
+                    </div>
+                    <div id="members-gallery" className={`team-gallery ${teamType === 'members' ? 'active' : ''}`}>
+                        <div className="team-member">
+                            <img src={config.membersImage} alt="Kartika.id Members" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="about-us" id="testimonials">
+        <div className="container about-us-content-container">
+            <div className="about-us-content">
+                <h1>{config.testimonialsHeading || 'What they say about us'}</h1>
+            </div>
+        </div>
+        <div className="testimonials-carousel-wrapper">
+            <div className="testimonials-carousel" ref={carouselRef}>
+                {config.testimonials.map((t) => (
+                    <div key={t.id} className="testimonial-card">
+                        <div className="testimonial-content">
+                            <div className="testimonial-text-content">
+                                <p className={checkLongText(t.text)}>{`"${t.text}"`}</p>
+                                <div className="testimonial-author">
+                                    <img 
+                                        src={`/images/testi-${t.name.split(' ')[0].toLowerCase().replace('.', '')}.png`} 
+                                        alt={t.name} 
+                                        className="testimonial-image" 
+                                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} 
+                                    />
+                                    <p><strong>{t.name}</strong> | {t.role}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+                {/* Duplicated for smooth scrolling loop */}
+                {config.testimonials.map((t) => (
+                    <div key={t.id + '-dup'} className="testimonial-card">
+                        <div className="testimonial-content">
+                            <div className="testimonial-text-content">
+                                <p className={checkLongText(t.text)}>{`"${t.text}"`}</p>
+                                <div className="testimonial-author">
+                                    <img 
+                                        src={`/images/testi-${t.name.split(' ')[0].toLowerCase().replace('.', '')}.png`} 
+                                        alt={t.name} 
+                                        className="testimonial-image" 
+                                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} 
+                                    />
+                                    <p><strong>{t.name}</strong> | {t.role}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+        <div className="gradient-overlay left"></div>
+        <div className="gradient-overlay right"></div>
+      </section>
+      
+      <section className="poster-section">
+        <div className="poster-content-container">
+            <div className="poster-left">
+                <a href={config.posterLink} target="_blank" rel="noreferrer">
+                    <img src={config.posterLeftImage} alt="Poster Left" />
+                </a>
+            </div>
+            <div className="poster-right">
+                <a href={config.posterLink} target="_blank" rel="noreferrer">
+                    <img src={config.posterRightImage} alt="Poster Content Right" />
+                </a>
+            </div>
+        </div>
+      </section>
+      <section className="join-us-section" id="join-us" style={{ position: 'relative', zIndex: 1000 }}>
+        <div className="container join-us-content-container">
+            <div className="join-us-image-wrapper">
+                <img src="/images/Frame 8.webp" alt="Join With Us" />
+                <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
+            </div>
+        </div>
+      </section>
+
+      <footer style={{ position: 'relative', zIndex: 1000 }}>
+        <div className="container">
+            <div className="footer-content">
+                <div className="footer-section">
+                    <h3>{config.footerConnectTitle || 'Connect With Us'}</h3>
+                    <div className="footer-links-row">
+                        {config.instagramLink && <a href={config.instagramLink} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i> Instagram</a>}
+                        {config.linkedinLink && <a href={config.linkedinLink} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i> LinkedIn</a>}
+                        {config.emailAddress && <a href={`mailto:${config.emailAddress}`}><i className="fas fa-envelope"></i> Email: {config.emailAddress}</a>}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

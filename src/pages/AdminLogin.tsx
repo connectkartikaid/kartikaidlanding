@@ -24,35 +24,50 @@ const AdminLogin: React.FC = () => {
         setIsLoading(true)
         setError(null)
 
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            })
+        // Simulate a brief loading state for UX
+        await new Promise((resolve) => setTimeout(resolve, 600))
 
-            const data = await response.json()
+        // Hardcoded credentials for Kartika super admin
+        const VALID_USERNAME = 'kartikaadmin'
+        const VALID_PASSWORD = 'adminkartikaid354'
 
-            if (response.ok && data.success) {
-                setAdminSession(data.token)
-                navigate('/admin/dashboard')
-            } else {
-                setError(data.error || 'Login failed. Please check your credentials.')
+        let role = ''
+        let authenticated = false
+
+        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+            authenticated = true
+            role = 'Super Admin'
+        } else {
+            // Check dynamically created admins
+            try {
+                const usersJson = localStorage.getItem('kartika_admins')
+                if (usersJson) {
+                    const users = JSON.parse(usersJson)
+                    const user = users.find((u: any) => u.username === username && u.password === password)
+                    if (user) {
+                        authenticated = true
+                        role = user.role
+                    }
+                }
+            } catch (e) {
+                console.error(e)
             }
-        } catch (err) {
-            setError('An error occurred. Please try again later.')
-            console.error('Login error:', err)
-        } finally {
-            setIsLoading(false)
         }
+
+        if (authenticated) {
+            setAdminSession('kartika-admin-token-' + Date.now(), role)
+            navigate('/admin/dashboard')
+        } else {
+            setError('Username atau password salah. Silakan coba lagi.')
+        }
+
+        setIsLoading(false)
     }
 
     return (
         <div className="admin-login-page">
             <Helmet>
-                <title>Admin Login | Mangala Living</title>
+                <title>Admin Login | Kartika.id</title>
                 <meta name="robots" content="noindex, nofollow" />
             </Helmet>
 
@@ -60,7 +75,7 @@ const AdminLogin: React.FC = () => {
                 <div className="admin-login-card">
                     <div className="admin-login-header">
                         <div className="admin-logo">
-                            <h1>MANGALA</h1>
+                            <h1>KARTIKA</h1>
                             <p>ADMIN PANEL</p>
                         </div>
                         <h2>Welcome Back</h2>
@@ -83,7 +98,7 @@ const AdminLogin: React.FC = () => {
                                     id="username"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
-                                    placeholder="rioanggara"
+                                    placeholder="kartikaadmin"
                                     required
                                     autoComplete="username"
                                 />
@@ -126,7 +141,7 @@ const AdminLogin: React.FC = () => {
                     </form>
 
                     <div className="admin-login-footer">
-                        <p>&copy; {new Date().getFullYear()} Mangala Living. All rights reserved.</p>
+                        <p>&copy; {new Date().getFullYear()} Kartika.id. All rights reserved.</p>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ import './App.css'
 // Critical components loaded immediately - NO LAZY LOADING for Home
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import WhatsAppButton from './components/WhatsAppButton'
+
 import SingaporeLanguageModal from './components/SingaporeLanguageModal'
 import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -29,6 +29,8 @@ const Partnership = lazy(() => import('./pages/Partnership'))
 const SearchResults = lazy(() => import('./pages/SearchResults'))
 const BestSellers = lazy(() => import('./pages/BestSellers'))
 const Blog = lazy(() => import('./pages/Blog'))
+const KartikaBlog = lazy(() => import('./pages/KartikaBlog'))
+const KartikaBlogPost = lazy(() => import('./pages/KartikaBlogPost'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
 const TermsOfService = lazy(() => import('./pages/TermsOfService'))
 const ShippingInformation = lazy(() => import('./pages/ShippingInformation'))
@@ -38,8 +40,10 @@ const ImageLicense = lazy(() => import('./pages/ImageLicense'))
 const AdminLogin = lazy(() => import('./pages/AdminLogin'))
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
 const AdminBlogManager = lazy(() => import('./pages/AdminBlogManager'))
+const AdminManagement = lazy(() => import('./pages/AdminManagement'))
+const LandingPageEditor = lazy(() => import('./pages/LandingPageEditor.tsx'))
 
-// SEO Landing Pages - Keyword Celah (Anti-Marketplace Strategy)
+// Anti-Marketplace Strategy
 const FurnitureBesiCustomBekasi = lazy(() => import('./pages/FurnitureBesiCustomBekasi'))
 // const WorkshopFurnitureBesiBekasi = lazy(() => import('./pages/WorkshopFurnitureBesiBekasi'))
 // const BikinMejaBesiCafeCustom = lazy(() => import('./pages/BikinMejaBesiCafeCustom'))
@@ -145,6 +149,7 @@ function App() {
         <Routes>
           {/* Home - Load immediately (no suspense) */}
           <Route path="/" element={<Home />} />
+          <Route path="/sandbox" element={<Home />} />
           <Route path="/id" element={<Home />} />
           <Route path="/eng" element={<Home />} />
           <Route path="/ar" element={<Home />} />
@@ -212,10 +217,25 @@ function App() {
           } />
           <Route path="/blog" element={
             <Suspense fallback={<Loading />}>
+              <KartikaBlog />
+            </Suspense>
+          } />
+          <Route path="/mangala-blog" element={
+            <Suspense fallback={<Loading />}>
               <Blog />
             </Suspense>
           } />
           <Route path="/blog/:slug" element={
+            <Suspense fallback={<Loading />}>
+              <KartikaBlogPost />
+            </Suspense>
+          } />
+          <Route path="/sandbox/blog/:slug" element={
+            <Suspense fallback={<Loading />}>
+              <KartikaBlogPost />
+            </Suspense>
+          } />
+          <Route path="/mangala-blog/:slug" element={
             <Suspense fallback={<Loading />}>
               <BlogPost />
             </Suspense>
@@ -378,6 +398,20 @@ function App() {
               </Suspense>
             </ProtectedRoute>
           } />
+          <Route path="/admin/users" element={
+            <ProtectedRoute>
+              <Suspense fallback={<Loading />}>
+                <AdminManagement />
+              </Suspense>
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/landing-editor" element={
+            <ProtectedRoute>
+              <Suspense fallback={<Loading />}>
+                <LandingPageEditor />
+              </Suspense>
+            </ProtectedRoute>
+          } />
           <Route path="/admin/blog/new" element={
             <ProtectedRoute>
               <Suspense fallback={<Loading />}>
@@ -417,7 +451,6 @@ function App() {
           {/* 404 - Catch all unmatched routes */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <WhatsAppButton />
         <Analytics />
         <SpeedInsights />
       </Router>

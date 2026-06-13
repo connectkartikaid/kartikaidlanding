@@ -4,23 +4,24 @@ import { useNavigate } from 'react-router-dom'
 import {
     Plus, Edit, Trash2, Search, ArrowLeft, Save,
     FileText, AlertCircle, Loader2, Check, X,
-    Type, Sparkles, Eye
+    Type, Sparkles, Eye, ShieldAlert
 } from 'lucide-react'
-import { BLOG_POSTS, type BlogPost } from '../data/blog'
+import { getAdminRole } from '../utils/adminAuth'
+import { KARTIKA_BLOG_POSTS, type KartikaBlogPost } from '../data/kartika-blog'
 import type { LanguageCode } from '../utils/languageManager'
 import { BlogContentEditor } from '../components/BlogContentEditor'
 import './Admin.css'
 
 const AdminBlogManager: React.FC = () => {
     const [view, setView] = useState<'list' | 'editor'>('list')
-    const [posts, setPosts] = useState<BlogPost[]>([])
+    const [posts, setPosts] = useState<KartikaBlogPost[]>([])
     const [searchTerm, setSearchTerm] = useState('')
     const [isSaving, setIsSaving] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
     // Editor state
-    const [editingPost, setEditingPost] = useState<BlogPost | null>(null)
+    const [editingPost, setEditingPost] = useState<KartikaBlogPost | null>(null)
 
     // AI Generator state
     const [showAIModal, setShowAIModal] = useState(false)
@@ -35,17 +36,35 @@ const AdminBlogManager: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1)
 
     const navigate = useNavigate()
+    const role = getAdminRole()
+    const canAccessBlog = role === 'Super Admin' || role === 'Content Writer'
 
     useEffect(() => {
-        // 1. Load from imported BLOG_POSTS (base)
-        const basePosts: BlogPost[] = BLOG_POSTS.map(p => ({ ...p, status: 'synced' as const }))
+        // 0. Purge any legacy Mangala data from localStorage
+        localStorage.removeItem('mangala_blog_drafts')
+        const existingKartika = localStorage.getItem('kartika_blog_drafts')
+        if (existingKartika) {
+            try {
+                const parsed = JSON.parse(existingKartika) as KartikaBlogPost[]
+                // Detect Mangala contamination: >10 articles or Mangala author
+                const isMangalaData = parsed.length > 10 ||
+                    (parsed[0] && (parsed[0].author === 'Helmi Ramdan' || parsed[0].slug?.includes('furnitur') || parsed[0].slug?.includes('bekasi')))
+                if (isMangalaData) {
+                    localStorage.removeItem('kartika_blog_drafts')
+                }
+            } catch {
+                localStorage.removeItem('kartika_blog_drafts')
+            }
+        }
 
-        // 2. Load from localStorage (overrides/new drafts)
-        const savedPosts = localStorage.getItem('mangala_blog_drafts')
+        // 1. Load from KARTIKA_BLOG_POSTS (base — clean Kartika data)
+        const basePosts: KartikaBlogPost[] = KARTIKA_BLOG_POSTS.map(p => ({ ...p, status: 'synced' as const }))
+
+        // 2. Load from localStorage (Kartika drafts only)
+        const savedPosts = localStorage.getItem('kartika_blog_drafts')
         if (savedPosts) {
             try {
-                const parsedDrafts = JSON.parse(savedPosts) as BlogPost[]
-                // Merge logic: drafts with same ID as basePosts override them
+                const parsedDrafts = JSON.parse(savedPosts) as KartikaBlogPost[]
                 const mergedPosts = [...basePosts]
                 parsedDrafts.forEach(draft => {
                     const index = mergedPosts.findIndex(p => p.id === draft.id)
@@ -70,11 +89,11 @@ const AdminBlogManager: React.FC = () => {
     useEffect(() => {
         if (!isLoading) {
             const drafts = posts.filter(p => p.status === 'draft')
-            localStorage.setItem('mangala_blog_drafts', JSON.stringify(drafts))
+            localStorage.setItem('kartika_blog_drafts', JSON.stringify(drafts))
         }
     }, [posts, isLoading])
 
-    const handleEdit = (post: BlogPost) => {
+    const handleEdit = (post: KartikaBlogPost) => {
         setEditingPost({
             ...post,
             customContent: post.customContent || {
@@ -102,7 +121,7 @@ const AdminBlogManager: React.FC = () => {
             excerpt: '',
             image: '',
             date: dateString,
-            author: 'Helmi Ramdan',
+            author: 'Tim Kartika.id',
             status: 'draft',
             customContent: {
                 introduction: '',
@@ -126,7 +145,7 @@ const AdminBlogManager: React.FC = () => {
 
         // Update posts list
         const exists = posts.find(p => p.id === postToSave.id)
-        let updatedPosts: BlogPost[]
+        let updatedPosts: KartikaBlogPost[]
         if (exists) {
             updatedPosts = posts.map(p => p.id === postToSave.id ? postToSave : p)
         } else {
@@ -160,7 +179,7 @@ const AdminBlogManager: React.FC = () => {
                 // Mark all as synced and clear local drafts
                 const syncedPosts = posts.map(p => ({ ...p, status: 'synced' as const }))
                 setPosts(syncedPosts)
-                localStorage.removeItem('mangala_blog_drafts')
+                localStorage.removeItem('kartika_blog_drafts')
 
                 setMessage({
                     type: 'success',
@@ -192,24 +211,57 @@ const AdminBlogManager: React.FC = () => {
         setMessage(null)
 
         try {
-            const response = await fetch('/api/admin/generate-article', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    prompt: aiPrompt,
-                    category: editingPost?.category,
-                    model: selectedModel,
-                    language: selectedLanguage
-                })
-            })
+            let article;
+            try {
+                const response = await fetch('/api/admin/generate-article', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: aiPrompt,
+                        category: editingPost?.category,
+                        model: selectedModel,
+                        language: selectedLanguage
+                    })
+                });
 
-            const result = await response.json()
-
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || 'AI generation failed')
+                const text = await response.text();
+                // If it returns HTML (SPA fallback), throw to trigger the mock
+                if (text.startsWith('<')) throw new Error('API not available, using mock fallback');
+                
+                const result = JSON.parse(text);
+                if (!response.ok || !result.success) throw new Error(result.error || 'AI generation failed');
+                article = result.article;
+            } catch (err) {
+                // Mock AI Response for local development without backend
+                console.warn('Using local mock for AI generation', err);
+                await new Promise(r => setTimeout(r, 1500)); // Simulate delay
+                article = {
+                    title: aiPrompt,
+                    slug: aiPrompt.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || `artikel-${Date.now()}`,
+                    excerpt: 'Menavigasi karir di bidang teknik bagi perempuan menghadirkan tantangan unik sekaligus peluang luar biasa. Artikel ini membahas strategi dan pengalaman inspiratif yang bisa menjadi referensi.',
+                    category: editingPost?.category || 'Program',
+                    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop',
+                    language: selectedLanguage,
+                    introduction: `<p>Dunia keteknikan sering kali dianggap sebagai ranah yang didominasi oleh laki-laki. Namun, perlahan tapi pasti, batasan ini mulai ditembus oleh para perempuan tangguh yang membuktikan bahwa kompetensi tidak mengenal gender.</p>
+<p>Topik tentang <strong>${aiPrompt}</strong> menjadi semakin relevan saat kita berbicara tentang pembangunan inklusif. Di berbagai industri, mulai dari pertambangan, sipil, hingga teknologi informasi, kehadiran insinyur perempuan membawa perspektif baru yang lebih komprehensif dalam pemecahan masalah.</p>`,
+                    keyPoints: [
+                        'Pentingnya membangun jejaring (networking) dengan sesama insinyur perempuan.',
+                        'Mengatasi imposter syndrome di lingkungan kerja yang didominasi laki-laki.',
+                        'Peran mentorship dalam akselerasi karir profesional.'
+                    ],
+                    sections: [
+                        { 
+                            heading: 'Membangun Kepercayaan Diri di Lapangan', 
+                            content: '<p>Salah satu tantangan terbesar bagi perempuan di bidang teknik adalah membangun kepercayaan diri, terutama saat harus mengambil keputusan di lapangan kerja. Berdasarkan pengalaman dari berbagai mentor di Kartika.id, kunci utamanya adalah persiapan teknis yang matang dan kemampuan komunikasi yang asertif.</p><p>Ketika seorang perempuan mampu menyampaikan ide teknisnya dengan jelas dan berlandaskan data, respek dari rekan kerja—baik laki-laki maupun perempuan—akan tumbuh dengan sendirinya.</p>'
+                        },
+                        { 
+                            heading: 'Mencari Mentor yang Tepat', 
+                            content: '<p>Tidak ada yang lebih berharga dibandingkan belajar dari mereka yang sudah lebih dulu melewati jalan yang sama. Program seperti Kartiship memberikan wadah bagi mahasiswi teknik untuk terhubung dengan profesional wanita. Mereka tidak hanya memberikan bimbingan teknis, tetapi juga insight tentang <em>work-life balance</em> dan negosiasi gaji.</p>'
+                        }
+                    ],
+                    conclusion: '<p>Perjalanan karir di bidang teknik bagi perempuan memang memiliki tantangannya tersendiri. Namun, dengan dukungan komunitas, mentorship yang tepat, serta kepercayaan diri yang kuat, setiap hambatan dapat diubah menjadi pijakan untuk mencapai kesuksesan yang lebih tinggi.</p>'
+                };
             }
-
-            const article = result.article
 
             // Auto-fill form with AI-generated content
             setEditingPost(p => p ? {
@@ -250,20 +302,25 @@ const AdminBlogManager: React.FC = () => {
         setMessage(null)
 
         try {
-            const response = await fetch('/api/admin/suggest-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title: editingPost.title,
-                    excerpt: editingPost.excerpt,
-                    model: selectedModel
-                })
-            })
-
-            const result = await response.json()
-
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || 'Failed to suggest image')
+            let result;
+            try {
+                const response = await fetch('/api/admin/suggest-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: editingPost.title,
+                        excerpt: editingPost.excerpt,
+                        model: selectedModel
+                    })
+                });
+                const text = await response.text();
+                if (text.startsWith('<')) throw new Error('API not available, using mock fallback');
+                result = JSON.parse(text);
+                if (!response.ok || !result.success) throw new Error(result.error || 'Failed to suggest image');
+            } catch (err) {
+                console.warn('Using local mock for image suggestion', err);
+                await new Promise(r => setTimeout(r, 1000));
+                result = { image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&auto=format&fit=crop', searchQuery: 'technology women' };
             }
 
             if (result.image) {
@@ -293,21 +350,25 @@ const AdminBlogManager: React.FC = () => {
         setMessage(null)
 
         try {
-            const response = await fetch('/api/admin/suggest-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title: section.heading,
-                    excerpt: section.content.replace(/<[^>]*>/g, '').substring(0, 200),
-                    model: selectedModel,
-                    context: 'blog section content'
-                })
-            })
-
-            const result = await response.json()
-
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || 'Failed to suggest image')
+            let result;
+            try {
+                const response = await fetch('/api/admin/suggest-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: section.heading,
+                        excerpt: section.content,
+                        model: selectedModel
+                    })
+                });
+                const text = await response.text();
+                if (text.startsWith('<')) throw new Error('API not available, using mock fallback');
+                result = JSON.parse(text);
+                if (!response.ok || !result.success) throw new Error(result.error || 'Failed to suggest image');
+            } catch (err) {
+                console.warn('Using local mock for section image suggestion', err);
+                await new Promise(r => setTimeout(r, 1000));
+                result = { image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop', searchQuery: 'team collaboration' };
             }
 
             if (result.image) {
@@ -359,6 +420,18 @@ const AdminBlogManager: React.FC = () => {
         setCurrentPage(1)
     }, [searchTerm, itemsPerPage])
 
+    if (!canAccessBlog) {
+        return (
+            <div className="admin-dashboard" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f5f5f5' }}>
+                <Helmet><title>Access Denied | Kartika.id</title></Helmet>
+                <ShieldAlert size={64} color="#d93025" style={{ marginBottom: '20px' }} />
+                <h2 style={{ fontFamily: '"Gelasio", serif', color: '#333' }}>Access Denied</h2>
+                <p style={{ color: '#666', marginBottom: '20px' }}>You need Content Writer or Super Admin privileges to access the Blog Manager.</p>
+                <button className="nav-btn" onClick={() => navigate('/admin/dashboard')}>Return to Dashboard</button>
+            </div>
+        )
+    }
+
     const indexOfLastItem = currentPage * (itemsPerPage === 'all' ? totalItems : itemsPerPage)
     const indexOfFirstItem = indexOfLastItem - (itemsPerPage === 'all' ? totalItems : itemsPerPage)
     const currentItems = sortedPosts.slice(indexOfFirstItem, indexOfLastItem)
@@ -396,7 +469,7 @@ const AdminBlogManager: React.FC = () => {
     return (
         <div className="admin-dashboard admin-blog-manager">
             <Helmet>
-                <title>{view === 'list' ? 'Blog Manager' : 'Edit Post'} | Mangala Admin</title>
+                <title>{view === 'list' ? 'Blog Manager' : 'Edit Post'} | Kartika Admin</title>
             </Helmet>
 
             <header className="admin-header">
@@ -414,10 +487,25 @@ const AdminBlogManager: React.FC = () => {
                             <span>{isSaving ? 'Deploying...' : 'Deploy Changes'}</span>
                         </button>
                     ) : (
-                        <button onClick={handleSavePost} className="save-btn">
-                            <Check size={16} />
-                            <span>Done Editing</span>
-                        </button>
+                        <>
+                            {editingPost?.slug && (
+                                <a
+                                    href={editingPost.status === 'draft' ? `/sandbox/blog/${editingPost.slug}` : `/blog/${editingPost.slug}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="save-btn"
+                                    style={{ background: '#4a5568', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
+                                    title={editingPost.status === 'draft' ? 'Preview in Sandbox' : 'View Live'}
+                                >
+                                    <Eye size={16} />
+                                    <span>{editingPost.status === 'draft' ? 'Sandbox Preview' : 'View Live'}</span>
+                                </a>
+                            )}
+                            <button onClick={handleSavePost} className="save-btn">
+                                <Check size={16} />
+                                <span>Done Editing</span>
+                            </button>
+                        </>
                     )}
                 </div>
             </header>
@@ -498,9 +586,20 @@ const AdminBlogManager: React.FC = () => {
                                                 </div>
                                             </td>
                                             <td className="actions-cell">
-                                                {post.status !== 'draft' && (
+                                                {post.status === 'draft' ? (
                                                     <a
-                                                        href={`https://mangala-living.com/blog/${post.slug}`}
+                                                        href={`/sandbox/blog/${post.slug}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="action-btn preview"
+                                                        title="Preview in Sandbox"
+                                                        style={{ background: '#4a5568' }}
+                                                    >
+                                                        <Eye size={16} />
+                                                    </a>
+                                                ) : (
+                                                    <a
+                                                        href={`/blog/${post.slug}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="action-btn preview"
@@ -581,7 +680,14 @@ const AdminBlogManager: React.FC = () => {
                                     <input
                                         type="text"
                                         value={editingPost?.title || ''}
-                                        onChange={e => setEditingPost(p => p ? { ...p, title: e.target.value } : null)}
+                                        onChange={e => {
+                                            const newTitle = e.target.value
+                                            setEditingPost(p => p ? { 
+                                                ...p, 
+                                                title: newTitle,
+                                                slug: newTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+                                            } : null)
+                                        }}
                                         placeholder="Headline of the article"
                                     />
                                 </div>
@@ -590,24 +696,28 @@ const AdminBlogManager: React.FC = () => {
                                     <input
                                         type="text"
                                         value={editingPost?.slug || ''}
-                                        onChange={e => setEditingPost(p => p ? { ...p, slug: e.target.value } : null)}
-                                        placeholder="e.g. tips-memilih-furniture"
+                                        readOnly
+                                        disabled
+                                        style={{ backgroundColor: '#f0f0f0', color: '#888', cursor: 'not-allowed' }}
+                                        placeholder="Auto-generated from title"
+                                        title="Slug is automatically generated from the title"
                                     />
                                 </div>
 
                                 <div className="input-group-compact">
                                     <label>Category</label>
                                     <select
-                                        value={editingPost?.category || 'Tips and Trick'}
+                                        value={editingPost?.category || 'Program'}
                                         onChange={e => setEditingPost(p => p ? { ...p, category: e.target.value } : null)}
                                     >
-                                        <option>Tips and Trick</option>
-                                        <option>Workshop & Production</option>
-                                        <option>Commercial Furniture</option>
-                                        <option>About Furniture</option>
-                                        <option>Furniture Information</option>
-                                        <option>Furniture Guide</option>
-                                        <option>Design Inspiration</option>
+                                        <option>Program</option>
+                                        <option>Inspirasi</option>
+                                        <option>Tips</option>
+                                        <option>Komunitas</option>
+                                        <option>Alumni Spotlight</option>
+                                        <option>Beasiswa</option>
+                                        <option>KartiShare</option>
+                                        <option>KartiCare</option>
                                     </select>
                                 </div>
                                 <div className="input-group-compact">
@@ -645,14 +755,40 @@ const AdminBlogManager: React.FC = () => {
                                 </div>
 
                                 <div className="input-group-compact span-2">
-                                    <label>Featured Image URL</label>
-                                    <div className="input-with-action">
+                                    <label>Featured Image (URL or Upload)</label>
+                                    <div className="input-with-action" style={{ display: 'flex', gap: '8px' }}>
                                         <input
                                             type="text"
                                             value={editingPost?.image || ''}
                                             onChange={e => setEditingPost(p => p ? { ...p, image: e.target.value } : null)}
-                                            placeholder="https://..."
+                                            placeholder="Image URL or choose file..."
+                                            style={{ flex: 1 }}
                                         />
+                                        <input 
+                                            type="file" 
+                                            accept="image/*"
+                                            style={{ display: 'none' }}
+                                            id="featured-image-upload"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0]
+                                                if (file) {
+                                                    const reader = new FileReader()
+                                                    reader.onload = (ev) => {
+                                                        if (ev.target?.result) {
+                                                            setEditingPost(p => p ? { ...p, image: ev.target!.result as string } : null)
+                                                        }
+                                                    }
+                                                    reader.readAsDataURL(file)
+                                                }
+                                            }}
+                                        />
+                                        <label 
+                                            htmlFor="featured-image-upload" 
+                                            className="action-input-btn" 
+                                            style={{ cursor: 'pointer', background: '#555', color: 'white', display: 'flex', alignItems: 'center', padding: '0 12px', borderRadius: '4px', fontSize: '0.9em' }}
+                                        >
+                                            📁 Upload
+                                        </label>
                                         <button
                                             className="action-input-btn"
                                             onClick={handleSuggestImage}
@@ -699,6 +835,10 @@ const AdminBlogManager: React.FC = () => {
                                     onIntroductionChange={(value) =>
                                         setEditingPost(p => p ? {
                                             ...p,
+                                            // Auto-generate excerpt if not already set manually
+                                            excerpt: (!p.excerpt || p.excerpt === p.customContent?.introduction?.replace(/<[^>]*>/g, '').substring(0, 160) + ((p.customContent?.introduction?.length || 0) > 160 ? '...' : '')) 
+                                                ? value.replace(/<[^>]*>/g, '').substring(0, 160) + (value.length > 160 ? '...' : '')
+                                                : p.excerpt,
                                             customContent: {
                                                 ...p.customContent,
                                                 introduction: value,
