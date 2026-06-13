@@ -283,3 +283,8 @@ export const truncateMetaDescription = (description: string, minLength: number =
   }
   return truncated + '...'
 }
+
+// Alias used by Shop.tsx and ProductDetail.tsx
+export const getProductImageUrl = (imagePath: string, _slug?: string): string => {
+  return getImageUrl(imagePath)
+}
