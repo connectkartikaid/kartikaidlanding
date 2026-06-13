@@ -209,7 +209,18 @@ const generateAttachmentSitemap = (posts) => {
   const entries = []
   const now = new Date()
 
-        `      <image:caption>${post.title}</image:caption>`,
+  posts.forEach((post) => {
+    if (post.image) {
+      entries.push([
+        '  <url>',
+        `    <loc>${escapeXml(post.image)}</loc>`,
+        `    <lastmod>${formatDate(now)}</lastmod>`,
+        `    <changefreq>monthly</changefreq>`,
+        `    <priority>0.50</priority>`,
+        '    <image:image>',
+        `      <image:loc>${escapeXml(post.image)}</image:loc>`,
+        `      <image:title>${escapeXml(post.title)}</image:title>`,
+        `      <image:caption>${escapeXml(post.title)}</image:caption>`,
         '    </image:image>',
         '  </url>'
       ].join('\n'))
