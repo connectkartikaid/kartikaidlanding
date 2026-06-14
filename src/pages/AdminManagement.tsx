@@ -254,6 +254,7 @@ const AdminManagement: React.FC = () => {
                                 <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                     <strong>kartikaadmin</strong>
                                     <span style={{ fontSize: '0.75em', background: '#2D1B00', color: '#fff', padding: '2px 7px', borderRadius: '10px', marginLeft: '8px' }}>System Root</span>
+                                    <div style={{ fontSize: '12px', color: '#d93025', marginTop: '4px', fontFamily: 'monospace' }}>🔑 adminkartikaid354</div>
                                 </td>
                                 <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                     <RoleBadge role="Super Admin" />
@@ -267,6 +268,7 @@ const AdminManagement: React.FC = () => {
                                 <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                     <strong>adminkartika</strong>
                                     <span style={{ fontSize: '0.75em', background: '#2D1B00', color: '#fff', padding: '2px 7px', borderRadius: '10px', marginLeft: '8px' }}>System Root</span>
+                                    <div style={{ fontSize: '12px', color: '#d93025', marginTop: '4px', fontFamily: 'monospace' }}>🔑 kartikaempower</div>
                                 </td>
                                 <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                     <RoleBadge role="Super Admin" />
@@ -285,6 +287,7 @@ const AdminManagement: React.FC = () => {
                                     onMouseLeave={e => (e.currentTarget.style.background = '')}>
                                     <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                         <strong>{user.username}</strong>
+                                        <div style={{ fontSize: '12px', color: '#d93025', marginTop: '4px', fontFamily: 'monospace' }}>🔑 {user.password || '—'}</div>
                                     </td>
                                     <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
                                         <RoleBadge role={user.role} />
