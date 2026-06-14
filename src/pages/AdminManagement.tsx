@@ -135,7 +135,7 @@ const AdminManagement: React.FC = () => {
         setIsDeploying(true);
         setMessage({ type: 'success', text: 'Deploying admin changes to GitHub...' });
         try {
-            const res = await fetch('/api/admin/deploy', {
+            const res = await fetch('/.netlify/functions/admin-deploy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ source: 'admin_management', admins: users })

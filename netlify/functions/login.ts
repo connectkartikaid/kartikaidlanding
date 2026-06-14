@@ -16,9 +16,12 @@ const handler: Handler = async (event) => {
         }
 
         // Check against all admins stored in env, or fallback to single admin check
-        // The primary admin is rioanggara; other admins are managed via localStorage on the client side
+        // The primary admin is kartikaadmin; other admins are managed via Admin Dashboard
+        const customAdmins: any[] = [];
+        
         const validAdmins = [
-            { username: 'rioanggara', password: ADMIN_PASSWORD, role: 'Super Admin' }
+            { username: 'kartikaadmin', password: ADMIN_PASSWORD, role: 'Super Admin' },
+            ...customAdmins
         ];
 
         const admin = validAdmins.find(a => a.username === username && a.password === password);

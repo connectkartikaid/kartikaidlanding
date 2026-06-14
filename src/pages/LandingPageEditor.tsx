@@ -129,7 +129,7 @@ const LandingPageEditor: React.FC = () => {
         setMessage({ type: 'success', text: 'Deploying changes to GitHub...' });
         saveLandingDraft(config);
         try {
-            const res = await fetch('/api/admin/deploy', {
+            const res = await fetch('/.netlify/functions/admin-deploy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ source: 'landing_page', config })

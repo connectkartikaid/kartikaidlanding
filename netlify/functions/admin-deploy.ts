@@ -5,7 +5,7 @@ const handler: Handler = async (event) => {
         return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
-    const { posts, commitMessage = 'Update blog posts via Kartika admin' } = JSON.parse(event.body || '{}');
+    const { posts, config, admins, source, commitMessage = 'Update via Kartika admin' } = JSON.parse(event.body || '{}');
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const GITHUB_REPO = process.env.GITHUB_REPO || 'connectkartikaid/kartikaidlanding';
@@ -18,13 +18,12 @@ const handler: Handler = async (event) => {
         };
     }
 
-    if (!posts || !Array.isArray(posts)) {
-        return { statusCode: 400, body: JSON.stringify({ error: 'posts array is required' }) };
-    }
-
     try {
         const [owner, repo] = GITHUB_REPO.split('/');
-        const filePath = 'src/data/kartika-blog.ts';
+        
+        let filePath = 'src/data/kartika-blog.ts';
+        if (source === 'landing_page') filePath = 'src/data/landingConfig.ts';
+        if (source === 'admin_management') filePath = 'netlify/functions/login.ts';
 
         // Step 1: Get current file content and SHA
         const getFileResponse = await fetch(
@@ -38,27 +37,43 @@ const handler: Handler = async (event) => {
             }
         );
 
-        if (!getFileResponse.ok) {
+        let currentContent = '';
+        let sha: string | undefined = undefined;
+
+        if (getFileResponse.ok) {
+            const fileData = await getFileResponse.json();
+            currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+            sha = fileData.sha;
+        } else if (getFileResponse.status !== 404) {
             throw new Error(`Failed to fetch file from GitHub: ${getFileResponse.statusText}`);
         }
 
-        const fileData = await getFileResponse.json();
-        const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
-        const sha = fileData.sha;
+        let newContent = currentContent;
 
-        // Step 2: Generate new file content - replace the KARTIKA_BLOG_POSTS array
-        const newPostsJson = JSON.stringify(posts, null, 2);
-        let newContent = currentContent.replace(
-            /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)\[[\s\S]*?\](\s*;?)/,
-            `$1${newPostsJson}$2`
-        );
-
-        // Fallback: if regex didn't match, try simpler approach
-        if (newContent === currentContent) {
+        if (source === 'landing_page') {
+            const configJson = JSON.stringify(config, null, 2);
             newContent = currentContent.replace(
-                /export const KARTIKA_BLOG_POSTS[\s\S]*?= \[[\s\S]*?\];?/,
-                `export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = ${newPostsJson};`
+                /(export const defaultLandingConfig:\s*LandingConfig\s*=\s*)\{[\s\S]*?\}(\s*;?)/,
+                `$1${configJson}$2`
             );
+        } else if (source === 'admin_management') {
+            const adminsJson = JSON.stringify(admins, null, 2);
+            newContent = currentContent.replace(
+                /(const customAdmins:\s*any\[\]\s*=\s*)\[[\s\S]*?\](\s*;)/,
+                `$1${adminsJson}$2`
+            );
+        } else {
+            const newPostsJson = JSON.stringify(posts, null, 2);
+            newContent = currentContent.replace(
+                /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)\[[\s\S]*?\](\s*;?)/,
+                `$1${newPostsJson}$2`
+            );
+            if (newContent === currentContent) {
+                newContent = currentContent.replace(
+                    /export const KARTIKA_BLOG_POSTS[\s\S]*?= \[[\s\S]*?\];?/,
+                    `export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = ${newPostsJson};`
+                );
+            }
         }
 
         if (newContent === currentContent) {
