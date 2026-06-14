@@ -59,6 +59,65 @@ body.kartika-home-active::before {
     padding: 5px 0;
 }
 
+.kartika-home .kartika-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: transparent;
+    transition: background 0.3s ease;
+}
+
+.kartika-home .kartika-header.scrolled {
+    background: rgba(45, 27, 0, 0.95);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.kartika-home .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-direction: row;
+}
+
+.kartika-home .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.kartika-home .header-logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.kartika-home .header-logo-text {
+    margin: 5px 0 0 0;
+    color: #FEFAE4;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 0.95em;
+    font-weight: normal;
+}
+
+.kartika-home .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #FEFAE4;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
 /* Fix about-us section getting wrong container sizing */
 .kartika-home .about-us-content-container {
     max-width: 1200px;
@@ -113,6 +172,7 @@ body.kartika-home-active::before {
     gap: 15px !important;
     order: 2 !important;
     float: none !important;
+    transition: all 0.3s ease;
 }
 
 /* Hide Mangala's global WhatsApp button on Kartika page */
@@ -165,5 +225,36 @@ body.kartika-home-active .whatsapp-container {
 @media (max-width: 768px) {
     .kartika-home .container {
         padding: 0 15px;
+    }
+
+    .kartika-home .mobile-menu-btn {
+        display: block;
+    }
+    
+    .kartika-home .logo-container {
+        width: 180px;
+    }
+    
+    .kartika-home .header-logo-text {
+        font-size: 0.8em;
+    }
+
+    .kartika-home .nav-links {
+        display: none !important;
+    }
+
+    .kartika-home .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #2D1B00 !important;
+        padding: 20px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        align-items: center !important;
+        gap: 20px !important;
     }
 }

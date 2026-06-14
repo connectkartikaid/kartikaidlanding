@@ -9,6 +9,7 @@ const Home = () => {
     const [teamType, setTeamType] = useState('coreteam');
     const [activeProgram, setActiveProgram] = useState('kartishare');
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [heroMarginTop, setHeroMarginTop] = useState('0px');
     const carouselRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef<number>(0);
@@ -152,18 +153,23 @@ const Home = () => {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Helmet>
 
-            <header ref={headerRef} className={isScrolled ? 'scrolled' : ''} style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'transparent' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '10px 20px', width: '100%', boxSizing: 'border-box', flexDirection: 'row' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '280px', flexShrink: 0 }}>
-                        <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                        <p style={{ margin: '5px 0 0 0', color: '#FEFAE4', fontFamily: '"Josefin Sans", sans-serif', fontSize: '0.95em', fontWeight: 'normal' }}>{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
+            <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}>
+                <div className="header-inner">
+                    <div className="logo-container">
+                        <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
+                        <p className="header-logo-text">{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
                     </div>
-                    <div className="nav-links" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '15px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                        <a href="#about-us" onClick={(e) => handleNavClick(e, '#about-us')}>About Us</a>
-                        <a href="#our-programs" onClick={(e) => handleNavClick(e, '#our-programs')}>Our Programs</a>
-                        <a href="#our-team" onClick={(e) => handleNavClick(e, '#our-team')}>Our Team</a>
-                        <a href="/blog">Blog</a>
-                        <a href="#join-us" className="btn" onClick={(e) => handleNavClick(e, '#join-us')}>Join Now</a>
+                    
+                    <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                        <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                    </button>
+
+                    <div className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                        <a href="#about-us" onClick={(e) => { handleNavClick(e, '#about-us'); setIsMobileMenuOpen(false); }}>About Us</a>
+                        <a href="#our-programs" onClick={(e) => { handleNavClick(e, '#our-programs'); setIsMobileMenuOpen(false); }}>Our Programs</a>
+                        <a href="#our-team" onClick={(e) => { handleNavClick(e, '#our-team'); setIsMobileMenuOpen(false); }}>Our Team</a>
+                        <a href="/blog" onClick={() => setIsMobileMenuOpen(false)}>Blog</a>
+                        <a href="#join-us" className="btn" onClick={(e) => { handleNavClick(e, '#join-us'); setIsMobileMenuOpen(false); }}>Join Now</a>
                     </div>
                 </div>
             </header>
