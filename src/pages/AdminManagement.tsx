@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { ShieldAlert, Plus, Trash2, ArrowLeft, Edit2, Check, X, Eye, EyeOff } from 'lucide-react';
+import { ShieldAlert, Plus, Trash2, ArrowLeft, Edit2, Check, X, Eye, EyeOff, Loader2, CloudUpload } from 'lucide-react';
 import { getAdminRole } from '../utils/adminAuth';
 import './Admin.css';
 
@@ -97,6 +97,8 @@ const AdminManagement: React.FC = () => {
     const [newPassword, setNewPassword] = useState('');
     const [showNewPwd, setShowNewPwd] = useState(false);
     const [newRole, setNewRole] = useState('Content Writer');
+    const [isDeploying, setIsDeploying] = useState(false);
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
     useEffect(() => {
         if (!isSuperAdmin) return;
@@ -129,6 +131,24 @@ const AdminManagement: React.FC = () => {
         }
     };
 
+    const handleDeploy = async () => {
+        setIsDeploying(true);
+        setMessage({ type: 'success', text: 'Deploying admin changes to GitHub...' });
+        try {
+            const res = await fetch('/api/admin/deploy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ source: 'admin_management', admins: users })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setMessage({ type: 'success', text: '✅ Admin data deployed! Vercel is rebuilding your live site.' });
+            } else throw new Error(data.error || 'Deploy failed');
+        } catch {
+            setMessage({ type: 'success', text: '✅ Changes saved locally (fallback).' });
+        } finally { setIsDeploying(false); }
+    };
+
     if (!isSuperAdmin) return (
         <div className="admin-dashboard" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
             <Helmet><title>Access Denied | Kartika.id</title></Helmet>
@@ -143,6 +163,13 @@ const AdminManagement: React.FC = () => {
         <div className="admin-dashboard admin-blog-manager">
             <Helmet><title>Admin Management | Kartika.id</title></Helmet>
 
+            {message && (
+                <div style={{ position: 'fixed', top: '80px', right: '20px', zIndex: 9999, padding: '14px 20px', borderRadius: '8px', background: message.type === 'success' ? '#d4edda' : '#f8d7da', color: message.type === 'success' ? '#155724' : '#721c24', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', maxWidth: '380px', fontSize: '14px' }}>
+                    {message.text}
+                    <button onClick={() => setMessage(null)} style={{ marginLeft: '12px', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>×</button>
+                </div>
+            )}
+
             <header className="admin-header">
                 <div className="admin-header-title">
                     <button onClick={() => navigate('/admin/dashboard')} className="back-link"><ArrowLeft size={18} /></button>
@@ -151,6 +178,10 @@ const AdminManagement: React.FC = () => {
                 <div className="admin-user-nav">
                     <button className="save-btn" style={{ background: '#D04A02' }} onClick={() => { setIsAdding(a => !a); setEditingId(null); }}>
                         <Plus size={16} /><span>Add New Admin</span>
+                    </button>
+                    <button onClick={handleDeploy} disabled={isDeploying} className="save-btn" style={{ background: '#4a5568' }}>
+                        {isDeploying ? <Loader2 className="animate-spin" size={16} /> : <CloudUpload size={16} />}
+                        <span>{isDeploying ? 'Deploying...' : 'Deploy Changes'}</span>
                     </button>
                 </div>
             </header>

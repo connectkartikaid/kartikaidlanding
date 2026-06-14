@@ -1,6 +1,4 @@
-import { Plus, Trash2, Sparkles, Package } from 'lucide-react';
-import { ALL_PRODUCTS } from '../data/products';
-
+import { Plus, Trash2, Sparkles } from 'lucide-react';
 interface ContentSection {
     heading: string;
     content: string;
@@ -266,24 +264,6 @@ export const BlogContentEditor: React.FC<BlogContentEditorProps> = ({
                                         />
                                     </div>
                                 </>
-                            ) : index > 1 ? (
-                                <div className="input-group-compact">
-                                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '5px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                        <Package size={14} /> Mention Product (Soft selling)
-                                    </label>
-                                    <select
-                                        value={section.productId?.toString() || ''}
-                                        onChange={(e) => updateSection(index, 'productId', e.target.value ? parseInt(e.target.value) : undefined)}
-                                        style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', backgroundColor: '#fff' }}
-                                    >
-                                        <option value="">-- No Product Linked --</option>
-                                        {ALL_PRODUCTS.map(p => (
-                                            <option key={p.id} value={p.id.toString()}>
-                                                {p.name} ({p.price})
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
                             ) : null}
                         </div>
 
@@ -336,7 +316,6 @@ export const BlogContentEditor: React.FC<BlogContentEditorProps> = ({
                 <strong>ℹ️ Auto-Generated Components:</strong>
                 <p>The following will be automatically added to your blog post:</p>
                 <ul>
-                    <li>Product Showcase (inserted after 2nd section)</li>
                     <li>Author Bio (at the end)</li>
                     <li>CTA Section (at the end)</li>
                     <li>Random Unsplash Images (if not specified)</li>

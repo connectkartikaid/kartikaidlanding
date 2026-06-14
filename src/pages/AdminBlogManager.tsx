@@ -482,10 +482,16 @@ const AdminBlogManager: React.FC = () => {
 
                 <div className="admin-user-nav">
                     {view === 'list' ? (
-                        <button onClick={handleSyncToFiles} className="save-btn" disabled={isSaving}>
-                            {isSaving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
-                            <span>{isSaving ? 'Deploying...' : 'Deploy Changes'}</span>
-                        </button>
+                        <>
+                            <button className="save-btn" style={{ background: '#D04A02' }} onClick={handleNew}>
+                                <Plus size={16} />
+                                <span>New Article</span>
+                            </button>
+                            <button onClick={handleSyncToFiles} className="save-btn" disabled={isSaving}>
+                                {isSaving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
+                                <span>{isSaving ? 'Deploying...' : 'Deploy Changes'}</span>
+                            </button>
+                        </>
                     ) : (
                         <>
                             {editingPost?.slug && (
@@ -523,20 +529,17 @@ const AdminBlogManager: React.FC = () => {
 
                 {view === 'list' ? (
                     <>
-                        <div className="manager-toolbar">
-                            <div className="search-box">
-                                <Search size={18} />
+                        <div className="manager-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', background: '#fff', padding: '15px 20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                            <div className="search-box" style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#f5f5f5', padding: '8px 15px', borderRadius: '20px', flex: 1 }}>
+                                <Search size={18} color="#888" />
                                 <input
                                     type="text"
                                     placeholder="Search articles..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
+                                    style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: '14px' }}
                                 />
                             </div>
-                            <button className="create-post-btn" onClick={handleNew}>
-                                <Plus size={18} />
-                                <span style={{ marginLeft: '5px' }}>New Article</span>
-                            </button>
                         </div>
 
                         <div className="posts-table-card card">

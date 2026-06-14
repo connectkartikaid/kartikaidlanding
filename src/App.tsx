@@ -12,29 +12,14 @@ import './App.css'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 
-import SingaporeLanguageModal from './components/SingaporeLanguageModal'
 import ScrollToTop from './components/ScrollToTop'
 import ProtectedRoute from './components/ProtectedRoute'
 
-// Preload critical pages for better performance
-const Shop = lazy(() => import('./pages/Shop'))
-const ProductDetail = lazy(() => import('./pages/ProductDetail'))
-const ProductCategory = lazy(() => import('./pages/ProductCategory'))
+// Removed preloading for Mangala shop pages
 
 // Lazy load less critical pages
-const Contact = lazy(() => import('./pages/Contact'))
-const About = lazy(() => import('./pages/About'))
-const CustomOrder = lazy(() => import('./pages/CustomOrder'))
-const Partnership = lazy(() => import('./pages/Partnership'))
-const SearchResults = lazy(() => import('./pages/SearchResults'))
-const BestSellers = lazy(() => import('./pages/BestSellers'))
-const Blog = lazy(() => import('./pages/Blog'))
 const KartikaBlog = lazy(() => import('./pages/KartikaBlog'))
 const KartikaBlogPost = lazy(() => import('./pages/KartikaBlogPost'))
-const BlogPost = lazy(() => import('./pages/BlogPost'))
-const TermsOfService = lazy(() => import('./pages/TermsOfService'))
-const ShippingInformation = lazy(() => import('./pages/ShippingInformation'))
-const ImageLicense = lazy(() => import('./pages/ImageLicense'))
 
 // Admin Pages
 const AdminLogin = lazy(() => import('./pages/AdminLogin'))
@@ -43,10 +28,7 @@ const AdminBlogManager = lazy(() => import('./pages/AdminBlogManager'))
 const AdminManagement = lazy(() => import('./pages/AdminManagement'))
 const LandingPageEditor = lazy(() => import('./pages/LandingPageEditor.tsx'))
 
-// Anti-Marketplace Strategy
-const FurnitureBesiCustomBekasi = lazy(() => import('./pages/FurnitureBesiCustomBekasi'))
-// const WorkshopFurnitureBesiBekasi = lazy(() => import('./pages/WorkshopFurnitureBesiBekasi'))
-// const BikinMejaBesiCafeCustom = lazy(() => import('./pages/BikinMejaBesiCafeCustom'))
+// Anti-Marketplace Strategy (Mangala pages removed)
 
 // Minimal loading for better UX
 const Loading = () => (
@@ -101,20 +83,9 @@ function App() {
       if (!hasUserInteracted) {
         hasUserInteracted = true
 
-        // Preload critical pages immediately after user interaction
-        import('./pages/Shop')
-        import('./pages/ProductDetail')
-
-        // Preload secondary pages after 2 seconds
-        setTimeout(() => {
-          import('./pages/ProductCategory')
-        }, 2000)
-
         // Preload tertiary pages after 5 seconds
         setTimeout(() => {
-          import('./pages/About')
-          import('./pages/Blog')
-          import('./pages/Contact')
+          import('./pages/KartikaBlog')
         }, 5000)
       }
     }
@@ -128,8 +99,7 @@ function App() {
     // Fallback: preload critical pages after 10 seconds if no interaction
     preloadTimer = setTimeout(() => {
       if (!hasUserInteracted) {
-        import('./pages/Shop')
-        import('./pages/ProductDetail')
+        import('./pages/KartikaBlog')
       }
     }, 10000) as unknown as number
 
@@ -145,7 +115,6 @@ function App() {
     <HelmetProvider>
       <Router>
         <ScrollToTop />
-        <SingaporeLanguageModal />
         <Routes>
           {/* Home - Load immediately (no suspense) */}
           <Route path="/" element={<Home />} />
@@ -159,70 +128,10 @@ function App() {
           <Route path="/fr" element={<Home />} />
           <Route path="/ko" element={<Home />} />
 
-          {/* Other pages with minimal loading */}
-          <Route path="/search" element={
-            <Suspense fallback={<Loading />}>
-              <SearchResults />
-            </Suspense>
-          } />
-          <Route path="/shop" element={
-            <Suspense fallback={<Loading />}>
-              <Shop />
-            </Suspense>
-          } />
-          <Route path="/id/shop" element={
-            <Suspense fallback={<Loading />}>
-              <Shop />
-            </Suspense>
-          } />
-          <Route path="/eng/shop" element={
-            <Suspense fallback={<Loading />}>
-              <Shop />
-            </Suspense>
-          } />
-          <Route path="/product-tag/best-seller" element={
-            <Suspense fallback={<Loading />}>
-              <BestSellers />
-            </Suspense>
-          } />
-          <Route path="/product-category/:category" element={
-            <Suspense fallback={<Loading />}>
-              <ProductCategory />
-            </Suspense>
-          } />
-          <Route path="/product/:slug" element={
-            <Suspense fallback={<Loading />}>
-              <ProductDetail />
-            </Suspense>
-          } />
-          <Route path="/contact-us" element={
-            <Suspense fallback={<Loading />}>
-              <Contact />
-            </Suspense>
-          } />
-          <Route path="/about" element={
-            <Suspense fallback={<Loading />}>
-              <About />
-            </Suspense>
-          } />
-          <Route path="/custom-order" element={
-            <Suspense fallback={<Loading />}>
-              <CustomOrder />
-            </Suspense>
-          } />
-          <Route path="/partnership" element={
-            <Suspense fallback={<Loading />}>
-              <Partnership />
-            </Suspense>
-          } />
+          {/* Blog Pages */}
           <Route path="/blog" element={
             <Suspense fallback={<Loading />}>
               <KartikaBlog />
-            </Suspense>
-          } />
-          <Route path="/mangala-blog" element={
-            <Suspense fallback={<Loading />}>
-              <Blog />
             </Suspense>
           } />
           <Route path="/blog/:slug" element={
@@ -233,141 +142,6 @@ function App() {
           <Route path="/sandbox/blog/:slug" element={
             <Suspense fallback={<Loading />}>
               <KartikaBlogPost />
-            </Suspense>
-          } />
-          <Route path="/mangala-blog/:slug" element={
-            <Suspense fallback={<Loading />}>
-              <BlogPost />
-            </Suspense>
-          } />
-          <Route path="/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/id/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/ar/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/zh/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/ja/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/es/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/fr/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/ko/terms-of-service" element={
-            <Suspense fallback={<Loading />}>
-              <TermsOfService />
-            </Suspense>
-          } />
-          <Route path="/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/id/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/eng/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/ar/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/zh/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/ja/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/es/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/fr/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/ko/shipping-information" element={
-            <Suspense fallback={<Loading />}>
-              <ShippingInformation />
-            </Suspense>
-          } />
-          <Route path="/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/id/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/eng/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/ar/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/zh/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/ja/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/es/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/fr/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
-            </Suspense>
-          } />
-          <Route path="/ko/image-license" element={
-            <Suspense fallback={<Loading />}>
-              <ImageLicense />
             </Suspense>
           } />
 
@@ -427,24 +201,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-          {/* SEO Landing Pages - Keyword Celah Strategy */}
-          <Route path="/furniture-besi-custom-bekasi" element={
-            <Suspense fallback={<Loading />}>
-              <FurnitureBesiCustomBekasi />
-            </Suspense>
-          } />
-          {/* TODO: Create these landing pages
-          <Route path="/workshop-furniture-besi-bekasi" element={
-            <Suspense fallback={<Loading />}>
-              <WorkshopFurnitureBesiBekasi />
-            </Suspense>
-          } />
-          <Route path="/bikin-meja-besi-cafe-custom" element={
-            <Suspense fallback={<Loading />}>
-              <BikinMejaBesiCafeCustom />
-            </Suspense>
-          } />
-          */}
+
 
           {/* 404 - Explicit 404 route for redirects */}
           <Route path="/404-not-found" element={<NotFound />} />
