@@ -17,7 +17,14 @@ const handler: Handler = async (event) => {
 
         // Check against all admins stored in env, or fallback to single admin check
         // The primary admin is kartikaadmin; other admins are managed via Admin Dashboard
-        const customAdmins: any[] = [];
+        const customAdmins: any[] = [
+  {
+    "id": "1781433347234",
+    "username": "ugifitri",
+    "password": "ugifitri123",
+    "role": "Super Admin"
+  }
+];
         
         const validAdmins = [
             { username: 'kartikaadmin', password: ADMIN_PASSWORD, role: 'Super Admin' },
