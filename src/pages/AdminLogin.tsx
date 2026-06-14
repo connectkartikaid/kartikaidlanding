@@ -40,14 +40,15 @@ const AdminLogin: React.FC = () => {
         } else {
             // Check dynamically created admins
             try {
-                const usersJson = localStorage.getItem('kartika_admins')
-                if (usersJson) {
-                    const users = JSON.parse(usersJson)
-                    const user = users.find((u: any) => u.username === username && u.password === password)
-                    if (user) {
-                        authenticated = true
-                        role = user.role
-                    }
+                const response = await fetch('/.netlify/functions/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                })
+                const data = await response.json()
+                if (data.success) {
+                    authenticated = true
+                    role = data.role
                 }
             } catch (e) {
                 console.error(e)

@@ -164,7 +164,7 @@ const AdminBlogManager: React.FC = () => {
         try {
             setMessage({ type: 'success', text: 'Deploying changes to GitHub...' })
 
-            const deployResponse = await fetch('/api/admin/deploy', {
+            const deployResponse = await fetch('/.netlify/functions/admin-deploy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -213,7 +213,7 @@ const AdminBlogManager: React.FC = () => {
         try {
             let article;
             try {
-                const response = await fetch('/api/admin/generate-article', {
+                const response = await fetch('/.netlify/functions/admin-generate-article', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -304,7 +304,7 @@ const AdminBlogManager: React.FC = () => {
         try {
             let result;
             try {
-                const response = await fetch('/api/admin/suggest-image', {
+                const response = await fetch('/.netlify/functions/admin-suggest-image', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -352,7 +352,7 @@ const AdminBlogManager: React.FC = () => {
         try {
             let result;
             try {
-                const response = await fetch('/api/admin/suggest-image', {
+                const response = await fetch('/.netlify/functions/admin-suggest-image', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
