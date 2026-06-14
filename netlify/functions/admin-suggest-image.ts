@@ -55,11 +55,11 @@ const handler: Handler = async (event) => {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are an expert at choosing the perfect image search query for blog posts. Respond with ONLY the search query in English. Tends toward specific, high-quality photography terms. No quotes, no preamble.'
+                        content: 'You are an expert at choosing the perfect image search query for blog posts. Respond with ONLY the search query in English. Tends toward specific, high-quality photography terms related to women empowerment, diverse women, female professionals, education, and community support. No quotes, no preamble.'
                     },
                     {
                         role: 'user',
-                        content: `Context: ${context}\nArticle/Section Heading: ${title}\nContent Snippet: ${excerpt || ''}\n\nProvide a specific English search query for Unsplash (e.g. "community gathering", "education workshop", "inspiring people"). Ensure the query is relevant to the specific context provided.`
+                        content: `Context: ${context}\nArticle/Section Heading: ${title}\nContent Snippet: ${excerpt || ''}\n\nProvide a specific English search query for Unsplash (e.g. "diverse women collaborating", "female leader office", "women studying together"). Ensure the query is relevant to the specific context provided.`
                     }
                 ],
                 temperature: 0.5,

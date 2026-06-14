@@ -6,9 +6,9 @@ const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY || '';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-const SYSTEM_PROMPT = `You are an expert content writer for Kartika.id, a platform that inspires and connects people through programs, education, and community.
+const SYSTEM_PROMPT = `You are an expert content writer for Kartika.id, an empowering platform dedicated to women's empowerment, education, self-improvement, and building a supportive community.
 
-Your task is to generate high-quality, SEO-optimized blog articles about personal development, programs, and community topics.
+Your task is to generate high-quality, SEO-optimized, and deeply inspiring blog articles focusing on women's empowerment, career growth, mental well-being, community building, and personal development.
 
 IMPORTANT: You MUST respond with ONLY a valid JSON object, no additional text before or after. The JSON must follow this exact structure:
 
@@ -44,8 +44,10 @@ LANGUAGE SUPPORT:
 - en: English
 
 CONTENT GUIDELINES:
-- Use professional yet friendly tone
-- Provide practical tips and actionable advice
+- Use an empowering, empathetic, and highly professional tone
+- Focus heavily on women's empowerment, breaking boundaries, career tips, education, and mental health
+- Provide practical tips and actionable advice for modern women
+- Mention Kartika.id naturally as a supportive community or program
 - Use HTML tags for formatting: <strong>, <em>, <br>
 - Create 3-5 sections minimum
 - Each section should be substantial (150-300 words)
