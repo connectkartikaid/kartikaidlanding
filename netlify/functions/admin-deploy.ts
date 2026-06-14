@@ -53,27 +53,21 @@ const handler: Handler = async (event) => {
         if (source === 'landing_page') {
             const configJson = JSON.stringify(config, null, 2);
             newContent = currentContent.replace(
-                /(export const defaultLandingConfig:\s*LandingConfig\s*=\s*)\{[\s\S]*?\}(\s*;?)/,
+                /(export const defaultLandingConfig:\s*LandingConfig\s*=\s*)[\s\S]*?(;\n\nexport const getLandingConfig)/,
                 `$1${configJson}$2`
             );
         } else if (source === 'admin_management') {
             const adminsJson = JSON.stringify(admins, null, 2);
             newContent = currentContent.replace(
-                /(const customAdmins:\s*any\[\]\s*=\s*)\[[\s\S]*?\](\s*;)/,
+                /(const customAdmins:\s*any\[\]\s*=\s*)[\s\S]*?(;\s*\n\s*const validAdmins)/,
                 `$1${adminsJson}$2`
             );
         } else {
             const newPostsJson = JSON.stringify(posts, null, 2);
             newContent = currentContent.replace(
-                /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)\[[\s\S]*?\](\s*;?)/,
+                /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)[\s\S]*?(;\n\n\/\/\s*───\s*Helper functions|\n\nexport function)/,
                 `$1${newPostsJson}$2`
             );
-            if (newContent === currentContent) {
-                newContent = currentContent.replace(
-                    /export const KARTIKA_BLOG_POSTS[\s\S]*?= \[[\s\S]*?\];?/,
-                    `export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = ${newPostsJson};`
-                );
-            }
         }
 
         if (newContent === currentContent) {
