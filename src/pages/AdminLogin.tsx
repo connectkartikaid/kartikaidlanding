@@ -27,32 +27,22 @@ const AdminLogin: React.FC = () => {
         // Simulate a brief loading state for UX
         await new Promise((resolve) => setTimeout(resolve, 600))
 
-        // Hardcoded credentials for Kartika super admin
-        const VALID_USERNAME = 'kartikaadmin'
-        const VALID_PASSWORD = 'adminkartikaid354'
-
         let role = ''
         let authenticated = false
 
-        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-            authenticated = true
-            role = 'Super Admin'
-        } else {
-            // Check dynamically created admins
-            try {
-                const response = await fetch('/.netlify/functions/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                })
-                const data = await response.json()
-                if (data.success) {
-                    authenticated = true
-                    role = data.user?.role || 'Content Writer'
-                }
-            } catch (e) {
-                console.error(e)
+        try {
+            const response = await fetch('/.netlify/functions/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            const data = await response.json()
+            if (data.success) {
+                authenticated = true
+                role = data.user?.role || 'Content Writer'
             }
+        } catch (e) {
+            console.error(e)
         }
 
         if (authenticated) {

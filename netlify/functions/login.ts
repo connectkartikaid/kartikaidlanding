@@ -8,9 +8,7 @@ const handler: Handler = async (event) => {
     try {
         const { username, password } = JSON.parse(event.body || '{}');
 
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'adminkartikaid354';
-
-        // Check against all admins stored in env, or fallback to single admin check
+        // Check against all admins
         // The primary admin is kartikaadmin; other admins are managed via Admin Dashboard
         const customAdmins: any[] = [
   {
@@ -22,7 +20,8 @@ const handler: Handler = async (event) => {
 ];
         
         const validAdmins = [
-            { username: 'kartikaadmin', password: ADMIN_PASSWORD, role: 'Super Admin' },
+            { username: 'kartikaadmin', password: 'adminkartikaid354', role: 'Super Admin' },
+            { username: 'adminkartika', password: 'kartikaempower', role: 'Super Admin' },
             ...customAdmins
         ];
 
