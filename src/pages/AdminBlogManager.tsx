@@ -664,19 +664,32 @@ const AdminBlogManager: React.FC = () => {
                     </>
                 ) : (
                     <div className="post-editor-container">
-                        <div className="editor-header-actions">
-                            <button
-                                className="ai-generate-btn"
-                                onClick={() => setShowAIModal(true)}
-                                disabled={isGenerating}
-                            >
-                                <Sparkles size={18} />
-                                <span>{isGenerating ? 'Generating...' : 'Generate with AI'}</span>
-                            </button>
-                        </div>
-
                         <section className="editor-section card compact">
-                            <h2 className="editor-h2"><Type size={16} /> Metadata Editor</h2>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                                <h2 className="editor-h2" style={{ margin: 0 }}><Type size={16} /> Metadata Editor</h2>
+                                <button
+                                    className="ai-generate-btn"
+                                    onClick={() => setShowAIModal(true)}
+                                    disabled={isGenerating}
+                                    style={{
+                                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '6px 12px',
+                                        borderRadius: '6px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px',
+                                        cursor: 'pointer',
+                                        fontWeight: 600,
+                                        fontSize: '13px',
+                                        boxShadow: '0 2px 4px rgba(16, 185, 129, 0.3)'
+                                    }}
+                                >
+                                    <Sparkles size={16} />
+                                    <span>{isGenerating ? 'Generating...' : 'Generate with AI'}</span>
+                                </button>
+                            </div>
                             <div className="editor-grid-compact">
                                 <div className="input-group-compact span-2">
                                     <label>Article Title</label>
