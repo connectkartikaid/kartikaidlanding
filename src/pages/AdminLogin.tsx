@@ -48,7 +48,7 @@ const AdminLogin: React.FC = () => {
                 const data = await response.json()
                 if (data.success) {
                     authenticated = true
-                    role = data.role
+                    role = data.user?.role || 'Content Writer'
                 }
             } catch (e) {
                 console.error(e)
