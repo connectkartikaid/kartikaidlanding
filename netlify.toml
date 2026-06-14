@@ -1,6 +1,27 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/admin/deploy"
+  to = "/.netlify/functions/admin-deploy"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/generate-article"
+  to = "/.netlify/functions/admin-generate-article"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/suggest-image"
+  to = "/.netlify/functions/admin-suggest-image"
+  status = 200
+
+[[redirects]]
+  from = "/api/login"
+  to = "/.netlify/functions/login"
+  status = 200
 
 [[redirects]]
   from = "/*"
