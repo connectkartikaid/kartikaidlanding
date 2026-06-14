@@ -21,7 +21,7 @@ const handler: Handler = async (event) => {
   {
     "id": "1781433347234",
     "username": "ugi",
-    "password": "ugifitri123",
+    "password": "ugi123",
     "role": "Super Admin"
   }
 ];
