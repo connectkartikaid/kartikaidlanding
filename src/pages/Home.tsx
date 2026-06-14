@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async'
 import '../../public/style.css'
 import './Home.css'
 import { getLandingConfig, getLandingDraft } from '../data/landingConfig'
+import { generateOrganizationStructuredData } from '../utils/structuredData'
+import { generateBreadcrumbSchema, generateWebPageSchema, generateMetaDescription } from '../utils/seoEnhancements'
 
 const Home = () => {
     const [missionType, setMissionType] = useState('women-empowerment');
@@ -145,10 +147,22 @@ const Home = () => {
         return text.length > 120 ? 'testimonial-text long' : 'testimonial-text';
     };
 
+    const schemaOrg = generateOrganizationStructuredData();
+    const schemaWebPage = generateWebPageSchema({
+        title: 'Kartika.id - Kartini Teknik Berdaya',
+        description: generateMetaDescription('home'),
+        url: '/'
+    });
+    const schemaBreadcrumb = generateBreadcrumbSchema([{ name: "Home", url: "/" }]);
+
     return (
         <div className="kartika-home">
             <Helmet>
-                <title>Kartika.id</title>
+                <title>Kartika.id | Kartini Teknik Berdaya</title>
+                <meta name="description" content={generateMetaDescription('home')} />
+                <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
+                <script type="application/ld+json">{JSON.stringify(schemaWebPage)}</script>
+                <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
                 <link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&amp;family=Josefin+Sans:wght@600&amp;display=swap" rel="stylesheet" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Helmet>

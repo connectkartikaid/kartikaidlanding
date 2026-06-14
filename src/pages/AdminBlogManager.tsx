@@ -970,7 +970,7 @@ const AdminBlogManager: React.FC = () => {
                             <textarea
                                 value={aiPrompt}
                                 onChange={(e) => setAiPrompt(e.target.value)}
-                                placeholder="Example: Panduan memilih furniture cafe industrial yang tahan lama dan hemat budget untuk cafe kecil di Jakarta"
+                                placeholder="Example: Artikel tentang pentingnya pendidikan teknik untuk perempuan di Indonesia timur, dengan gaya bahasa yang inspiratif."
                                 rows={5}
                                 disabled={isGenerating}
                             />

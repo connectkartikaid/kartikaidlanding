@@ -1,22 +1,14 @@
-// Structured Data utilities for Mangala Living
-
-const IMAGE_LICENSE_PAGE = "https://mangala-living.com/image-license"
+// Structured Data utilities for Kartika.id
 
 export const DEFAULT_IMAGE_RIGHTS_METADATA = {
-  acquireLicensePage: `${IMAGE_LICENSE_PAGE}#request-license`,
-  license: `${IMAGE_LICENSE_PAGE}#usage-terms`,
-  copyrightNotice: "Copyright 1999-2025 Mangala Living. All image rights reserved.",
+  copyrightNotice: "Copyright 2026 Kartika.id. All rights reserved.",
   creator: {
     "@type": "Organization",
-    "name": "Mangala Living",
-    "url": "https://mangala-living.com"
+    "name": "Kartika.id",
+    "url": "https://kartika.id"
   }
 } as const
 
-/**
- * Generate ImageObject schema for SEO-optimized image indexing
- * This helps Google understand and index images better for image search
- */
 export const generateImageObjectSchema = (image: {
   url: string
   alt?: string
@@ -26,88 +18,35 @@ export const generateImageObjectSchema = (image: {
   contentUrl?: string
   description?: string
   caption?: string
-  acquireLicensePage?: string
-  license?: string
-  copyrightNotice?: string
-  creator?: {
-    "@type": string
-    name: string
-    url?: string
-  }
 }) => {
-  const rightsMetadata = {
-    ...DEFAULT_IMAGE_RIGHTS_METADATA,
-    ...(image.acquireLicensePage && { acquireLicensePage: image.acquireLicensePage }),
-    ...(image.license && { license: image.license }),
-    ...(image.copyrightNotice && { copyrightNotice: image.copyrightNotice }),
-    ...(image.creator && { creator: image.creator })
-  }
-
   return {
     "@context": "https://schema.org",
     "@type": "ImageObject",
     "url": image.url,
     "contentUrl": image.contentUrl || image.url,
-    "caption": image.caption || image.alt || image.title || "Industrial Furniture by Mangala Living",
-    "description": image.description || image.alt || image.title || "Premium Industrial Furniture from Mangala Living Workshop Bekasi",
+    "caption": image.caption || image.alt || image.title || "Kartini Teknik Berdaya - Kartika.id",
+    "description": image.description || image.alt || image.title || "Empowering Female Engineers in Indonesia",
     ...(image.width && { "width": image.width }),
     ...(image.height && { "height": image.height }),
-    "creditText": "Mangala Living",
+    "creditText": "Kartika.id",
     "copyrightHolder": {
       "@type": "Organization",
-      "name": "Mangala Living"
+      "name": "Kartika.id"
     },
-    ...rightsMetadata,
+    ...DEFAULT_IMAGE_RIGHTS_METADATA,
     "publisher": {
       "@type": "Organization",
-      "name": "Mangala Living",
+      "name": "Kartika.id",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://mangala-living.com/logo.png",
+        "url": "https://kartika.id/images/Kartika-logo.png",
         ...DEFAULT_IMAGE_RIGHTS_METADATA
       }
     }
   }
 }
 
-/**
- * Generate multiple ImageObject schemas for product galleries
- */
-export const generateProductImageGallerySchema = (images: Array<{
-  url: string
-  alt?: string
-  title?: string
-  width?: number
-  height?: number
-}>, productName: string) => {
-  return images.map((img, index) => ({
-    "@context": "https://schema.org",
-    "@type": "ImageObject",
-    "url": img.url,
-    "contentUrl": img.url,
-    "caption": img.alt || `${productName} - Image ${index + 1} - Mangala Living`,
-    "description": img.title || img.alt || `${productName} Premium Industrial Furniture - Mangala Living`,
-    ...(img.width && { "width": img.width }),
-    ...(img.height && { "height": img.height }),
-    "creditText": "Mangala Living",
-    "copyrightHolder": {
-      "@type": "Organization",
-      "name": "Mangala Living"
-    },
-    ...DEFAULT_IMAGE_RIGHTS_METADATA,
-    "publisher": {
-      "@type": "Organization",
-      "name": "Mangala Living",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://mangala-living.com/logo.png",
-        ...DEFAULT_IMAGE_RIGHTS_METADATA
-      }
-    }
-  }))
-}
-
-// Generate BlogPosting Schema for SEO with Author E-E-A-T
+// Generate BlogPosting Schema for SEO
 export const generateBlogPostingSchema = (post: {
   title: string
   excerpt: string
@@ -117,481 +56,67 @@ export const generateBlogPostingSchema = (post: {
   category: string
   author?: string
 }) => {
-  // If author is specified (Helmi Ramdan), use Person schema with full credentials
-  // Otherwise fallback to Organization
-  const authorSchema = post.author === 'Helmi Ramdan' ? {
-    "@type": "Person",
-    "name": "Helmi Ramdan",
-    "url": "https://www.linkedin.com/in/helmi-ramdan-067912118/",
-    "sameAs": "https://www.linkedin.com/in/helmi-ramdan-067912118/",
-    "jobTitle": "Associate - Housing & Settlement Infrastructure",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Dinas Perumahan Rakyat dan Kawasan Permukiman Provinsi DKI Jakarta"
-    },
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "Universitas Diponegoro"
-    },
-    "knowsAbout": [
-      "Architecture",
-      "Interior Design",
-      "Commercial Space Design",
-      "Infrastructure Engineering",
-      "Construction",
-      "Furniture Design",
-      "Industrial Furniture",
-      "Space Planning",
-      "Project Management"
-    ],
-    "hasCredential": [
-      {
-        "@type": "EducationalOccupationalCredential",
-        "credentialCategory": "degree",
-        "educationalLevel": "Diploma III",
-        "name": "Desain Arsitektur"
-      }
-    ],
-    "hasOccupation": [
-      {
-        "@type": "Occupation",
-        "name": "Associate",
-        "occupationLocation": {
-          "@type": "City",
-          "name": "Jakarta"
-        },
-        "skills": "Architecture, Infrastructure, Design Engineering"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Infrastructure Engineer",
-        "occupationLocation": {
-          "@type": "City",
-          "name": "Bekasi"
-        },
-        "skills": "Infrastructure Development, Project Management"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Design Engineer",
-        "skills": "Architectural Design, CAD, Technical Drawing"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Architectural Drafter",
-        "skills": "AutoCAD, 3D Modeling, Construction Documentation"
-      }
-    ],
-    "description": "Architecture and infrastructure professional with 10+ years of experience in commercial space design, construction, and furniture consultation. Currently serving as Associate at Jakarta Provincial Housing and Settlement Agency, with previous roles in infrastructure engineering, procurement, and architectural drafting.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Jakarta",
-      "addressRegion": "DKI Jakarta",
-      "addressCountry": "ID"
-    }
-  } : {
-    "@type": "Organization",
-    "name": "Mangala Living",
-    "url": "https://mangala-living.com",
-    "logo": "https://mangala-living.com/logo.png",
-    "image": "https://mangala-living.com/og-image.jpg"
-  }
-
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
-    "image": {
-      "@type": "ImageObject",
-      "url": post.image,
-      "contentUrl": post.image,
-      "caption": `${post.title} - ${post.category} Blog Furniture Industrial`,
-      "description": post.excerpt,
-      "width": 1200,
-      "height": 630,
-      "creditText": "Mangala Living",
-      "copyrightHolder": {
-        "@type": "Organization",
-        "name": "Mangala Living"
-      },
-      ...DEFAULT_IMAGE_RIGHTS_METADATA
-    },
+    "image": post.image,
     "datePublished": post.date,
     "dateModified": post.date,
-    "author": authorSchema,
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Tim Kartika.id"
+    },
     "publisher": {
       "@type": "Organization",
-      "name": "Mangala Living",
+      "name": "Kartika.id",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://mangala-living.com/logo.png",
-        ...DEFAULT_IMAGE_RIGHTS_METADATA
+        "url": "https://kartika.id/images/Kartika-logo.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://mangala-living.com/blog/${post.slug}`
+      "@id": `https://kartika.id/blog/${post.slug}`
     },
     "articleSection": post.category,
     "inLanguage": "id-ID",
     "keywords": [
-      "furniture industrial",
-      "furniture besi custom",
-      "furniture bekasi",
-      "meja industrial",
-      "kursi bar",
-      "furniture cafe",
-      "furniture restoran"
+      "women in engineering",
+      "perempuan teknik",
+      "kartini teknik berdaya",
+      "pendidikan teknik",
+      "pemberdayaan perempuan",
+      "STEM indonesia"
     ]
   }
 }
 
-// Generate FAQ Schema for educational content
-export const generateFAQSchema = (faqs: Array<{ question: string; answer: string }>) => {
+export const generateOrganizationStructuredData = () => {
   return {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "name": "Mangala Living FAQ",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  }
-}
-
-export const generateMerchantStructuredData = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Mangala Living",
-    "url": "https://mangala-living.com",
-    "logo": "https://mangala-living.com/logo.png",
-    "image": "https://mangala-living.com/og-image.jpg",
-    "description": "Premium Industrial Scandinavian Furniture for Coffee Shops, Restaurants & Offices. Custom Solutions Since 1999.",
-    "foundingDate": "1999",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Jl. Raya Setu Cikarang Bar.",
-      "addressLocality": "Bekasi",
-      "addressRegion": "Jawa Barat",
-      "postalCode": "17320",
-      "addressCountry": "ID"
-    },
+    "@type": ["NGO", "EducationalOrganization", "Organization"],
+    "name": "Kartika.id - Kartini Teknik Berdaya",
+    "alternateName": "Kartika.id",
+    "url": "https://kartika.id",
+    "logo": "https://kartika.id/images/Kartika-logo.png",
+    "image": "https://kartika.id/images/Kartika-logo.png",
+    "description": "Kartika.id (Kartini Teknik Berdaya) is a community and NGO dedicated to empowering female engineering students in Indonesia through mentorship, networking, and skill development.",
+    "foundingDate": "2023",
     "contactPoint": [
       {
         "@type": "ContactPoint",
-        "telephone": "+6288801146881",
-        "contactType": "customer service",
-        "email": "lifewithmangala@gmail.com",
-        "availableLanguage": ["Indonesian", "English"],
-        "areaServed": "ID"
-      },
-      {
-        "@type": "ContactPoint",
-        "telephone": "+6288801146881",
-        "contactType": "sales",
-        "email": "lifewithmangala@gmail.com",
+        "email": "hello@kartika.id",
+        "contactType": "customer support",
         "availableLanguage": ["Indonesian", "English"],
         "areaServed": "ID"
       }
     ],
     "sameAs": [
-      "https://www.instagram.com/mangalaliving",
-      "https://www.facebook.com/mangalaliving",
-      "https://wa.me/+6288801146881"
+      "https://www.instagram.com/connect.kartika.id",
+      "https://www.linkedin.com/company/kartika-id"
     ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Industrial Furniture Collection",
-      "description": "Complete collection of industrial furniture for commercial and residential use",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Product",
-            "name": "Industrial Furniture",
-            "category": "Furniture",
-            "description": "Premium industrial furniture made from high-quality materials",
-            "image": "https://mangala-living.com/og-image.jpg",
-            "offers": {
-              "@type": "Offer",
-              "price": "1500000",
-              "priceCurrency": "IDR",
-              "availability": "https://schema.org/InStock",
-              "priceValidUntil": "2026-12-31",
-              "url": "https://mangala-living.com/shop"
-            }
-          },
-          "price": "1500000",
-          "priceCurrency": "IDR",
-          "availability": "https://schema.org/InStock",
-          "priceValidUntil": "2026-12-31",
-          "hasMerchantReturnPolicy": {
-            "@type": "MerchantReturnPolicy",
-            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-            "merchantReturnDays": 30,
-            "returnMethod": "https://schema.org/ReturnByMail",
-            "returnFees": "https://schema.org/FreeReturn",
-            "applicableCountry": "ID"
-          },
-          "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": "0",
-              "currency": "IDR"
-            },
-            "shippingDestination": {
-              "@type": "DefinedRegion",
-              "addressCountry": "ID"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "businessDays": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-              },
-              "cutoffTime": "14:00",
-              "handlingTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 3,
-                "maxValue": 5,
-                "unitCode": "DAY"
-              },
-              "transitTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 1,
-                "maxValue": 3,
-                "unitCode": "DAY"
-              }
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-
-export const generateLocalBusinessStructuredData = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": ["FurnitureStore", "LocalBusiness"],
-    "name": "Mangala Living - Workshop Furniture Industrial Bekasi",
-    "alternateName": "Mangala Living Furniture Industrial Bekasi",
-    "image": "https://mangala-living.com/og-image.jpg",
-    "description": "Workshop Furniture Besi Custom Bekasi sejak 1999. Spesialis Industrial Furniture untuk Cafe, Restoran, Hotel, Kantor. Produksi langsung harga pabrik, material berkualitas, finishing powder coating. Melayani Jakarta, Bekasi, Jabodetabek.",
-    "url": "https://mangala-living.com",
-    "telephone": "+6288801146881",
-    "email": "lifewithmangala@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Jl. Raya Setu Cikarang Bar.",
-      "addressLocality": "Bekasi",
-      "addressRegion": "Jawa Barat",
-      "postalCode": "17320",
-      "addressCountry": "ID"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -6.2088,
-      "longitude": 107.1602
-    },
-    "areaServed": [
-      // BEKASI KOTA
-      { "@type": "City", "name": "Bekasi Barat" },
-      { "@type": "City", "name": "Bekasi Timur" },
-      { "@type": "City", "name": "Bekasi Selatan" },
-      { "@type": "City", "name": "Bekasi Utara" },
-      { "@type": "City", "name": "Rawalumbu" },
-      { "@type": "City", "name": "Pondok Gede" },
-      { "@type": "City", "name": "Jatiasih" },
-      { "@type": "City", "name": "Bantargebang" },
-      { "@type": "City", "name": "Mustika Jaya" },
-      { "@type": "City", "name": "Medan Satria" },
-      // BEKASI KABUPATEN - CIKARANG
-      { "@type": "City", "name": "Cikarang Barat" },
-      { "@type": "City", "name": "Cikarang Utara" },
-      { "@type": "City", "name": "Cikarang Selatan" },
-      { "@type": "City", "name": "Cikarang Timur" },
-      { "@type": "City", "name": "Cikarang Pusat" },
-      { "@type": "City", "name": "Tambun Selatan" },
-      { "@type": "City", "name": "Tambun Utara" },
-      { "@type": "City", "name": "Cibitung" },
-      { "@type": "City", "name": "Setu" },
-      // KAWASAN KOMERSIAL PREMIUM BEKASI
-      { "@type": "Place", "name": "Summarecon Bekasi" },
-      { "@type": "Place", "name": "Harapan Indah" },
-      { "@type": "Place", "name": "Grand Galaxy City" },
-      { "@type": "Place", "name": "Galaxy Bekasi" },
-      { "@type": "Place", "name": "Kemang Pratama" },
-      { "@type": "Place", "name": "Lippo Cikarang" },
-      { "@type": "Place", "name": "Jababeka" },
-      { "@type": "Place", "name": "Deltamas" },
-      { "@type": "Place", "name": "EJIP (East Jakarta Industrial Park)" },
-      { "@type": "Place", "name": "Greenland International Cikarang" },
-      { "@type": "Place", "name": "MM2100 Industrial Town" },
-      // JAKARTA
-      { "@type": "City", "name": "Jakarta Timur" },
-      { "@type": "City", "name": "Jakarta Pusat" },
-      { "@type": "City", "name": "Jakarta Selatan" },
-      { "@type": "City", "name": "Jakarta Barat" },
-      { "@type": "City", "name": "Jakarta Utara" },
-      // JABODETABEK LAINNYA
-      { "@type": "City", "name": "Depok" },
-      { "@type": "City", "name": "Bogor" },
-      { "@type": "City", "name": "Tangerang" },
-      { "@type": "City", "name": "Karawang" },
-      { "@type": "City", "name": "Cileungsi" },
-      { "@type": "State", "name": "Jabodetabek" }
-    ],
-    "serviceArea": {
-      "@type": "GeoCircle",
-      "geoMidpoint": {
-        "@type": "GeoCoordinates",
-        "latitude": -6.2088,
-        "longitude": 107.1602
-      },
-      "geoRadius": "100000"
-    },
-    "slogan": "Furniture Industrial Bekasi - Workshop Terpercaya Sejak 1999",
-    "foundingDate": "1999",
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "08:00",
-        "closes": "17:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "08:00",
-        "closes": "15:00"
-      }
-    ],
-    "priceRange": "$$",
-    "paymentAccepted": ["Cash", "Bank Transfer", "Credit Card"],
-    "currenciesAccepted": "IDR",
-    "hasMap": "https://maps.app.goo.gl/5Bc5ymfVtAYRPtpK7",
-    "brand": {
-      "@type": "Brand",
-      "name": "Mangala Living"
-    },
-    "makesOffer": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Furniture Besi Custom Bekasi",
-          "description": "Jasa pembuatan furniture besi custom untuk cafe, restoran, hotel, dan kantor"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Industrial Furniture Bekasi",
-          "description": "Produksi furniture industrial dengan desain modern dan material berkualitas"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Furniture Cafe Industrial Bekasi",
-          "description": "Spesialis furniture cafe industrial: meja, kursi, display rack, kitchen cabinet"
-        }
-      }
-    ],
-    "keywords": "furniture besi custom bekasi, industrial furniture bekasi, furniture cafe industrial bekasi, workshop furniture besi bekasi, jual furniture industrial jakarta bekasi, meja makan besi custom bekasi, meja cafe industrial besi, furniture besi hotel custom, bikin furniture besi custom jabodetabek, furniture besi untuk restoran, furniture bekasi barat, furniture bekasi timur, furniture bekasi selatan, furniture bekasi utara, furniture cikarang barat, furniture cikarang utara, furniture cikarang selatan, furniture cikarang timur, furniture cikarang pusat, furniture harapan indah, furniture summarecon bekasi, furniture jatiasih, furniture pekayon, furniture tambun, furniture pondok gede, furniture mustika jaya, furniture rawalumbu, furniture medan satria, furniture lippo cikarang, furniture jababeka, furniture grand galaxy city, furniture galaxy bekasi, furniture kemang pratama, furniture deltamas, furniture ejip, furniture greenland cikarang, furniture mm2100, furniture jakarta timur, furniture jakarta pusat, furniture jakarta selatan, furniture depok, furniture bogor, furniture karawang, furniture cibitung, furniture setu, furniture kranji, furniture bintara, furniture kayuringin, furniture pekayon jaya, furniture margahayu, furniture kaliabang"
-  }
-}
-
-// Generate Service Area Schema with Geo Coordinates for all Bekasi areas
-export const generateServiceAreaSchema = () => {
-  const bekasiAreas = [
-    // BEKASI KOTA
-    { name: "Bekasi Barat", lat: -6.2367, lon: 106.9944, kelurahan: ["Bintara", "Kranji", "Kota Baru", "Jakasampurna", "Bintara Jaya"] },
-    { name: "Bekasi Timur", lat: -6.2440, lon: 107.0076, kelurahan: ["Jatiasih", "Pekayon", "Aren Jaya", "Duren Jaya", "Margahayu"] },
-    { name: "Bekasi Selatan", lat: -6.2638, lon: 106.9891, kelurahan: ["Kayuringin Jaya", "Margajaya", "Jakasetia", "Pekayon Jaya"] },
-    { name: "Bekasi Utara", lat: -6.2131, lon: 107.0067, kelurahan: ["Harapan Indah", "Pejuang", "Teluk Pucung", "Kaliabang", "Kaliabang Tengah"] },
-    { name: "Rawalumbu", lat: -6.2600, lon: 106.9766, kelurahan: ["Bojong Rawalumbu", "Sepanjang Jaya", "Pengasinan", "Rawalumbu"] },
-    { name: "Pondok Gede", lat: -6.2759, lon: 106.9784, kelurahan: ["Jatiwaringin", "Jatibening", "Jatiraden", "Jatimakmur"] },
-    { name: "Mustika Jaya", lat: -6.2855, lon: 106.9924, kelurahan: ["Mustikasari", "Pedurenan", "Cimuning", "Mustika Jaya"] },
-    { name: "Medan Satria", lat: -6.1951, lon: 107.0071, kelurahan: ["Kali Baru", "Pejuang", "Harapan Baru", "Medan Satria"] },
-    { name: "Bantargebang", lat: -6.3238, lon: 106.9951, kelurahan: ["Bantargebang", "Sumur Batu"] },
-    { name: "Jatiasih", lat: -6.2765, lon: 106.9557, kelurahan: ["Jatiasih", "Jatiluhur", "Jatisari", "Jatimekar"] },
-    
-    // BEKASI KABUPATEN - CIKARANG
-    { name: "Cikarang Barat", lat: -6.2703, lon: 107.1483, kelurahan: ["Lippo Cikarang", "Cibatu", "Telaga Murni", "Pasir Gombong", "Gandamekar"] },
-    { name: "Cikarang Utara", lat: -6.2481, lon: 107.1529, kelurahan: ["Karang Asih", "Simpangan", "Sukamaju", "Danau Indah", "Mekarmukti"] },
-    { name: "Cikarang Selatan", lat: -6.2887, lon: 107.1552, kelurahan: ["Jababeka", "Greenland", "Pasirsari", "Ciantra", "Sukasejati"] },
-    { name: "Cikarang Timur", lat: -6.2674, lon: 107.1730, kelurahan: ["Serang Baru", "Karangreja", "Jayamukti", "Sukamanah", "Karangbaru"] },
-    { name: "Cikarang Pusat", lat: -6.2813, lon: 107.1442, kelurahan: ["Taman Galaxy", "Lemahabang", "Hegarmukti", "Kalijaya", "Cikarang"] },
-    { name: "Tambun Selatan", lat: -6.2546, lon: 107.0529, kelurahan: ["Sertajaya", "Mangunjaya", "Lambangjaya", "Setiadarma", "Tridaya Sakti"] },
-    { name: "Tambun Utara", lat: -6.2178, lon: 107.0514, kelurahan: ["Satria Jaya", "Karang Satria", "Wanasari", "Karang Bahagia", "Setia Mekar"] },
-    { name: "Cibitung", lat: -6.2369, lon: 107.0969, kelurahan: ["Wanajaya", "Mekarjaya", "Cikedokan", "Lambang Jaya"] },
-    { name: "Setu", lat: -6.2088, lon: 107.1002, kelurahan: ["Telajung", "Lubang Buaya", "Kertajaya", "Cijengkol"] },
-    { name: "Sukatani", lat: -6.1832, lon: 107.0724, kelurahan: ["Sukatani", "Sukaramai", "Ciledug", "Hegarmanah"] },
-    
-    // KAWASAN KOMERSIAL & INDUSTRIAL ESTATE
-    { name: "Summarecon Bekasi", lat: -6.2235, lon: 107.0024, kelurahan: ["Marga Mulya", "Boulevard Summarecon"], commercial: true },
-    { name: "Harapan Indah", lat: -6.2148, lon: 107.0053, kelurahan: ["Boulevard Harapan Indah", "Taman Harapan Indah"], commercial: true },
-    { name: "Grand Galaxy City", lat: -6.2615, lon: 106.9924, kelurahan: ["Jakasetia", "Pekayon Jaya"], commercial: true },
-    { name: "Galaxy Bekasi", lat: -6.2627, lon: 106.9934, kelurahan: ["Jakasetia"], commercial: true },
-    { name: "Kemang Pratama", lat: -6.2590, lon: 107.0152, kelurahan: ["Bojong Rawalumbu"], commercial: true },
-    { name: "Lippo Cikarang", lat: -6.2751, lon: 107.1519, kelurahan: ["Cibatu", "Pasir Gombong"], commercial: true },
-    { name: "Jababeka", lat: -6.2896, lon: 107.1575, kelurahan: ["Pasirsari", "Ciantra"], industrial: true },
-    { name: "Deltamas", lat: -6.2634, lon: 107.1283, kelurahan: ["Kalijaya", "Cikarang Pusat"], commercial: true },
-    { name: "EJIP", lat: -6.3210, lon: 107.1642, kelurahan: ["Lemahabang", "Sukaresmi"], industrial: true },
-    { name: "Greenland International", lat: -6.2915, lon: 107.1548, kelurahan: ["Pasirsari"], commercial: true },
-    { name: "MM2100", lat: -6.2583, lon: 107.1489, kelurahan: ["Gandasari", "Cibatu"], industrial: true },
-    
-    // JAKARTA (PERBATASAN & AREA UTAMA)
-    { name: "Jakarta Timur", lat: -6.2607, lon: 106.9003, kelurahan: ["Cakung", "Kramat Jati", "Makasar", "Cipayung", "Pondok Gede"], jakarta: true },
-    { name: "Jakarta Pusat", lat: -6.1863, lon: 106.8341, kelurahan: ["Sudirman", "Thamrin", "Kuningan"], jakarta: true },
-    { name: "Jakarta Selatan", lat: -6.2608, lon: 106.8106, kelurahan: ["Kemang", "SCBD", "Senopati", "Kebayoran"], jakarta: true },
-    
-    // JABODETABEK LAINNYA
-    { name: "Depok", lat: -6.4025, lon: 106.7942, kelurahan: ["Margonda", "UI", "Sawangan", "Beji"], jabodetabek: true },
-    { name: "Bogor", lat: -6.5974, lon: 106.8060, kelurahan: ["Bogor Kota", "Cibinong", "Sentul City"], jabodetabek: true },
-    { name: "Karawang", lat: -6.3214, lon: 107.3047, kelurahan: ["Karawang Barat", "Karawang Timur", "Teluk Jambe"], jabodetabek: true },
-    { name: "Cileungsi", lat: -6.3949, lon: 106.9596, kelurahan: ["Metland Transyogi", "Cileungsi Kidul"], jabodetabek: true }
-  ]
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Furniture Besi Custom & Industrial Furniture Manufacturing",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "Mangala Living",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Jl. Raya Setu Cikarang Bar.",
-        "addressLocality": "Bekasi",
-        "addressRegion": "Jawa Barat",
-        "postalCode": "17320",
-        "addressCountry": "ID"
-      }
-    },
-    "areaServed": bekasiAreas.map(area => ({
-      "@type": "City",
-      "name": area.name,
-      "containedIn": {
-        "@type": "AdministrativeArea",
-        "name": "Bekasi"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": area.lat,
-        "longitude": area.lon
-      }
-    }))
+    "keywords": "women in engineering, perempuan teknik, kartika.id, kartini teknik berdaya, female engineers indonesia, teknik mesin, STEM indonesia, komunitas perempuan teknik"
   }
 }

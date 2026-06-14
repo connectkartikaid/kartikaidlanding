@@ -5,6 +5,7 @@ import '../../public/style.css'
 import './Home.css'
 import './Blog.css'
 import { KARTIKA_BLOG_POSTS, type KartikaBlogPost } from '../data/kartika-blog'
+import { generateBreadcrumbSchema, generateWebPageSchema } from '../utils/seoEnhancements'
 
 // ── Helper: Merge base data with localStorage drafts ─────────────────────────
 function getMergedPosts(): KartikaBlogPost[] {
@@ -63,14 +64,47 @@ const KartikaBlog: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const schemaBreadcrumb = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+  ])
+  const schemaWebPage = generateWebPageSchema({
+    title: 'Blog | Kartika.id — Kartini Teknik Berdaya',
+    description: 'Artikel dan inspirasi seputar perempuan teknik, beasiswa, dan program pemberdayaan dari Indonesia Timur ke Nasional.',
+    url: '/blog',
+  })
+  const schemaItemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': 'Artikel Blog Kartika.id',
+    'description': 'Kumpulan artikel tentang perempuan di bidang teknik dan STEM Indonesia',
+    'numberOfItems': allPosts.length,
+    'itemListElement': allPosts.slice(0, 10).map((p, i) => ({
+      '@type': 'ListItem',
+      'position': i + 1,
+      'name': p.title,
+      'url': `https://kartika.id/blog/${p.slug}`,
+    })),
+  }
+
   return (
     <div className="kartika-home">
       <Helmet>
         <title>Blog | Kartika.id — Kartini Teknik Berdaya</title>
-        <meta
-          name="description"
-          content="Artikel dan inspirasi seputar perempuan teknik, beasiswa, dan program pemberdayaan dari Indonesia Timur ke Nasional."
-        />
+        <meta name="description" content="Artikel dan inspirasi seputar perempuan teknik, beasiswa, dan program pemberdayaan dari Indonesia Timur ke Nasional." />
+        <meta property="og:title" content="Blog | Kartika.id" />
+        <meta property="og:description" content="Artikel dan inspirasi seputar perempuan teknik, beasiswa, dan program pemberdayaan." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kartika.id/blog" />
+        <meta property="og:image" content="https://kartika.id/images/Kartika-logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Blog | Kartika.id" />
+        <meta name="twitter:description" content="Artikel inspirasi perempuan teknik Indonesia." />
+        <meta name="keywords" content="blog perempuan teknik, kartika.id blog, women in engineering indonesia, STEM perempuan, artikel teknik" />
+        <link rel="canonical" href="https://kartika.id/blog" />
+        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
+        <script type="application/ld+json">{JSON.stringify(schemaWebPage)}</script>
+        <script type="application/ld+json">{JSON.stringify(schemaItemList)}</script>
         <link
           href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&family=Josefin+Sans:wght@600&display=swap"
           rel="stylesheet"

@@ -6,6 +6,8 @@ import './Home.css'
 import './Blog.css'
 import './BlogPost.css'
 import { KARTIKA_BLOG_POSTS, type KartikaBlogPost } from '../data/kartika-blog'
+import { generateBlogPostingSchema } from '../utils/structuredData'
+import { generateBreadcrumbSchema } from '../utils/seoEnhancements'
 
 // ── Helper: load post from base data + localStorage drafts ────────────────────
 function loadPost(slug: string): KartikaBlogPost | undefined {
@@ -69,15 +71,49 @@ const KartikaBlogPostPage: React.FC = () => {
     post.customContent.conclusion
   )
 
+  const canonicalUrl = `https://kartika.id/blog/${post.slug}`
+  const schemaBlogPost = generateBlogPostingSchema({
+    title: post.title,
+    excerpt: post.excerpt,
+    slug: post.slug,
+    date: post.date,
+    image: post.image || 'https://kartika.id/images/Kartika-logo.png',
+    category: post.category,
+    author: post.author || 'Tim Kartika.id',
+  })
+  const schemaBreadcrumb = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ])
+
   return (
     <div className="kartika-home">
       <Helmet>
         <title>{post.title} | Kartika.id</title>
         <meta name="description" content={post.excerpt} />
+        <meta name="author" content={post.author || 'Tim Kartika.id'} />
+        <meta name="keywords" content={`${post.category}, perempuan teknik, women in engineering, kartika.id, STEM indonesia, ${post.title}`} />
+        <link rel="canonical" href={canonicalUrl} />
+        {/* Open Graph */}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.image} />
+        <meta property="og:image" content={post.image || 'https://kartika.id/images/Kartika-logo.png'} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="Kartika.id" />
+        <meta property="og:locale" content="id_ID" />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:author" content={post.author || 'Tim Kartika.id'} />
+        <meta property="article:section" content={post.category} />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt} />
+        <meta name="twitter:image" content={post.image || 'https://kartika.id/images/Kartika-logo.png'} />
+        {/* Schema.org JSON-LD */}
+        <script type="application/ld+json">{JSON.stringify(schemaBlogPost)}</script>
+        <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
         <link
           href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&family=Josefin+Sans:wght@400;600&display=swap"
           rel="stylesheet"
