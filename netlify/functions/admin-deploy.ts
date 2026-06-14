@@ -49,14 +49,14 @@ const handler: Handler = async (event) => {
         // Step 2: Generate new file content - replace the KARTIKA_BLOG_POSTS array
         const newPostsJson = JSON.stringify(posts, null, 2);
         let newContent = currentContent.replace(
-            /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)\[[\s\S]*?\](\s*;)/,
+            /(export const KARTIKA_BLOG_POSTS:\s*KartikaBlogPost\[\]\s*=\s*)\[[\s\S]*?\](\s*;?)/,
             `$1${newPostsJson}$2`
         );
 
         // Fallback: if regex didn't match, try simpler approach
         if (newContent === currentContent) {
             newContent = currentContent.replace(
-                /export const KARTIKA_BLOG_POSTS[\s\S]*?= \[[\s\S]*?\];/,
+                /export const KARTIKA_BLOG_POSTS[\s\S]*?= \[[\s\S]*?\];?/,
                 `export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = ${newPostsJson};`
             );
         }
