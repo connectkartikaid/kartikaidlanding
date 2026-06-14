@@ -49,11 +49,6 @@ body.kartika-home-active::before {
     display: none;
 }
 
-/* Ensure the logo has proper sizing */
-.kartika-home .logo {
-    max-width: 180px;
-}
-
 /* Make sure header doesn't get extra padding from App.css */
 .kartika-home header {
     padding: 5px 0;
@@ -66,12 +61,14 @@ body.kartika-home-active::before {
     width: 100%;
     z-index: 1000;
     background: transparent;
-    transition: background 0.3s ease;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
 }
 
 .kartika-home .kartika-header.scrolled {
-    background: rgba(45, 27, 0, 0.95);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    background: rgba(45, 27, 0, 0.65);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.22);
 }
 
 .kartika-home .header-inner {
@@ -84,6 +81,11 @@ body.kartika-home-active::before {
     width: 100%;
     box-sizing: border-box;
     flex-direction: row;
+}
+
+/* Ensure the logo has proper sizing */
+.kartika-home .logo {
+    max-width: 180px;
 }
 
 .kartika-home .logo-container {
@@ -250,7 +252,9 @@ body.kartika-home-active .whatsapp-container {
         top: 100% !important;
         left: 0 !important;
         width: 100% !important;
-        background: #2D1B00 !important;
+        background: rgba(45, 27, 0, 0.95) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
         padding: 20px !important;
         box-sizing: border-box !important;
         box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;

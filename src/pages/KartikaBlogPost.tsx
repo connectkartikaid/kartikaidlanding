@@ -124,8 +124,7 @@ const KartikaBlogPostPage: React.FC = () => {
       {/* ── NAV (identical to Home.tsx) ──────────────────────────────── */}
       <header
         ref={headerRef}
-        className={isScrolled ? 'scrolled' : ''}
-        style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'rgba(208,74,2,0.95)' }}
+        className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '10px 20px', width: '100%', boxSizing: 'border-box' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '280px', flexShrink: 0 }}>

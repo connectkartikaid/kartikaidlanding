@@ -118,15 +118,7 @@ const KartikaBlog: React.FC = () => {
       {/* ── NAVIGATION (identical to Home.tsx) ────────────────────────────── */}
       <header
         ref={headerRef}
-        className={isScrolled ? 'scrolled' : ''}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          zIndex: 1000,
-          background: 'transparent',
-        }}
+        className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}
       >
         <div
           style={{
