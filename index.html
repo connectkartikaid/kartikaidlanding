@@ -1,28 +1,173 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    
+
+    <!-- === FAVICON & PWA === -->
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- === VIEWPORT & RENDERING === -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#D04A02" />
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Kartika.id - Temukan program-program terbaik dan inspiratif untuk Anda." />
-    <meta name="keywords" content="kartika, program kartika, komunitas" />
-    <meta name="author" content="Kartika.id" />
-    <meta name="robots" content="index, follow" />
-    
-    <title>Kartika.id | Official Website</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- Performance optimizations -->
+    <!-- === PRIMARY SEO === -->
+    <title>Kartika.id | Kartini Teknik Berdaya — Komunitas Perempuan Teknik Indonesia</title>
+    <meta name="description" content="Kartika.id (Kartini Teknik Berdaya) adalah komunitas pemberdayaan perempuan di bidang teknik (STEM) Indonesia. Kami menghubungkan mahasiswi teknik dengan mentor, beasiswa, dan program penguatan karir." />
+    <meta name="keywords" content="kartika.id, kartini teknik berdaya, perempuan teknik indonesia, women in engineering, komunitas perempuan teknik, STEM perempuan, beasiswa teknik perempuan, kartishare, kartiship, kartinection" />
+    <meta name="author" content="Kartika.id" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://kartika.id/" />
+
+    <!-- === OPEN GRAPH (Facebook, WhatsApp, LinkedIn) === -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kartika.id" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Kartika.id | Kartini Teknik Berdaya" />
+    <meta property="og:description" content="Komunitas pemberdayaan perempuan di bidang teknik Indonesia. Bergabung dengan Kartika.id untuk mentoring, beasiswa, dan networking sesama insinyur perempuan." />
+    <meta property="og:url" content="https://kartika.id/" />
+    <meta property="og:image" content="https://kartika.id/images/Kartika-logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Kartika.id - Kartini Teknik Berdaya" />
+
+    <!-- === TWITTER CARD === -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@kartikaid" />
+    <meta name="twitter:creator" content="@kartikaid" />
+    <meta name="twitter:title" content="Kartika.id | Kartini Teknik Berdaya" />
+    <meta name="twitter:description" content="Komunitas perempuan teknik Indonesia. Mentoring, beasiswa, dan networking untuk insinyur perempuan." />
+    <meta name="twitter:image" content="https://kartika.id/images/Kartika-logo.png" />
+
+    <!-- === GEO / LOCAL SEO === -->
+    <meta name="geo.region" content="ID" />
+    <meta name="geo.country" content="Indonesia" />
+    <meta name="language" content="Indonesian" />
+    <meta name="content-language" content="id" />
+
+    <!-- === PERFORMANCE: DNS-PREFETCH & PRECONNECT === -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" /></noscript>
-    
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://api.groq.com" />
+
+    <!-- === FONTS: Non-blocking === -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Gelasio:wght@600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Gelasio:wght@600&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Gelasio:wght@600&display=swap" /></noscript>
+
+    <!-- === SCHEMA.ORG: WebSite (enables Sitelinks Searchbox) === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://kartika.id/#website",
+      "name": "Kartika.id",
+      "alternateName": "Kartini Teknik Berdaya",
+      "url": "https://kartika.id",
+      "description": "Komunitas pemberdayaan perempuan di bidang teknik dan STEM Indonesia",
+      "inLanguage": "id-ID",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://kartika.id/blog?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- === SCHEMA.ORG: Organization (E-E-A-T signals) === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["NGO", "EducationalOrganization", "Organization"],
+      "@id": "https://kartika.id/#organization",
+      "name": "Kartika.id",
+      "alternateName": "Kartini Teknik Berdaya",
+      "url": "https://kartika.id",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kartika.id/images/Kartika-logo.png",
+        "width": 500,
+        "height": 200
+      },
+      "image": "https://kartika.id/images/Kartika-logo.png",
+      "description": "Kartika.id (Kartini Teknik Berdaya) adalah komunitas dan NGO yang didedikasikan untuk memberdayakan mahasiswi teknik di Indonesia melalui mentorship, networking, dan pengembangan skill.",
+      "foundingDate": "2023",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Indonesia"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@kartika.id",
+        "contactType": "customer support",
+        "availableLanguage": ["Indonesian", "English"]
+      },
+      "sameAs": [
+        "https://www.instagram.com/connect.kartika.id",
+        "https://www.linkedin.com/company/kartika-id"
+      ],
+      "knowsAbout": [
+        "Women in Engineering",
+        "STEM Education Indonesia",
+        "Female Engineers Empowerment",
+        "Engineering Scholarship",
+        "Professional Mentorship",
+        "Networking for Women"
+      ]
+    }
+    </script>
+
+    <!-- === SCHEMA.ORG: FAQ Page (Home) === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu Kartika.id?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kartika.id (Kartini Teknik Berdaya) adalah komunitas yang hadir untuk memberdayakan perempuan di bidang teknik (STEM) di Indonesia, khususnya mahasiswi dari Indonesia Timur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Program apa saja yang ada di Kartika.id?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kartika.id memiliki tiga program utama: Kartishare (webinar & knowledge sharing), Kartiship (mentorship & career building), dan Kartinection (networking antar sesama perempuan teknik)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Siapa yang bisa bergabung dengan Kartika.id?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kartika.id terbuka untuk seluruh mahasiswi dan perempuan yang sedang atau sudah berkarir di bidang teknik dan STEM di Indonesia."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara bergabung dengan Kartika.id?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anda dapat bergabung dengan Kartika.id melalui tombol 'Join Now' di website kami, atau dengan mengikuti program-program yang kami selenggarakan secara rutin."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

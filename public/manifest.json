@@ -1,15 +1,22 @@
 {
-  "name": "Mangala Living - Furniture Industrial Besi Custom Indonesia",
-  "short_name": "Mangala Living",
-  "description": "Manufacturer furniture industrial besi custom untuk cafe, restoran, hotel. Workshop Bekasi sejak 1999.",
+  "name": "Kartika.id — Kartini Teknik Berdaya",
+  "short_name": "Kartika.id",
+  "description": "Komunitas pemberdayaan perempuan di bidang teknik (STEM) Indonesia. Mentoring, beasiswa, dan networking untuk insinyur perempuan.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#8B7355",
+  "background_color": "#2D1B00",
+  "theme_color": "#D04A02",
   "lang": "id",
-  "categories": ["business", "shopping", "lifestyle"],
+  "categories": ["education", "community", "social"],
+  "screenshots": [
+    {
+      "src": "/images/Kartika-logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
   "icons": [
     {
       "src": "/favicon-16x16.png",
