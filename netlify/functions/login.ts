@@ -19,9 +19,9 @@ const handler: Handler = async (event) => {
         // The primary admin is kartikaadmin; other admins are managed via Admin Dashboard
         const customAdmins: any[] = [
   {
-    "id": "1781433347234",
+    "id": "1781433996714",
     "username": "ugi",
-    "password": "ugi123",
+    "password": "ugi354",
     "role": "Super Admin"
   }
 ];
