@@ -2,8 +2,6 @@ import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { Suspense, lazy } from 'react'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/react'
 import { enableImageProtection, addImageProtectionStyles } from './utils/imageProtection'
 import { initializeGlobalWhatsAppTracking } from './utils/globalWhatsAppTracking'
 import './App.css'
@@ -208,8 +206,6 @@ function App() {
           {/* 404 - Catch all unmatched routes */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Analytics />
-        <SpeedInsights />
       </Router>
     </HelmetProvider>
   )
