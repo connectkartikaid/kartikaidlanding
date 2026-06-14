@@ -47,7 +47,7 @@ export interface LandingConfig {
 }
 
 export const defaultLandingConfig: LandingConfig = {
-  "navLogoText": "Kartini Teknik Berdayas",
+  "navLogoText": "Kartini Teknik Berdaya",
   "heroTitle": "Empowering Future Female Engineers",
   "heroSubtitle": "From Eastern Indonesia to the Nation",
   "heroImage": "/images/kartika sect-1.webp",
