@@ -20,7 +20,7 @@ const handler: Handler = async (event) => {
         const customAdmins: any[] = [
   {
     "id": "1781433347234",
-    "username": "ugifitri",
+    "username": "ugi",
     "password": "ugifitri123",
     "role": "Super Admin"
   }
