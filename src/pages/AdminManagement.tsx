@@ -263,6 +263,19 @@ const AdminManagement: React.FC = () => {
                                     <span style={{ fontSize: '12px', color: '#aaa', fontStyle: 'italic' }}>Protected</span>
                                 </td>
                             </tr>
+                            <tr style={{ background: '#fffbf5' }}>
+                                <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
+                                    <strong>adminkartika</strong>
+                                    <span style={{ fontSize: '0.75em', background: '#2D1B00', color: '#fff', padding: '2px 7px', borderRadius: '10px', marginLeft: '8px' }}>System Root</span>
+                                </td>
+                                <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
+                                    <RoleBadge role="Super Admin" />
+                                    <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>{ROLE_ACCESS['Super Admin']}</div>
+                                </td>
+                                <td style={{ padding: '14px 16px', borderBottom: '1px solid #eee' }}>
+                                    <span style={{ fontSize: '12px', color: '#aaa', fontStyle: 'italic' }}>Protected</span>
+                                </td>
+                            </tr>
 
                             {users.map(user => editingId === user.id ? (
                                 <EditRow key={user.id} user={user} onSave={handleEdit} onCancel={() => setEditingId(null)} />
