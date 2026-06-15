@@ -39,7 +39,7 @@ const KartikaBlog: React.FC = () => {
   const allPosts = getMergedPosts()
   const totalPages = Math.max(1, Math.ceil(allPosts.length / POSTS_PER_PAGE))
   const currentPage = Number.isNaN(rawPage) ? 1 : Math.min(Math.max(rawPage, 1), totalPages)
-  
+
   const start = (currentPage - 1) * POSTS_PER_PAGE
   const posts = allPosts.slice(start, start + POSTS_PER_PAGE)
 
@@ -180,7 +180,7 @@ const KartikaBlog: React.FC = () => {
               Blog
             </Link>
             <a
-              href="https://forms.gle/UFg49LSrEJRQmCpy9/"
+              href="https://bit.ly/KartikaID_3rdGen_Registration_Form"
               target="_blank"
               rel="noreferrer"
               className="btn"
