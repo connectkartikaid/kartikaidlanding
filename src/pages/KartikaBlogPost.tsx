@@ -138,7 +138,7 @@ const KartikaBlogPostPage: React.FC = () => {
             <Link to="/#our-programs">Our Programs</Link>
             <Link to="/#our-team">Our Team</Link>
             <Link to="/blog">Blog</Link>
-            <a href="https://forms.gle/UFg49LSrEJRQmCpy9/" target="_blank" rel="noreferrer" className="btn">Join Now</a>
+            <a href="https://bit.ly/KartikaID_3rdGen_Registration_Form" target="_blank" rel="noreferrer" className="btn">Join Now</a>
           </div>
         </div>
       </header>
