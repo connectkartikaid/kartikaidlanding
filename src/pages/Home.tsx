@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import '../../public/style.css'
 import './Home.css'
@@ -9,6 +9,7 @@ import { generateBreadcrumbSchema, generateWebPageSchema, generateMetaDescriptio
 const Home = () => {
     const [missionType, setMissionType] = useState('women-empowerment');
     const [teamType, setTeamType] = useState('coreteam');
+    const [speakerType, setSpeakerType] = useState('1stgen');
     const [activeProgram, setActiveProgram] = useState('kartishare');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -173,7 +174,7 @@ const Home = () => {
                         <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
                         <p className="header-logo-text">{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
                     </div>
-                    
+
                     <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                         <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
                     </button>
@@ -297,9 +298,22 @@ const Home = () => {
 
             <section className="our-speakers-section" id="our-speakers">
                 <div className="container our-speakers-content-container">
-                    <h1 className="section-title" style={{ whiteSpace: 'pre-line' }}>{config.speakersTitle || 'Our Speakers\nKartika.id First Generation'}</h1>
-                    <div className="speaker-image-wrapper">
-                        <img src={config.speakersImage} alt="Kartika.id First Generation Speakers" className="speaker-image" />
+                    <h1 className="section-title" style={{ whiteSpace: 'pre-line' }}>{config.speakersTitle || 'Our Speakers'}</h1>
+                    <div className="team-nav">
+                        <button className={`team-btn ${speakerType === '1stgen' ? 'active' : ''}`} onClick={() => setSpeakerType('1stgen')}>1st Generation <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                        <button className={`team-btn ${speakerType === '2ndgen' ? 'active' : ''}`} onClick={() => setSpeakerType('2ndgen')}>2nd Generation <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                    </div>
+                    <div className="team-gallery-container">
+                        <div id="speakers-1st-gallery" className={`team-gallery ${speakerType === '1stgen' ? 'active' : ''}`}>
+                            <div className="team-member">
+                                <img src={config.speakersImage} alt="Kartika.id First Generation Speakers" className="speaker-image" />
+                            </div>
+                        </div>
+                        <div id="speakers-2nd-gallery" className={`team-gallery ${speakerType === '2ndgen' ? 'active' : ''}`}>
+                            <div className="team-member">
+                                <img src={config.speakers2ndImage} alt="Kartika.id Second Generation Speakers" className="speaker-image" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -310,6 +324,7 @@ const Home = () => {
                         <h1>Our Team</h1>
                         <div className="team-nav">
                             <button className={`team-btn ${teamType === 'coreteam' ? 'active' : ''}`} onClick={() => setTeamType('coreteam')}>Coreteam <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                            <button className={`team-btn ${teamType === 'advisors' ? 'active' : ''}`} onClick={() => setTeamType('advisors')}>Advisors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
                             <button className={`team-btn ${teamType === 'mentors' ? 'active' : ''}`} onClick={() => setTeamType('mentors')}>Mentors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
                             <button className={`team-btn ${teamType === 'members' ? 'active' : ''}`} onClick={() => setTeamType('members')}>Members <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
                         </div>
@@ -317,6 +332,11 @@ const Home = () => {
                             <div id="coreteam-gallery" className={`team-gallery ${teamType === 'coreteam' ? 'active' : ''}`}>
                                 <div className="team-member">
                                     <img src={config.coreteamImage} alt="Kartika.id Core Team" />
+                                </div>
+                            </div>
+                            <div id="advisors-gallery" className={`team-gallery ${teamType === 'advisors' ? 'active' : ''}`}>
+                                <div className="team-member">
+                                    <img src={config.advisorsImage} alt="Kartika.id Advisors" />
                                 </div>
                             </div>
                             <div id="mentors-gallery" className={`team-gallery ${teamType === 'mentors' ? 'active' : ''}`}>
@@ -385,24 +405,10 @@ const Home = () => {
                 <div className="gradient-overlay right"></div>
             </section>
 
-            <section className="poster-section">
-                <div className="poster-content-container">
-                    <div className="poster-left">
-                        <a href={config.posterLink} target="_blank" rel="noreferrer">
-                            <img src={config.posterLeftImage} alt="Poster Left" />
-                        </a>
-                    </div>
-                    <div className="poster-right">
-                        <a href={config.posterLink} target="_blank" rel="noreferrer">
-                            <img src={config.posterRightImage} alt="Poster Content Right" />
-                        </a>
-                    </div>
-                </div>
-            </section>
             <section className="join-us-section" id="join-us" style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container join-us-content-container">
                     <div className="join-us-image-wrapper">
-                        <img src="/images/Frame 8.webp" alt="Join With Us" />
+                        <img src="/images/foto-coreteam.webp" alt="Join With Us" />
                         <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
                     </div>
                 </div>
@@ -417,6 +423,11 @@ const Home = () => {
                                 {config.instagramLink && <a href={config.instagramLink} target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i> Instagram</a>}
                                 {config.linkedinLink && <a href={config.linkedinLink} target="_blank" rel="noreferrer"><i className="fab fa-linkedin"></i> LinkedIn</a>}
                                 {config.emailAddress && <a href={`mailto:${config.emailAddress}`}><i className="fas fa-envelope"></i> Email: {config.emailAddress}</a>}
+                                {config.contactCenterLink && (
+                                    <a href={config.contactCenterLink} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '280px', width: 'auto', padding: '12px 20px', lineHeight: '1.4' }}>
+                                        Contact Center <br /> (Head of Partnership)
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

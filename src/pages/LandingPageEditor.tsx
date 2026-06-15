@@ -304,28 +304,17 @@ const LandingPageEditor: React.FC = () => {
                     <TextField label="Speakers Section Title" value={config.speakersTitle} onChange={(v: string) => upd({ speakersTitle: v })} rows={2}
                         hint="Use a new line (Enter) for the second line of the heading." />
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '8px' }}>
-                        <ImageInput label="Speakers Image" value={config.speakersImage} onChange={(v: string) => upd({ speakersImage: v })} />
+                        <ImageInput label="Speakers 1st Gen Image" value={config.speakersImage} onChange={(v: string) => upd({ speakersImage: v })} />
+                        <ImageInput label="Speakers 2nd Gen Image" value={config.speakers2ndImage} onChange={(v: string) => upd({ speakers2ndImage: v })} />
                         <ImageInput label="Coreteam Image" value={config.coreteamImage} onChange={(v: string) => upd({ coreteamImage: v })} />
                         <ImageInput label="Mentors Image" value={config.mentorsImage} onChange={(v: string) => upd({ mentorsImage: v })} />
                         <ImageInput label="Members Image" value={config.membersImage} onChange={(v: string) => upd({ membersImage: v })} />
+                        <ImageInput label="Advisors Image" value={config.advisorsImage} onChange={(v: string) => upd({ advisorsImage: v })} />
                     </div>
                 </Section>
 
-                {/* 9. Links & CTA */}
-                <Section number="9" title="Links & Call to Action">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                        <ImageInput label="Poster Left Image" value={config.posterLeftImage} onChange={(v: string) => upd({ posterLeftImage: v })} />
-                        <ImageInput label="Poster Right Image" value={config.posterRightImage} onChange={(v: string) => upd({ posterRightImage: v })} />
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '12px' }}>
-                        <TextField label="Poster Link (Saraswati Fellowship)" value={config.posterLink} onChange={(v: string) => upd({ posterLink: v })} />
-                        <TextField label="Join Section Button Text" value={config.joinSectionTitle} onChange={(v: string) => upd({ joinSectionTitle: v })} />
-                    </div>
-                    <TextField label="Join With Us Link (Google Form)" value={config.joinLink} onChange={(v: string) => upd({ joinLink: v })} />
-                </Section>
-
-                {/* 10. Contact / Footer */}
-                <Section number="10" title="Contact & Footer">
+                {/* 9. Contact / Footer */}
+                <Section number="9" title="Contact & Footer">
                     <TextField label="Footer Heading" value={config.footerConnectTitle} onChange={(v: string) => upd({ footerConnectTitle: v })} />
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '8px' }}>
                         <TextField label="Instagram Link" value={config.instagramLink} onChange={(v: string) => upd({ instagramLink: v })} />

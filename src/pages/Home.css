@@ -129,8 +129,10 @@ body.kartika-home-active::before {
 /* Ensure hero section padding is from style.css not App.css */
 .kartika-home .hero {
     padding: 0;
-    height: auto; /* Override App.css 100vh */
-    flex-direction: column !important; /* Force column layout */
+    height: auto;
+    /* Override App.css 100vh */
+    flex-direction: column !important;
+    /* Force column layout */
     justify-content: center !important;
     align-items: center !important;
     overflow: visible !important;
@@ -151,7 +153,8 @@ body.kartika-home-active::before {
     width: 180px;
     max-width: 180px;
     flex-shrink: 0;
-    margin-right: auto !important; /* Push everything else right */
+    margin-right: auto !important;
+    /* Push everything else right */
     order: 1 !important;
     float: none !important;
 }
@@ -218,6 +221,11 @@ body.kartika-home-active .whatsapp-container {
     padding: 0;
 }
 
+.join-us-image-wrapper img {
+    width: 2000px;
+    height: 878px;
+}
+
 /* Footer should keep its own styling */
 .kartika-home footer {
     padding: 60px 0 30px;
@@ -232,11 +240,11 @@ body.kartika-home-active .whatsapp-container {
     .kartika-home .mobile-menu-btn {
         display: block;
     }
-    
+
     .kartika-home .logo-container {
         width: 180px;
     }
-    
+
     .kartika-home .header-logo-text {
         font-size: 0.8em;
     }
@@ -257,7 +265,7 @@ body.kartika-home-active .whatsapp-container {
         -webkit-backdrop-filter: blur(15px) !important;
         padding: 20px !important;
         box-sizing: border-box !important;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
         align-items: center !important;
         gap: 20px !important;
     }

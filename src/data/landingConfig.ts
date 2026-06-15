@@ -1,49 +1,48 @@
 export interface LandingConfig {
-    // Navbar
-    navLogoText: string;
-    // Hero
-    heroTitle: string;
-    heroSubtitle: string;
-    heroImage: string;
-    // About
-    aboutText: string;
-    aboutImage: string;
-    // Missions
-    missionsHeading: string;
-    missions: { id: string; title: string; desc: string }[];
-    // Programs
-    programsHeading: string;
-    programs: { id: string; title: string; subtitle: string; desc: string }[];
-    // Stats
-    statsGroupTitle: string;
-    stats: { 
-        events: string; eventsLabel: string; 
-        students: string; studentsLabel: string; 
-        satisfaction: string; satisfactionLabel: string; 
-    };
-    // Partners
-    partnersHeading: string;
-    partners: { id: string; logo: string; alt: string; description: string }[];
-    // Speakers / Team
-    speakersTitle: string;
-    speakersImage: string;
-    coreteamImage: string;
-    mentorsImage: string;
-    membersImage: string;
-    // Testimonials
-    testimonialsHeading: string;
-    testimonials: { id: string; name: string; role: string; text: string }[];
-    // Posters & CTAs
-    posterLeftImage: string;
-    posterRightImage: string;
-    posterLink: string;
-    joinSectionTitle: string;
-    joinLink: string;
-    // Footer / Contact
-    footerConnectTitle: string;
-    instagramLink: string;
-    linkedinLink: string;
-    emailAddress: string;
+  // Navbar
+  navLogoText: string;
+  // Hero
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImage: string;
+  // About
+  aboutText: string;
+  aboutImage: string;
+  // Missions
+  missionsHeading: string;
+  missions: { id: string; title: string; desc: string }[];
+  // Programs
+  programsHeading: string;
+  programs: { id: string; title: string; subtitle: string; desc: string }[];
+  // Stats
+  statsGroupTitle: string;
+  stats: {
+    events: string; eventsLabel: string;
+    students: string; studentsLabel: string;
+    satisfaction: string; satisfactionLabel: string;
+  };
+  // Partners
+  partnersHeading: string;
+  partners: { id: string; logo: string; alt: string; description: string }[];
+  // Speakers / Team
+  speakersTitle: string;
+  speakersImage: string;
+  speakers2ndImage: string;
+  coreteamImage: string;
+  mentorsImage: string;
+  membersImage: string;
+  advisorsImage: string;
+  // Testimonials
+  testimonialsHeading: string;
+  testimonials: { id: string; name: string; role: string; text: string }[];
+  joinSectionTitle: string;
+  joinLink: string;
+  // Footer / Contact
+  footerConnectTitle: string;
+  instagramLink: string;
+  linkedinLink: string;
+  contactCenterLink: string;
+  emailAddress: string;
 }
 
 export const defaultLandingConfig: LandingConfig = {
@@ -92,13 +91,13 @@ export const defaultLandingConfig: LandingConfig = {
       "desc": "Kartinection is a Kartika.id program focused on networking for female engineering students. It helps students connect with professionals, alumni, and peers to expand their networks and gain industry insights."
     }
   ],
-  "statsGroupTitle": "Kartika.id First Generation",
+  "statsGroupTitle": "Kartika.id Third Generation",
   "stats": {
-    "events": "15+",
+    "events": "30+",
     "eventsLabel": "Events (Kartishare, Kartinection and Kartiship)",
-    "students": "75+",
+    "students": "100+",
     "studentsLabel": "Female Engineering Students Involved",
-    "satisfaction": "4.8/5",
+    "satisfaction": "4.81/5",
     "satisfactionLabel": "Overall Satisfaction"
   },
   "testimonialsHeading": "What they say about us",
@@ -161,51 +160,51 @@ export const defaultLandingConfig: LandingConfig = {
       "description": "Kartishare with AAPG Indonesia"
     }
   ],
-  "speakersTitle": "Our Speakers\nKartika.id First Generation",
+  "speakersTitle": "Our Speakers\nKartika.id",
   "speakersImage": "/images/asset speaker first gen.webp",
-  "coreteamImage": "/images/asset coreteam.webp",
-  "mentorsImage": "/images/asset mentor 2nd.webp",
-  "membersImage": "/images/asset member first gen.webp",
-  "posterLeftImage": "/images/poster left.webp",
-  "posterRightImage": "/images/poster-content-right.png",
-  "posterLink": "http://saraswatifellowship.com/",
+  "speakers2ndImage": "/images/speakers2ndgen.webp",
+  "coreteamImage": "/images/coreteam_lebih besar.webp",
+  "advisorsImage": "/images/advisor_lebih besar.webp",
+  "mentorsImage": "/images/ALL MENTORS.webp",
+  "membersImage": "/images/UNIV MEMBER GEN 2.webp",
   "joinSectionTitle": "Join With us",
-  "joinLink": "https://forms.gle/UFg49LSrEJRQmVy9/",
+  "joinLink": "https://bit.ly/KartikaID_3rdGen_Registration_Form",
   "footerConnectTitle": "Connect With Us",
   "instagramLink": "https://www.instagram.com/kartikaidn/",
   "linkedinLink": "https://www.linkedin.com/company/kartika-id",
-  "emailAddress": "kartiniteknikberdaya@gmail.com"
+  "contactCenterLink": "https://wa.me/+6282314332942",
+  "emailAddress": "connectkartikaidn@gmail.com"
 };
 
 export const getLandingConfig = (): LandingConfig => {
-    try {
-        const stored = localStorage.getItem('kartika_landing_config');
-        if (stored) {
-            return { ...defaultLandingConfig, ...JSON.parse(stored) };
-        }
-    } catch (e) {
-        console.error('Error parsing landing config:', e);
+  try {
+    const stored = localStorage.getItem('kartika_landing_config');
+    if (stored) {
+      return { ...defaultLandingConfig, ...JSON.parse(stored) };
     }
-    return defaultLandingConfig;
+  } catch (e) {
+    console.error('Error parsing landing config:', e);
+  }
+  return defaultLandingConfig;
 };
 
 export const saveLandingConfig = (config: LandingConfig) => {
-    localStorage.setItem('kartika_landing_config', JSON.stringify(config));
+  localStorage.setItem('kartika_landing_config', JSON.stringify(config));
 };
 
 export const getLandingDraft = (): LandingConfig => {
-    try {
-        const stored = localStorage.getItem('kartika_landing_draft');
-        if (stored) {
-            return { ...defaultLandingConfig, ...JSON.parse(stored) };
-        }
-    } catch (e) {
-        console.error('Error parsing landing draft:', e);
+  try {
+    const stored = localStorage.getItem('kartika_landing_draft');
+    if (stored) {
+      return { ...defaultLandingConfig, ...JSON.parse(stored) };
     }
-    // Fall back to live config if no draft exists
-    return getLandingConfig();
+  } catch (e) {
+    console.error('Error parsing landing draft:', e);
+  }
+  // Fall back to live config if no draft exists
+  return getLandingConfig();
 };
 
 export const saveLandingDraft = (config: LandingConfig) => {
-    localStorage.setItem('kartika_landing_draft', JSON.stringify(config));
+  localStorage.setItem('kartika_landing_draft', JSON.stringify(config));
 };
