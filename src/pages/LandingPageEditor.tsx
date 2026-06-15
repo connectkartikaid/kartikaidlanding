@@ -316,10 +316,11 @@ const LandingPageEditor: React.FC = () => {
                 {/* 9. Contact / Footer */}
                 <Section number="9" title="Contact & Footer">
                     <TextField label="Footer Heading" value={config.footerConnectTitle} onChange={(v: string) => upd({ footerConnectTitle: v })} />
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '8px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '12px', marginTop: '8px' }}>
                         <TextField label="Instagram Link" value={config.instagramLink} onChange={(v: string) => upd({ instagramLink: v })} />
                         <TextField label="LinkedIn Link" value={config.linkedinLink} onChange={(v: string) => upd({ linkedinLink: v })} />
                         <TextField label="Email Address" value={config.emailAddress} onChange={(v: string) => upd({ emailAddress: v })} />
+                        <TextField label="Contact Center Link" value={config.contactCenterLink} onChange={(v: string) => upd({ contactCenterLink: v })} />
                     </div>
                 </Section>
 
