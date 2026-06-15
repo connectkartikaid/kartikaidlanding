@@ -94,7 +94,7 @@ export const defaultLandingConfig: LandingConfig = {
   ],
   "statsGroupTitle": "Kartika.id First Generation",
   "stats": {
-    "events": "15+",
+    "events": "15000+",
     "eventsLabel": "Events (Kartishare, Kartinection and Kartiship)",
     "students": "75+",
     "studentsLabel": "Female Engineering Students Involved",
