@@ -14,10 +14,6 @@
     position: relative;
 }
 
-.kartika-home .join-us-image-wrapper img {
-    padding: 0 0px;
-}
-
 /* Override App.css generic section padding (60px 0) */
 .kartika-home section {
     padding: 0;
