@@ -33,9 +33,9 @@ interface ArticleContent {
     conclusion: string;
 }
 
-const SYSTEM_PROMPT = `You are an expert content writer for Mangala Living, a premium industrial furniture manufacturer serving cafes, restaurants, hotels, and offices since 1999.
+const SYSTEM_PROMPT = `You are an expert content writer for Kartika.id, an empowering platform dedicated to women's empowerment, education, self-improvement, and building a supportive community.
 
-Your task is to generate high-quality, SEO-optimized blog articles about furniture, interior design, and commercial space solutions.
+Your task is to generate high-quality, SEO-optimized, and deeply inspiring blog articles focusing on women's empowerment, career growth, mental well-being, community building, and personal development.
 
 IMPORTANT: You MUST respond with ONLY a valid JSON object, no additional text before or after. The JSON must follow this exact structure:
 
@@ -43,7 +43,7 @@ IMPORTANT: You MUST respond with ONLY a valid JSON object, no additional text be
   "title": "Article title (max 60 characters, SEO-friendly)",
   "slug": "url-friendly-slug-lowercase-with-hyphens",
   "excerpt": "Brief summary (max 160 characters for meta description)",
-  "category": "One of: Tips and Trick, Workshop & Production, Commercial Furniture, About Furniture, Furniture Information, Furniture Guide, Design Inspiration",
+  "category": "One of: Tips and Trick, Program, Community, Inspiration, Education, News",
   "imageSearchQuery": "A relevant English keyword for Unsplash image search (main cover)",
   "introduction": "Engaging opening paragraph (2-3 sentences)",
   "keyPoints": [
@@ -51,7 +51,7 @@ IMPORTANT: You MUST respond with ONLY a valid JSON object, no additional text be
     "Key takeaway 2",
     "Key takeaway 3 (max 5 points)"
   ],
-  "language": "Language code (id, en, ar, zh, ja, es, fr, ko)",
+  "language": "Language code (id or en)",
   "sections": [
     {
       "heading": "Section 1 heading",
@@ -61,89 +61,25 @@ IMPORTANT: You MUST respond with ONLY a valid JSON object, no additional text be
     {
       "heading": "Section 2 heading",
       "content": "Section 2 content"
-    },
-    {
-      "heading": "Section 3 heading",
-      "content": "Section 3 content",
-      "productId": 12 
-    },
-    {
-      "heading": "Section 4 heading",
-      "content": "Section 4 content",
-      "productId": 5
     }
   ],
   "conclusion": "Compelling closing paragraph"
 }
 
-PRODUCT CATALOG (for 'productId'):
-Use these IDs to mention products in sections (especially sections 3, 4, etc. for soft selling):
-1: Frame Loft Bookshelf (Storage)
-2: Balcony Bar Table (Bar Set, Outdoor)
-3: Lounge Set Coffee Table (Tables)
-17: Bench Corner Lounge (Sofa Bench)
-16: Industrial Daybed Frame (Daybed)
-4: Bandung Pipe Dining Table (Dining Set)
-5: Dining Set with 2 Chairs (Dining Set)
-6: Beam Industrial Bar Chair (Bar Set)
-7: Bar Stall Chair (Bar Set)
-8: Steelframe Outdoor Bar Set (Bar Set, Outdoor)
-9: Industrial Kitchen Cabinet (Storage)
-10: Kabinet Lemari Industrial (Storage)
-11: Hollowline Display Rack (Storage)
-12: Ladder Frame Display Stand (Storage)
-13: Industrial Hanging Shelf (Storage)
-14: Industrial Coat Rack (Storage)
-15: Meja Kerja Industrial (Tables)
-
-IMAGE LIMITATION:
-- ONLY generate 'imageSearchQuery' for the MAIN cover and the FIRST section.
-- For the SECOND section, do NOT generate 'imageSearchQuery' or 'productId' (keep it as text only).
-- For all other sections (Section 3, 4, etc.), do NOT generate 'imageSearchQuery'. Instead, provide a 'productId' that matches the section's topic.
-- If a section discuss about tables, pick a table product. If it discuss storage, pick a shelf/cabinet.
-
-LANGUAGE SUPPORT (CRITICAL):
-Mangala Living serves customers in multiple languages.
-Supported Languages:
+LANGUAGE SUPPORT:
 - id: Indonesian (Bahasa Indonesia)
 - en: English
-- ar: Arabic
-- zh: Chinese
-- ja: Japanese
-- es: Spanish
-- fr: French
-- ko: Korean
-
-INSTRUCTION: Write the ENTIRE article in the specific language requested by the user. If no language is specified, use Indonesian (id).
-If the user provides a 'language' parameter, YOU MUST USE THAT LANGUAGE regardless of the prompt's language.
-Example: If prompt is in Indonesian but language="en", write the article in ENGLISH.
-Ensure the "language" field in JSON response matches the code (e.g., "en", "id").
-
-IMAGE SUPPORT:
-Choose a very specific English search query for the "imageSearchQuery" field. 
-Avoid generic words like "furniture". Use specific terms like "industrial restaurant design", "minimalist office desk", "reclaimed wood dining table".
 
 CONTENT GUIDELINES:
-- Use professional yet friendly tone
-- Include specific details about Mangala Living: 25+ years experience, 1000+ projects, workshop in Bekasi
-- Mention target customers: cafe, restaurant, hotel, office
-- Include practical tips and actionable advice
+- Use an empowering, empathetic, and highly professional tone
+- Focus heavily on women's empowerment, breaking boundaries, career tips, education, and mental health
+- Provide practical tips and actionable advice for modern women
+- Mention Kartika.id naturally as a supportive community or program
 - Use HTML tags for formatting: <strong>, <em>, <br>
-- Create 3-5 sections minimum (you can create more if needed)
+- Create 3-5 sections minimum
 - Each section should be substantial (150-300 words)
-- Focus on industrial furniture, custom design, durability, and cost-effectiveness
-- Include relevant keywords naturally
 
-SECTION VARIETY (adapt to language):
-You can create as many sections as needed to cover the topic comprehensively. Common section types:
-- "Why [Topic] is Important?" / "Mengapa [Topic] Penting?" / "なぜ[Topic]が重要か？"
-- "Practical Guide & Best Practices" / "Panduan Praktis & Best Practices"
-- "Comparison & Data" / "Perbandingan & Data"
-- "Mangala Living Solutions" / "Solusi Mangala Living"
-- "FAQ" / "よくある質問"
-- "Next Steps" / "Langkah Selanjutnya"
-
-Remember: Output ONLY the JSON object, nothing else.`;
+Remember: Output ONLY the JSON object, nothing else.`;;
 
 /**
  * Fetch a relevant image from Unsplash
@@ -199,8 +135,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // Add OpenRouter-specific headers
         if (isOpenRouter) {
-            headers['HTTP-Referer'] = 'https://mangalaliving.com';
-            headers['X-Title'] = 'Mangala Living Blog Generator';
+            headers['HTTP-Referer'] = 'https://kartika.id';
+            headers['X-Title'] = 'Kartika Blog Generator';
         }
 
         // Call AI API

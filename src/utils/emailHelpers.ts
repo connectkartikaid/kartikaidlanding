@@ -3,7 +3,7 @@
  */
 
 /**
- * Send email notification to rioanggaraclub@gmail.com in the background
+ * Send email notification to kartiniteknikberdaya@gmail.com in the background
  * This function does not block the main action and silently handles errors
  */
 export const sendBackgroundEmail = async (

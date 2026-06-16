@@ -35,7 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             headers: {
                 'Authorization': `Bearer ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
-                'User-Agent': 'Mangala-Admin-Bot'
+                'User-Agent': 'Kartika-Admin-Bot'
             }
         });
 
@@ -71,7 +71,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 'Authorization': `Bearer ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
-                'User-Agent': 'Mangala-Admin-Bot'
+                'User-Agent': 'Kartika-Admin-Bot'
             },
             body: JSON.stringify({
                 message: commitMessage,

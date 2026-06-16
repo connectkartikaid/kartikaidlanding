@@ -113,13 +113,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <p style="margin: 5px 0;"><strong>Accept Language:</strong> ${req.headers['accept-language'] || 'Unknown'}</p>
       </div>
       <div style="margin-top: 30px; border-top: 2px solid #8B7355; padding-top: 15px; font-size: 12px; color: #777;">
-        <p>This is an automated notification from lifewithmangala.com</p>
+        <p>This is an automated notification from kartika.id</p>
         <p>You're receiving this because a visitor interacted with your website.</p>
       </div>
     `;
 
     if (isCatalog || notificationType === 'order_now' || notificationType === 'whatsapp_click' || notificationType === 'chatbot_lead' || notificationType === 'chatbot_message' || notificationType === 'subscription') {
-      subject = `Mangala Notification: ${notificationType.replace('_', ' ').toUpperCase()}`;
+      subject = `Kartika.id Notification: ${notificationType.replace('_', ' ').toUpperCase()}`;
       html = `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 25px; color: #333; line-height: 1.6; max-width: 600px; border: 1px solid #ddd; border-radius: 8px;">
           <h2 style="color: #8B7355; border-bottom: 2px solid #8B7355; padding-bottom: 10px;">🔔 New ${notificationType.replace('_', ' ').toUpperCase()}</h2>
@@ -142,7 +142,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Invalid notification type' });
     }
 
-    const recipients = ['lifewithmangala@gmail.com'];
+    const recipients = ['kartiniteknikberdaya@gmail.com', 'hello@kartika.id'];
     const results = [];
 
     // 1. Send Admin Notification (Existing Logic)
@@ -150,7 +150,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log(`[SUBSCRIPTION] Attempting to send notification to admin: ${recipient}`);
       try {
         const { data, error } = await resend.emails.send({
-          from: 'Mangala Living <catalog@mangala-living.com>',
+          from: 'Kartika.id <hello@kartika.id>',
           to: recipient,
           subject: subject,
           html: html,
@@ -406,7 +406,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       try {
         await resend.emails.send({
-          from: 'Mangala Living <no-reply-catalog@mangala-living.com>',
+          from: 'Kartika.id <no-reply@kartika.id>',
           to: email,
           subject: t.subject,
           html: userHtml,

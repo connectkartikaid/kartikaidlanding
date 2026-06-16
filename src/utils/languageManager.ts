@@ -4,7 +4,7 @@
  * Supports: English (en), Indonesian (id), Arabic (ar), Mandarin (zh), Japanese (ja), Spanish (es), French (fr), Korean (ko)
  */
 
-const LANGUAGE_STORAGE_KEY = 'mangala_lang_preference'
+const LANGUAGE_STORAGE_KEY = 'kartika_lang_preference'
 
 export type LanguageCode = 'id' | 'en' | 'ar' | 'zh' | 'ja' | 'es' | 'fr' | 'ko'
 

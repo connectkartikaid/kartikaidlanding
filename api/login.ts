@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // For this simple implementation, we'll return a success flag and a simple mock token.
         return res.status(200).json({
             success: true,
-            token: 'mangala_admin_session_' + Date.now(),
+            token: 'kartika-admin-token-' + Date.now(),
             user: { username: ADMIN_USERNAME }
         });
     }

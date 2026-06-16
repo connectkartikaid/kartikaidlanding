@@ -77,7 +77,7 @@ export const createTrackedWhatsAppUrl = (
 ): string => {
   // Track on URL creation (will be called when component renders)
   // We'll track again on actual click for accuracy
-  const baseUrl = 'https://wa.me/+6288801146881';
+  const baseUrl = 'https://wa.me/+6282314332942';
   
   if (message) {
     return `${baseUrl}?text=${encodeURIComponent(message)}`;
