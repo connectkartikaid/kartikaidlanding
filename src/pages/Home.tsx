@@ -425,7 +425,7 @@ const Home = () => {
                                 {config.emailAddress && <a href={`mailto:${config.emailAddress}`}><i className="fas fa-envelope"></i> Email: {config.emailAddress}</a>}
                                 {config.contactCenterLink && (
                                     <a href={config.contactCenterLink} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '280px', width: 'auto', padding: '12px 20px', lineHeight: '1.4' }}>
-                                        Contact Center <br /> (Head of Partnership)
+                                       <i className="fab fa-whatsapp" style={{ marginRight: 0, marginBottom: '8px' }}></i> Contact Center <br /> (Head of Partnership)
                                     </a>
                                 )}
                             </div>

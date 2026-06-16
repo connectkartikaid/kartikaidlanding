@@ -310,6 +310,9 @@ const KartikaBlogPostPage: React.FC = () => {
                 <a href="mailto:kartiniteknikberdaya@gmail.com">
                   <i className="fas fa-envelope" /> Email: kartiniteknikberdaya@gmail.com
                 </a>
+                <a href="https://wa.me/+6282314332942" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '280px', width: 'auto', padding: '12px 20px', lineHeight: '1.4' }}>
+                  <i className="fab fa-whatsapp" style={{ marginRight: 0, marginBottom: '8px' }} /> Contact Center <br /> (Head of Partnership)
+                </a>
               </div>
             </div>
           </div>
