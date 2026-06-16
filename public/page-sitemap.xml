@@ -2,198 +2,21 @@
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mangala-living.com/</loc>
-    <lastmod>2026-03-08</lastmod>
+    <loc>https://kartika.id/</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/" />
   </url>
   <url>
-    <loc>https://mangala-living.com/about</loc>
-    <lastmod>2026-03-05</lastmod>
+    <loc>https://kartika.id/about</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/about?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/about" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/about?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/about?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/about?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/about?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/about?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/about?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/about" />
   </url>
   <url>
-    <loc>https://mangala-living.com/blog</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://kartika.id/blog</loc>
+    <lastmod>2026-06-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/blog?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/blog" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/blog?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/blog?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/blog?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/blog?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/blog?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/blog?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/blog" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/contact-us</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/contact-us?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/contact-us" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/contact-us?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/contact-us?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/contact-us?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/contact-us?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/contact-us?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/contact-us?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/contact-us" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/custom-order</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/custom-order?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/custom-order" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/custom-order?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/custom-order?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/custom-order?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/custom-order?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/custom-order?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/custom-order?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/custom-order" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/furniture-besi-custom-bekasi</loc>
-    <lastmod>2025-11-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/furniture-besi-custom-bekasi" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/furniture-besi-custom-bekasi?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/furniture-besi-custom-bekasi" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/image-license</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.30</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/image-license?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/image-license" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/image-license?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/image-license?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/image-license?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/image-license?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/image-license?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/image-license?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/image-license" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/partnership</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/partnership?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/partnership" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/partnership?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/partnership?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/partnership?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/partnership?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/partnership?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/partnership?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/partnership" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/product-tag/best-seller</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.60</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/product-tag/best-seller?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/product-tag/best-seller" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/product-tag/best-seller?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/product-tag/best-seller?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/product-tag/best-seller?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/product-tag/best-seller?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/product-tag/best-seller?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/product-tag/best-seller?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/product-tag/best-seller" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/search</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.40</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/search?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/search" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/search?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/search?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/search?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/search?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/search?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/search?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/search" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/shipping-information</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.40</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/shipping-information?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/shipping-information" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/shipping-information?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/shipping-information?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/shipping-information?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/shipping-information?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/shipping-information?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/shipping-information?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/shipping-information" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/shop</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/shop?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/shop" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/shop?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/shop?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/shop?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/shop?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/shop?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/shop?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/shop" />
-  </url>
-  <url>
-    <loc>https://mangala-living.com/terms-of-service</loc>
-    <lastmod>2026-03-05</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.40</priority>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://mangala-living.com/terms-of-service?lang=id" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mangala-living.com/terms-of-service" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mangala-living.com/terms-of-service?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://mangala-living.com/terms-of-service?lang=zh" />
-    <xhtml:link rel="alternate" hreflang="ja-JP" href="https://mangala-living.com/terms-of-service?lang=ja" />
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://mangala-living.com/terms-of-service?lang=es" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://mangala-living.com/terms-of-service?lang=fr" />
-    <xhtml:link rel="alternate" hreflang="ko-KR" href="https://mangala-living.com/terms-of-service?lang=ko" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mangala-living.com/terms-of-service" />
   </url>
 </urlset>
