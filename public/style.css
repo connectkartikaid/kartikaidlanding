@@ -1444,7 +1444,8 @@ footer::before {
     }
 
     .footer-section .footer-links-row {
-        gap: 8px;
+        flex-direction: column;
+        gap: 16px;
     }
 }
 

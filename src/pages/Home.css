@@ -234,7 +234,20 @@ body.kartika-home-active .whatsapp-container {
 
 @media (max-width: 768px) {
     .kartika-home .container {
-        padding: 0 15px;
+        padding: 0 0px;
+    }
+
+    .kartika-home h1 {
+        font-size: 2.4rem;
+    }
+
+    .kartika-home .our-missions-main-content{
+        align-items: center;
+    }
+
+    .join-us-image-wrapper img {
+        width: 2500px;
+        height: 1000px;
     }
 
     .kartika-home .mobile-menu-btn {
