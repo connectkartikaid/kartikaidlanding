@@ -1447,6 +1447,10 @@ footer::before {
         flex-direction: column;
         gap: 16px;
     }
+
+    .footer-section .footer-links-row a {
+        justify-content: center;
+    }
 }
 
 /* General Section Title (if used outside about-us) */
