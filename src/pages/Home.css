@@ -232,6 +232,10 @@ body.kartika-home-active .whatsapp-container {
     padding-top: 10px;
 }
 
+.kartika-home .join-us-content-container {
+    padding: 0 !important;
+}
+
 @media (max-width: 768px) {
     .kartika-home .container {
         padding: 0 20px;
