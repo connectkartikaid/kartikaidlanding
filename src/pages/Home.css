@@ -237,8 +237,8 @@ body.kartika-home-active .whatsapp-container {
         padding: 0 20px;
     }
 
-    .container img{
-        padding : 0 0px;
+    .kartika-home .join-us-content-container {
+        padding: 0 !important;
     }
 
     /* .about-us-content p{
@@ -254,8 +254,8 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .join-us-image-wrapper img {
-        width: 500;
-        height: 1000px;
+        width: 100% !important;
+        height: auto !important;
     }
 
     .kartika-home .mobile-menu-btn {
