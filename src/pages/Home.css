@@ -237,6 +237,10 @@ body.kartika-home-active .whatsapp-container {
         padding: 0 0px;
     }
 
+    .about-us-content p{
+        font-size: 20px;
+    }
+
     .kartika-home h1 {
         font-size: 2.4rem;
     }
@@ -246,7 +250,7 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .join-us-image-wrapper img {
-        width: 2500px;
+        width: 500;
         height: 1000px;
     }
 
