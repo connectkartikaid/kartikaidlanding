@@ -318,7 +318,7 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .kartika-home .kartika-header.mobile-menu-active .mobile-menu-btn {
-        color: #D04A02 !important;
+        color: #ff8558 !important;
     }
 
     /* Mobile menu dropdown */
@@ -358,14 +358,14 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .kartika-home .nav-links.mobile-open a.active-mobile {
-        background: #D04A02 !important;
+        background: #ff8558 !important;
         color: #ffffff !important;
         border-bottom: none !important;
     }
 
     .kartika-home .nav-links.mobile-open a:not(.active-mobile):hover {
         background: #fafafa !important;
-        color: #D04A02 !important;
+        color: #ff8558 !important;
     }
 
     .kartika-home .nav-home-link {
