@@ -405,11 +405,11 @@ const Home = () => {
                 <div className="gradient-overlay right"></div>
             </section>
 
-            <section className="join-us-section" id="join-us" style={{ position: 'relative', zIndex: 1000 }}>
+            <section className="join-us-section" style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container join-us-content-container">
                     <div className="join-us-image-wrapper">
                         <img src="/images/foto-coreteam-versi2.webp" alt="Join With Us" />
-                        <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
+                        <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" id="join-us" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
                     </div>
                 </div>
             </section>
