@@ -329,7 +329,7 @@ body.kartika-home-active .whatsapp-container {
         top: 100% !important;
         left: 0 !important;
         width: 100% !important;
-        background: #ff8558 !important;
+        background: #ffffff !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
@@ -364,8 +364,8 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .kartika-home .nav-links.mobile-open a:not(.active-mobile):hover {
-        background: #ff8558 !important;
-        color: #ffffff !important;
+        background: #fafafa !important;
+        color: #ff8558 !important;
     }
 
     .kartika-home .nav-home-link {
