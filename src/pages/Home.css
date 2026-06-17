@@ -106,7 +106,7 @@ body.kartika-home-active::before {
 
 .kartika-home .logo-container:hover .header-logo-img,
 .kartika-home .kartika-header a:hover img {
-    filter: brightness(0) invert(65%) sepia(47%) saturate(1478%) hue-rotate(334deg) brightness(103%) contrast(101%) !important;
+    filter: brightness(0) invert(32%) sepia(87%) saturate(2466%) hue-rotate(15deg) brightness(89%) contrast(105%) !important;
 }
 
 .kartika-home .header-logo-text {
