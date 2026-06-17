@@ -198,6 +198,10 @@ body.kartika-home-active::before {
     transition: all 0.3s ease;
 }
 
+.kartika-home .nav-home-link {
+    display: none !important;
+}
+
 /* Hide Mangala's global WhatsApp button on Kartika page */
 body.kartika-home-active .whatsapp-container {
     display: none !important;
@@ -301,6 +305,23 @@ body.kartika-home-active .whatsapp-container {
         display: none !important;
     }
 
+    /* Active mobile menu header override */
+    .kartika-home .kartika-header.mobile-menu-active {
+        background: #ffffff !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .kartika-home .kartika-header.mobile-menu-active .header-logo-text {
+        color: #333333 !important;
+    }
+
+    .kartika-home .kartika-header.mobile-menu-active .mobile-menu-btn {
+        color: #D04A02 !important;
+    }
+
+    /* Mobile menu dropdown */
     .kartika-home .nav-links.mobile-open {
         display: flex !important;
         flex-direction: column !important;
@@ -308,14 +329,47 @@ body.kartika-home-active .whatsapp-container {
         top: 100% !important;
         left: 0 !important;
         width: 100% !important;
-        background: #ff8558 !important;
-        /* backdrop-filter: blur(15px) !important; */
-        /* -webkit-backdrop-filter: blur(15px) !important; */
-        padding: 20px !important;
+        background: #ffffff !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        border-top: 1px solid #f0f0f0 !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a {
+        display: flex !important;
+        justify-content: space-between !important;
         align-items: center !important;
-        gap: 20px !important;
+        color: #333333 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 16px 24px !important;
+        text-align: left !important;
+        width: 100% !important;
+        font-size: 1.05em !important;
+        font-weight: 600 !important;
+        font-family: 'Josefin Sans', sans-serif !important;
+        transition: background 0.2s ease, color 0.2s ease !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        box-shadow: none !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a.active-mobile {
+        background: #D04A02 !important;
+        color: #ffffff !important;
+        border-bottom: none !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a:not(.active-mobile):hover {
+        background: #fafafa !important;
+        color: #D04A02 !important;
+    }
+
+    .kartika-home .nav-home-link {
+        display: flex !important;
     }
 
 }

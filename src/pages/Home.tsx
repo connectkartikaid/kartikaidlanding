@@ -168,7 +168,7 @@ const Home = () => {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Helmet>
 
-            <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}>
+            <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
                 <div className="header-inner">
                     <div className="logo-container" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                         <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
@@ -180,6 +180,7 @@ const Home = () => {
                     </button>
 
                     <div className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                        <a href="#" className="nav-home-link active-mobile" onClick={(e) => { handleNavClick(e, '#'); setIsMobileMenuOpen(false); }}>Home</a>
                         <a href="#about-us" onClick={(e) => { handleNavClick(e, '#about-us'); setIsMobileMenuOpen(false); }}>About Us</a>
                         <a href="#our-programs" onClick={(e) => { handleNavClick(e, '#our-programs'); setIsMobileMenuOpen(false); }}>Our Programs</a>
                         <a href="#our-team" onClick={(e) => { handleNavClick(e, '#our-team'); setIsMobileMenuOpen(false); }}>Our Team</a>
