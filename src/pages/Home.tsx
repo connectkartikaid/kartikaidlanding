@@ -170,7 +170,7 @@ const Home = () => {
 
             <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="header-inner">
-                    <div className="logo-container">
+                    <div className="logo-container" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                         <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
                         <p className="header-logo-text">{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
                     </div>
@@ -408,7 +408,7 @@ const Home = () => {
             <section className="join-us-section" id="join-us" style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container join-us-content-container">
                     <div className="join-us-image-wrapper">
-                        <img src="/images/foto-coreteam.webp" alt="Join With Us" />
+                        <img src="/images/coreteam-footer.webp" alt="Join With Us" />
                         <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
                     </div>
                 </div>

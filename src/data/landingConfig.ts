@@ -49,7 +49,7 @@ export const defaultLandingConfig: LandingConfig = {
   "navLogoText": "Kartini Teknik Berdaya",
   "heroTitle": "Empowering Future Female Engineers",
   "heroSubtitle": "From Eastern Indonesia to the Nation",
-  "heroImage": "/images/kartika sect-1.webp",
+  "heroImage": "/images/kartika sect-1-ver-2.webp",
   "aboutText": "Kartika.id is a community initiative founded by Ugi Fitri Syawalyani, an Industrial Engineering student at Universitas Hasanuddin and an alumna of the Young Leaders for Indonesia program by McKinsey & Co. Our mission is to empower female engineering students—starting from Eastern Indonesia and now expanding nationwide. We aim to bridge the gap in support, opportunity, and access to networks through mentoring programs, career-sharing sessions, and inclusive community building. Kartika.id helps female engineering students navigate career paths in engineering, break stereotypes, and grow both professionally and personally.",
   "aboutImage": "/images/potrait-right.png",
   "missionsHeading": "Our Missions",
