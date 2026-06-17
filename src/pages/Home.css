@@ -307,7 +307,7 @@ body.kartika-home-active .whatsapp-container {
 
     /* Active mobile menu header override */
     .kartika-home .kartika-header.mobile-menu-active {
-        background: #ffffff !important;
+        background: #ff8558 !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
@@ -318,7 +318,7 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .kartika-home .kartika-header.mobile-menu-active .mobile-menu-btn {
-        color: #ff8558 !important;
+        color: #ffffff !important;
     }
 
     /* Mobile menu dropdown */
