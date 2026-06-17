@@ -298,6 +298,57 @@
     display: inline-block !important;
     padding: 8px 4px;
   }
+
+   /* Mobile menu dropdown */
+    .kartika-home .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        border-top: 1px solid #f0f0f0 !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        color: #333333 !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 16px 24px !important;
+        text-align: left !important;
+        width: 100% !important;
+        font-size: 1.05em !important;
+        font-weight: 600 !important;
+        font-family: 'Josefin Sans', sans-serif !important;
+        transition: background 0.2s ease, color 0.2s ease !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        box-shadow: none !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a.active-mobile {
+        background: #ff8558 !important;
+        color: #ffffff !important;
+        border-bottom: none !important;
+    }
+
+    .kartika-home .nav-links.mobile-open a:not(.active-mobile):hover {
+        background: #fafafa !important;
+        color: #ff8558 !important;
+    }
+
+    .kartika-home .nav-home-link {
+        display: flex !important;
+    }
 }
 
 
