@@ -142,17 +142,12 @@ const KartikaBlog: React.FC = () => {
               flexShrink: 0,
             }}
           >
-            <Link to="/" className="logo-wrapper">
+            <Link to="/">
               <img
                 src="/images/Kartika-logo.png"
                 alt="Kartika.id Logo"
-                className="header-logo-img default-logo"
+                className="header-logo-img"
                 style={{ width: '100%', height: 'auto', display: 'block' }}
-              />
-              <img
-                src="/images/Logo Kartika Oren.webp"
-                alt="Kartika.id Logo Hover"
-                className="header-logo-img hover-logo"
               />
             </Link>
             <p

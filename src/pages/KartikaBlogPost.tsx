@@ -128,9 +128,8 @@ const KartikaBlogPostPage: React.FC = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '10px 20px', width: '100%', boxSizing: 'border-box' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '280px', flexShrink: 0 }}>
-            <Link to="/" className="logo-wrapper">
-              <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img default-logo" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <img src="/images/Logo Kartika Oren.webp" alt="Kartika.id Logo Hover" className="header-logo-img hover-logo" />
+            <Link to="/">
+              <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </Link>
             <p style={{ margin: '5px 0 0 0', color: '#FEFAE4', fontFamily: '"Josefin Sans", sans-serif', fontSize: '0.95em', fontWeight: 'normal' }}>Kartini Teknik Berdaya</p>
           </div>

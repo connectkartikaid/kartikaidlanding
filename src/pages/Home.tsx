@@ -171,10 +171,7 @@ const Home = () => {
             <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="header-inner">
                     <div className="logo-container" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <div className="logo-wrapper">
-                            <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img default-logo" />
-                            <img src="/images/Logo Kartika Oren.webp" alt="Kartika.id Logo Hover" className="header-logo-img hover-logo" />
-                        </div>
+                        <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
                         <p className="header-logo-text">{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
                     </div>
 
