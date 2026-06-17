@@ -364,8 +364,8 @@ body.kartika-home-active .whatsapp-container {
     }
 
     .kartika-home .nav-links.mobile-open a:not(.active-mobile):hover {
-        background: #fafafa !important;
-        color: #ff8558 !important;
+        background: #ff8558 !important;
+        color: #ffffff !important;
     }
 
     .kartika-home .nav-home-link {
