@@ -97,16 +97,40 @@ body.kartika-home-active::before {
     cursor: pointer;
 }
 
-.kartika-home .header-logo-img {
+.kartika-home .logo-wrapper {
+    position: relative;
     width: 100%;
-    height: auto;
     display: block;
-    transition: content 0.3s ease;
 }
 
-.kartika-home .logo-container:hover .header-logo-img,
-.kartika-home .kartika-header a:hover img {
-    content: url('/images/Logo Kartika Oren.webp') !important;
+.kartika-home .logo-wrapper img.default-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease;
+}
+
+.kartika-home .logo-wrapper img.hover-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.kartika-home .logo-container:hover .logo-wrapper img.default-logo,
+.kartika-home .logo-wrapper:hover img.default-logo {
+    opacity: 0;
+}
+
+.kartika-home .logo-container:hover .logo-wrapper img.hover-logo,
+.kartika-home .logo-wrapper:hover img.hover-logo {
+    opacity: 1;
+    /* width: 90%; */
 }
 
 .kartika-home .header-logo-text {
@@ -244,9 +268,9 @@ body.kartika-home-active .whatsapp-container {
 }
 
 .join-us-image-wrapper img {
-    width: 1000px;
-    height: 1200px;
-    object-position: top;
+    width: 120vw;
+    height: 80vw;
+    /* object-position: top; */
 }
 
 /* Footer should keep its own styling */
