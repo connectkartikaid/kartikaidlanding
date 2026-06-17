@@ -195,7 +195,8 @@ const KartikaBlog: React.FC = () => {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         style={{
-          background: '#D04A02',
+          // background: '#ff8558',
+          // background: '#D04A02',
           padding: '160px 20px 80px',
           textAlign: 'center',
           minHeight: '40vh',
@@ -232,7 +233,7 @@ const KartikaBlog: React.FC = () => {
       </section>
 
       {/* ── BLOG GRID (same structure as Mangala's Blog.tsx) ──────────────── */}
-      <section style={{ background: '#FEFAE4', padding: '80px 20px' }}>
+      <section style={{ padding: '80px 20px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
           {posts.length === 0 ? (
@@ -267,7 +268,7 @@ const KartikaBlog: React.FC = () => {
                       {/* Replace MANGALA badge with KARTIKA */}
                       <div
                         className="blog-card-badge"
-                        style={{ background: '#D04A02' }}
+                        style={{ background: '#ff8558' }}
                       >
                         KARTIKA
                       </div>
@@ -396,7 +397,7 @@ const KartikaBlog: React.FC = () => {
               textAlign: 'center',
               marginTop: '64px',
               padding: '40px',
-              background: '#D04A02',
+              // background: '#D04A02',
               borderRadius: '16px',
               color: '#FEFAE4',
             }}
@@ -434,6 +435,7 @@ const KartikaBlog: React.FC = () => {
                 rel="noreferrer"
                 style={{
                   background: '#FEFAE4',
+                  // background: '#bfbfbfff',
                   color: '#D04A02',
                   padding: '10px 24px',
                   borderRadius: '25px',
@@ -490,8 +492,8 @@ const KartikaBlog: React.FC = () => {
                 <a href="mailto:kartiniteknikberdaya@gmail.com">
                   <i className="fas fa-envelope" /> Email: kartiniteknikberdaya@gmail.com
                 </a>
-                <a href="https://wa.me/+6282314332942" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '280px', width: 'auto', padding: '12px 20px', lineHeight: '1.4' }}>
-                  <i className="fab fa-whatsapp" style={{ marginRight: 0, marginBottom: '8px' }} /> Contact Center <br /> (Head of Partnership)
+                <a href="https://wa.me/+6282314332942" target="_blank" rel="noreferrer">
+                  <i className="fab fa-whatsapp"></i> Contact Center (Head of Partnership)
                 </a>
               </div>
             </div>
