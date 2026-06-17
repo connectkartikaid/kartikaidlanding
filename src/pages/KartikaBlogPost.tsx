@@ -29,6 +29,7 @@ const KartikaBlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
   const [isScrolled, setIsScrolled] = useState(false)
   const [linkCopied, setLinkCopied] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
 
   const post = slug ? loadPost(slug) : undefined
@@ -124,21 +125,33 @@ const KartikaBlogPostPage: React.FC = () => {
       {/* ── NAV (identical to Home.tsx) ──────────────────────────────── */}
       <header
         ref={headerRef}
-        className={`kartika-header ${isScrolled ? 'scrolled' : ''}`}
+        className={`kartika-header ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '10px 20px', width: '100%', boxSizing: 'border-box' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '280px', flexShrink: 0 }}>
-            <Link to="/">
-              <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </Link>
-            <p style={{ margin: '5px 0 0 0', color: '#FEFAE4', fontFamily: '"Josefin Sans", sans-serif', fontSize: '0.95em', fontWeight: 'normal' }}>Kartini Teknik Berdaya</p>
-          </div>
-          <div className="nav-links" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '15px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-            <Link to="/#about-us">About Us</Link>
-            <Link to="/#our-programs">Our Programs</Link>
-            <Link to="/#our-team">Our Team</Link>
-            <Link to="/blog">Blog</Link>
-            <a href="https://bit.ly/KartikaID_3rdGen_Registration_Form" target="_blank" rel="noreferrer" className="btn">Join Now</a>
+        <div className="header-inner">
+          <Link to="/" className="logo-container">
+            <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
+            <p className="header-logo-text">Kartini Teknik Berdaya</p>
+          </Link>
+
+          <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+          </button>
+
+          <div className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+            <Link to="/" className="nav-home-link" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link to="/#about-us" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
+            <Link to="/#our-programs" onClick={() => setIsMobileMenuOpen(false)}>Our Programs</Link>
+            <Link to="/#our-team" onClick={() => setIsMobileMenuOpen(false)}>Our Team</Link>
+            <Link to="/blog" className="active-mobile" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
+            <a
+              href="https://bit.ly/KartikaID_3rdGen_Registration_Form"
+              target="_blank"
+              rel="noreferrer"
+              className="btn"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Join Now
+            </a>
           </div>
         </div>
       </header>
