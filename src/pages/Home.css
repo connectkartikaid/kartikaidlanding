@@ -335,7 +335,7 @@ body.kartika-home-active .whatsapp-container {
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08) !important;
         align-items: stretch !important;
         gap: 0 !important;
-        /* border-top: 1px solid #f0f0f0 !important; */
+        border-top: 1px solid #f0f0f0 !important;
     }
 
     .kartika-home .nav-links.mobile-open a {
