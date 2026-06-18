@@ -118,7 +118,7 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
     "image": "https://images.unsplash.com/photo-1593526613712-7b4b9a707330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHx3b21lbiUyMGVtcG93ZXJtZW50fGVufDB8MHx8fDE3ODE3NTAxMjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
     "date": "2026-06-18 02:35",
     "author": "Tim Kartika.id",
-    "status": "draft",
+    "status": "synced",
     "customContent": {
       "introduction": "Kepercayaan diri adalah kunci untuk mencapai kesuksesan dalam berbagai aspek kehidupan. <strong>Kartika.id</strong> memahami bahwa membangun kepercayaan diri tidaklah mudah, namun dengan tips dan trik yang tepat, Anda dapat meningkatkan kepercayaan diri dan mencapai tujuan Anda.",
       "keyPoints": [
@@ -145,6 +145,44 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
         }
       ],
       "conclusion": "Membangun kepercayaan diri memerlukan waktu dan usaha, namun dengan tips dan trik yang tepat, Anda dapat <strong>meningkatkan kepercayaan diri</strong> dan mencapai tujuan Anda. <strong>Kartika.id</strong> berkomitmen untuk mendukung Anda dalam membangun kepercayaan diri dan mencapai kesuksesan."
+    }
+  },
+  {
+    "id": 5,
+    "slug": "tips-mengembangkan-diri-dengan-kartika-id",
+    "title": "Kartika.id: Tips Mengembangkan Diri",
+    "category": "Tips and Trick",
+    "excerpt": "Kartika.id membantu wanita mengembangkan diri dan mencapai tujuan",
+    "image": "https://images.unsplash.com/photo-1646579217809-7dbcd8120402?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHx3YW5pdGElMjBzdWtzZXN8ZW58MHwwfHx8MTc4MTc1MDE4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "date": "2026-06-18 02:36",
+    "author": "Tim Kartika.id",
+    "status": "draft",
+    "customContent": {
+      "introduction": "Kartika.id adalah platform yang membantu wanita mengembangkan diri dan mencapai tujuan. Dengan berbagai sumber daya dan dukungan, Kartika.id membantu wanita meningkatkan kualitas hidup dan mencapai kesuksesan. <br> Dalam artikel ini, kita akan membahas beberapa tips dan trik untuk mengembangkan diri dengan Kartika.id.",
+      "keyPoints": [
+        "Mengembangkan keterampilan dan pengetahuan",
+        "Meningkatkan kepercayaan diri",
+        "Membangun jaringan dan komunitas"
+      ],
+      "language": "id",
+      "sections": [
+        {
+          "heading": "Mengembangkan Keterampilan dan Pengetahuan",
+          "content": "Kartika.id menyediakan berbagai sumber daya untuk mengembangkan keterampilan dan pengetahuan. Dengan mengikuti kursus dan pelatihan, wanita dapat meningkatkan kemampuan dan meningkatkan kesempatan untuk sukses. <em>Beberapa contoh keterampilan yang dapat dikembangkan</em> melalui Kartika.id adalah keterampilan leadership, keterampilan komunikasi, dan keterampilan manajemen waktu.",
+          "imageSearchQuery": "kursus online",
+          "image": "https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHxrdXJzdXMlMjBvbmxpbmV8ZW58MHwwfHx8MTc4MTc1MDE4N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+          "imageAlt": "kursus online"
+        },
+        {
+          "heading": "Meningkatkan Kepercayaan Diri",
+          "content": "Kepercayaan diri adalah kunci untuk sukses. Kartika.id membantu wanita meningkatkan kepercayaan diri dengan menyediakan dukungan dan motivasi. <strong>Dengan berbagai program dan kegiatan</strong>, Kartika.id membantu wanita meningkatkan kesadaran diri dan meningkatkan kepercayaan diri."
+        },
+        {
+          "heading": "Membangun Jaringan dan Komunitas",
+          "content": "Jaringan dan komunitas adalah sangat penting untuk sukses. Kartika.id membantu wanita membangun jaringan dan komunitas dengan menyediakan platform untuk berbagi pengalaman dan pengetahuan. <em>Dengan bergabung dengan komunitas Kartika.id</em>, wanita dapat memperluas jaringan dan meningkatkan kesempatan untuk sukses."
+        }
+      ],
+      "conclusion": "Dengan Kartika.id, wanita dapat mengembangkan diri dan mencapai tujuan. Dengan berbagai sumber daya dan dukungan, Kartika.id membantu wanita meningkatkan kualitas hidup dan mencapai kesuksesan. <br> Jadi, bergabunglah dengan Kartika.id hari ini dan mulailah mengembangkan diri Anda!"
     }
   }
 ]
