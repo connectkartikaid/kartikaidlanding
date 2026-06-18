@@ -81,7 +81,7 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
     "image": "https://images.unsplash.com/photo-1646579217809-7dbcd8120402?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHx3YW5pdGElMjBiZXJkYXlhfGVufDB8MHx8fDE3ODE0OTkzNTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
     "date": "2026-06-15 04:55",
     "author": "Tim Kartika.id",
-    "status": "draft",
+    "status": "synced",
     "customContent": {
       "introduction": "Pemberdayaan wanita adalah proses yang sangat penting untuk mencapai kesetaraan gender dan meningkatkan kualitas hidup wanita. Dalam artikel ini, kita akan membahas beberapa tips dan trik untuk meningkatkan pemberdayaan wanita, terutama dalam konteks komunitas Kartika.id. <br> Dengan menjadi bagian dari komunitas yang mendukung, wanita dapat memperoleh pengetahuan, keterampilan, dan kepercayaan diri untuk mencapai tujuan mereka. <br> Mari kita mulai dengan memahami pentingnya pemberdayaan wanita.",
       "keyPoints": [
@@ -107,6 +107,44 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
         }
       ],
       "conclusion": "Pemberdayaan wanita adalah proses yang sangat penting untuk mencapai kesetaraan gender dan meningkatkan kualitas hidup wanita. <br> Dengan memahami pentingnya pemberdayaan, meningkatkan kesadaran dan keterampilan, serta membangun kepercayaan diri dan jaringan dukungan, wanita dapat mencapai tujuan mereka dan menjadi <strong>wanita yang berdaya</strong>. <br> Kartika.id berkomitmen untuk mendukung pemberdayaan wanita dan menyediakan sumber daya dan platform untuk wanita untuk mencapai tujuan mereka."
+    }
+  },
+  {
+    "id": 4,
+    "slug": "pentingnya-membangun-kepercayaan-diri",
+    "title": "Pentingnya Membangun Kepercayaan Diri",
+    "category": "Tips and Trick",
+    "excerpt": "Membangun kepercayaan diri untuk mencapai kesuksesan",
+    "image": "https://images.unsplash.com/photo-1593526613712-7b4b9a707330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHx3b21lbiUyMGVtcG93ZXJtZW50fGVufDB8MHx8fDE3ODE3NTAxMjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "date": "2026-06-18 02:35",
+    "author": "Tim Kartika.id",
+    "status": "draft",
+    "customContent": {
+      "introduction": "Kepercayaan diri adalah kunci untuk mencapai kesuksesan dalam berbagai aspek kehidupan. <strong>Kartika.id</strong> memahami bahwa membangun kepercayaan diri tidaklah mudah, namun dengan tips dan trik yang tepat, Anda dapat meningkatkan kepercayaan diri dan mencapai tujuan Anda.",
+      "keyPoints": [
+        "Mengenal diri sendiri",
+        "Mengembangkan kemampuan",
+        "Mengatasi rasa takut"
+      ],
+      "language": "id",
+      "sections": [
+        {
+          "heading": "Mengenal Diri Sendiri",
+          "content": "Mengenal diri sendiri adalah langkah pertama untuk membangun kepercayaan diri. Anda perlu <em>mengenal kelebihan dan kekurangan</em> Anda, serta <em>mengetahui apa yang Anda inginkan</em> dari hidup. Dengan demikian, Anda dapat <strong>meningkatkan kepercayaan diri</strong> dan membuat keputusan yang tepat.",
+          "imageSearchQuery": "self reflection",
+          "image": "https://images.unsplash.com/photo-1515463626042-123ab67dcaa7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHxzZWxmJTIwcmVmbGVjdGlvbnxlbnwwfDB8fHwxNzgxNzUwMTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "imageAlt": "self reflection"
+        },
+        {
+          "heading": "Mengembangkan Kemampuan",
+          "content": "Mengembangkan kemampuan adalah langkah berikutnya untuk membangun kepercayaan diri. Anda perlu <em>belajar dan meningkatkan kemampuan</em> Anda, serta <em>menerima tantangan baru</em>. Dengan demikian, Anda dapat <strong>meningkatkan kepercayaan diri</strong> dan mencapai tujuan Anda."
+        },
+        {
+          "heading": "Mengatasi Rasa Takut",
+          "content": "Mengatasi rasa takut adalah langkah terakhir untuk membangun kepercayaan diri. Anda perlu <em>mengenal sumber rasa takut</em> Anda, serta <em>mengembangkan strategi untuk mengatasi rasa takut</em>. Dengan demikian, Anda dapat <strong>meningkatkan kepercayaan diri</strong> dan mencapai tujuan Anda."
+        }
+      ],
+      "conclusion": "Membangun kepercayaan diri memerlukan waktu dan usaha, namun dengan tips dan trik yang tepat, Anda dapat <strong>meningkatkan kepercayaan diri</strong> dan mencapai tujuan Anda. <strong>Kartika.id</strong> berkomitmen untuk mendukung Anda dalam membangun kepercayaan diri dan mencapai kesuksesan."
     }
   }
 ]
