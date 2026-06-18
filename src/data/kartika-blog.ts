@@ -156,7 +156,7 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
     "image": "https://images.unsplash.com/photo-1646579217809-7dbcd8120402?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHx3YW5pdGElMjBzdWtzZXN8ZW58MHwwfHx8MTc4MTc1MDE4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
     "date": "2026-06-18 02:36",
     "author": "Tim Kartika.id",
-    "status": "draft",
+    "status": "synced",
     "customContent": {
       "introduction": "Kartika.id adalah platform yang membantu wanita mengembangkan diri dan mencapai tujuan. Dengan berbagai sumber daya dan dukungan, Kartika.id membantu wanita meningkatkan kualitas hidup dan mencapai kesuksesan. <br> Dalam artikel ini, kita akan membahas beberapa tips dan trik untuk mengembangkan diri dengan Kartika.id.",
       "keyPoints": [
@@ -183,6 +183,54 @@ export const KARTIKA_BLOG_POSTS: KartikaBlogPost[] = [
         }
       ],
       "conclusion": "Dengan Kartika.id, wanita dapat mengembangkan diri dan mencapai tujuan. Dengan berbagai sumber daya dan dukungan, Kartika.id membantu wanita meningkatkan kualitas hidup dan mencapai kesuksesan. <br> Jadi, bergabunglah dengan Kartika.id hari ini dan mulailah mengembangkan diri Anda!"
+    }
+  },
+  {
+    "id": 6,
+    "slug": "women-empowerment-in-indonesia",
+    "title": "Empowering Women in Indonesia",
+    "category": "Tips and Trick",
+    "excerpt": "A comprehensive guide to women's empowerment in Indonesia",
+    "image": "https://images.unsplash.com/photo-1586319826907-1ff4aadbaddc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHxpbmRvbmVzaWFuJTIwd29tZW4lMjBlbXBvd2VybWVudHxlbnwwfDB8fHwxNzgxNzUwMzIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "date": "2026-06-18 02:38",
+    "author": "Tim Kartika.id",
+    "status": "draft",
+    "customContent": {
+      "introduction": "In recent years, Indonesia has made significant strides in promoting women's empowerment, with various initiatives and programs aimed at bridging the gender gap. At Kartika.id, we believe that empowering women is crucial for the country's socio-economic development. In this article, we will delve into the world of women's empowerment in Indonesia, exploring the challenges, opportunities, and tips for women to reach their full potential.",
+      "keyPoints": [
+        "Understanding the challenges faced by Indonesian women",
+        "Building a supportive community for women",
+        "Developing skills and education for career advancement",
+        "Promoting mental health and well-being",
+        "Breaking down stereotypes and biases"
+      ],
+      "language": "en",
+      "sections": [
+        {
+          "heading": "Introduction to Women's Empowerment in Indonesia",
+          "content": "Indonesia has made significant progress in promoting women's rights and empowerment, with the government launching various initiatives to support women's education, health, and economic development. However, despite these efforts, many Indonesian women still face significant challenges, including limited access to education and job opportunities, as well as societal expectations that often restrict their choices. At Kartika.id, we believe that empowering women is essential for creating a more equitable and just society.",
+          "imageSearchQuery": "indonesian women in workplace",
+          "image": "https://images.unsplash.com/photo-1762341114881-669da93fef88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NzU2ODd8MHwxfHNlYXJjaHwxfHxpbmRvbmVzaWFuJTIwd29tZW4lMjBpbiUyMHdvcmtwbGFjZXxlbnwwfDB8fHwxNzgxNzUwMzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+          "imageAlt": "indonesian women in workplace"
+        },
+        {
+          "heading": "Breaking Down Barriers: Challenges Faced by Indonesian Women",
+          "content": "One of the primary challenges faced by Indonesian women is the deeply ingrained patriarchal culture, which often limits their opportunities and choices. Many women are expected to prioritize their roles as wives and mothers, rather than pursuing their own careers and interests. Additionally, women in Indonesia often face discrimination and harassment in the workplace, which can make it difficult for them to advance in their careers. To overcome these challenges, it is essential for women to have a strong support system, including friends, family, and community networks."
+        },
+        {
+          "heading": "Empowering Women through Education and Skills Development",
+          "content": "Education and skills development are critical components of women's empowerment in Indonesia. By acquiring new skills and knowledge, women can increase their confidence and self-esteem, as well as enhance their career prospects. At Kartika.id, we offer a range of programs and resources to support women's education and skills development, including online courses, workshops, and mentoring programs. We believe that by investing in women's education and skills development, we can help create a more equitable and prosperous society."
+        },
+        {
+          "heading": "Promoting Mental Health and Well-being",
+          "content": "Mental health and well-being are essential aspects of women's empowerment in Indonesia. Many women in Indonesia face significant stress and pressure, particularly in their roles as caregivers and breadwinners. To promote mental health and well-being, it is essential for women to prioritize self-care and seek support when needed. At Kartika.id, we offer a range of resources and programs to support women's mental health and well-being, including counseling services, support groups, and online forums."
+        },
+        {
+          "heading": "Building a Supportive Community for Women",
+          "content": "A supportive community is critical for women's empowerment in Indonesia. By connecting with other women who share similar experiences and challenges, women can build strong networks and relationships that can help them navigate their personal and professional lives. At Kartika.id, we believe in the power of community and offer a range of programs and resources to support women's community building, including online forums, social media groups, and in-person events."
+        }
+      ],
+      "conclusion": "Empowering women in Indonesia requires a multifaceted approach that addresses the various challenges and barriers that women face. By providing education and skills development, promoting mental health and well-being, and building supportive communities, we can help create a more equitable and prosperous society. At Kartika.id, we are committed to supporting women's empowerment in Indonesia and believe that together, we can create a brighter future for all."
     }
   }
 ]
