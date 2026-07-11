@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useLocation } from 'react-router-dom'
+import { getCurrentLanguage } from '../utils/languageManager'
 import '../../public/style.css'
 import './Home.css'
 import './Blog.css'
@@ -29,6 +30,8 @@ function getMergedPosts(): KartikaBlogPost[] {
 const POSTS_PER_PAGE = 8
 
 const KartikaBlog: React.FC = () => {
+  const location = useLocation()
+  const currentLanguage = getCurrentLanguage(location.pathname, location.search)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isArchiveExpanded, setIsArchiveExpanded] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -91,6 +94,7 @@ const KartikaBlog: React.FC = () => {
   return (
     <div className="kartika-home">
       <Helmet>
+        <html lang={currentLanguage} />
         <title>Blog | Kartika.id — Kartini Teknik Berdaya</title>
         <meta name="description" content="Artikel dan inspirasi seputar perempuan teknik, beasiswa, dan program pemberdayaan dari Indonesia Timur ke Nasional." />
         <meta property="og:title" content="Blog | Kartika.id" />

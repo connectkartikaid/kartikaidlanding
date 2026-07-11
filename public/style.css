@@ -385,7 +385,8 @@ header:hover {
     /* Ensures the heading and content below are centered */
 }
 
-.about-us-content h1 {
+.about-us-content h1,
+.about-us-content h2 {
     font-family: 'Gelasio', serif;
     font-style: italic;
     font-size: 3em;
@@ -432,7 +433,8 @@ header:hover {
         /* Space between text and image when stacked */
     }
 
-    .about-us-content h1 {
+    .about-us-content h1,
+    .about-us-content h2 {
         font-size: 2.5em;
     }
 
@@ -730,7 +732,8 @@ header:hover {
     align-items: center;
 }
 
-#testimonials .about-us-content h1 {
+#testimonials .about-us-content h1,
+#testimonials .about-us-content h2 {
     font-family: 'Gelasio', serif;
     font-style: normal;
     font-size: 3.5em;
@@ -1773,7 +1776,8 @@ footer::before {
     align-items: center;
 }
 
-.our-missions-header h1 {
+.our-missions-header h1,
+.our-missions-header h2 {
     font-family: 'Gelasio', serif;
     font-style: normal;
     font-size: 3.5em;
@@ -1910,7 +1914,8 @@ footer::before {
 }
 
 @media (max-width: 768px) {
-    .our-missions-header h1 {
+    .our-missions-header h1,
+    .our-missions-header h2 {
         font-size: 2.5em;
         margin-bottom: 30px;
     }
@@ -2306,7 +2311,8 @@ footer::before {
 }
 
 @media (max-width: 768px) {
-    #our-programs .about-us-content h1 {
+    #our-programs .about-us-content h1,
+    #our-programs .about-us-content h2 {
         margin-bottom: 2.5rem;
     }
 

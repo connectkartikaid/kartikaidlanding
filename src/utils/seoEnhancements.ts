@@ -1,5 +1,3 @@
-import { DEFAULT_IMAGE_RIGHTS_METADATA } from './structuredData'
-
 // Advanced SEO Enhancement Utilities for Kartika.id
 
 export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>) => {
@@ -45,7 +43,7 @@ export const generateWebPageSchema = (page: {
 
 export const generateMetaDescription = (type: 'home' | 'blog' | 'page') => {
   const descriptions = {
-    home: "Kartika.id (Kartini Teknik Berdaya) adalah komunitas pemberdayaan perempuan di bidang teknik (STEM) Indonesia. Kami mendukung mahasiswi teknik melalui mentoring dan networking.",
+    home: "Komunitas perempuan teknik (STEM) Indonesia. Dapatkan akses mentoring, program beasiswa, dan pengembangan karir untuk mahasiswi teknik. Bergabung bersama Kartika.id!",
     blog: "Baca artikel inspiratif tentang peran perempuan di bidang teknik, tips karir STEM, dan cerita sukses female engineers dari Kartika.id.",
     page: "Komunitas Kartini Teknik Berdaya (Kartika.id). Membangun masa depan yang lebih baik untuk perempuan di bidang teknik dan STEM."
   }

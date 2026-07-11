@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link, useParams, Navigate } from 'react-router-dom'
+import { Link, useParams, Navigate, useLocation } from 'react-router-dom'
+import { getCurrentLanguage } from '../utils/languageManager'
 import '../../public/style.css'
 import './Home.css'
 import './Blog.css'
@@ -27,6 +28,8 @@ function loadPost(slug: string): KartikaBlogPost | undefined {
 
 const KartikaBlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
+  const location = useLocation()
+  const currentLanguage = getCurrentLanguage(location.pathname, location.search)
   const [isScrolled, setIsScrolled] = useState(false)
   const [linkCopied, setLinkCopied] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -91,6 +94,7 @@ const KartikaBlogPostPage: React.FC = () => {
   return (
     <div className="kartika-home">
       <Helmet>
+        <html lang={currentLanguage} />
         <title>{post.title} | Kartika.id</title>
         <meta name="description" content={post.excerpt} />
         <meta name="author" content={post.author || 'Tim Kartika.id'} />

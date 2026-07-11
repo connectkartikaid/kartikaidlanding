@@ -1,12 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useLocation, Link } from 'react-router-dom'
 import '../../public/style.css'
 import './Home.css'
 import { getLandingConfig, getLandingDraft } from '../data/landingConfig'
 import { generateOrganizationStructuredData } from '../utils/structuredData'
 import { generateBreadcrumbSchema, generateWebPageSchema, generateMetaDescription } from '../utils/seoEnhancements'
+import { getCurrentLanguage } from '../utils/languageManager'
+import { KARTIKA_BLOG_POSTS } from '../data/kartika-blog'
 
 const Home = () => {
+    const location = useLocation();
+    const currentLanguage = getCurrentLanguage(location.pathname, location.search);
+
+    useEffect(() => {
+        document.documentElement.lang = currentLanguage;
+    }, [currentLanguage]);
     const [missionType, setMissionType] = useState('women-empowerment');
     const [teamType, setTeamType] = useState('coreteam');
     const [speakerType, setSpeakerType] = useState('1stgen');
@@ -129,6 +138,7 @@ const Home = () => {
         };
     }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleNavClick = (e: any, targetId: string) => {
         e.preventDefault();
         const targetElement = document.querySelector(targetId);
@@ -159,7 +169,8 @@ const Home = () => {
     return (
         <div className="kartika-home">
             <Helmet>
-                <title>Kartika.id | Kartini Teknik Berdaya</title>
+                <html lang={currentLanguage} />
+                <title>Kartika.id | Kartini Teknik Berdaya — Komunitas Perempuan Teknik Indonesia</title>
                 <meta name="description" content={generateMetaDescription('home')} />
                 <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
                 <script type="application/ld+json">{JSON.stringify(schemaWebPage)}</script>
@@ -205,7 +216,7 @@ const Home = () => {
             <section className="about-us" id="about-us">
                 <div className="container about-us-content-container">
                     <div className="about-us-content">
-                        <h1>About Us</h1>
+                        <h2>About Us</h2>
                         <p style={{ whiteSpace: 'pre-line' }}>{config.aboutText}</p>
                     </div>
                     <div className="about-us-image">
@@ -217,7 +228,7 @@ const Home = () => {
             <section className="our-missions-section" id="our-missions">
                 <div className="container our-missions-content-container">
                     <div className="our-missions-header">
-                        <h1>{config.missionsHeading || 'Our Missions'}</h1>
+                        <h2>{config.missionsHeading || 'Our Missions'}</h2>
                     </div>
                     <div className="our-missions-main-content">
                         <div className="missions-nav">
@@ -239,7 +250,7 @@ const Home = () => {
             <section className="about-us" id="our-programs">
                 <div className="container about-us-content-container">
                     <div className="about-us-content">
-                        <h1>{config.programsHeading || 'Our Programes'}</h1>
+                        <h2>{config.programsHeading || 'Our Programes'}</h2>
                         <div className="programs-grid">
                             {config.programs.map((p, i) => {
                                 const icons = ['fa-share-alt', 'fa-handshake', 'fa-network-wired'];
@@ -261,7 +272,7 @@ const Home = () => {
 
             <section className="first-generation-section" id="first-generation">
                 <div className="container first-generation-content-container">
-                    <h1 className="section-title">{config.statsGroupTitle || 'Kartika.id First Generation'}</h1>
+                    <h2 className="section-title">{config.statsGroupTitle || 'Kartika.id First Generation'}</h2>
                     <div className="impact-metrics-grid">
                         <div className="metric-item">
                             <span className="metric-number">{config.stats.events}</span>
@@ -281,7 +292,7 @@ const Home = () => {
 
             <section className="our-partners-section" id="our-partners">
                 <div className="container our-partners-content-container">
-                    <h1 className="section-title">{config.partnersHeading || 'Our Past Partners'}</h1>
+                    <h2 className="section-title">{config.partnersHeading || 'Our Past Partners'}</h2>
                     <div className="partners-grid">
                         {(config.partners || [
                             { id: 'p1', logo: '/images/unilever-logo.png', alt: 'Unilever Logo', description: 'Kartishare x Inspiring Unileader' },
@@ -299,7 +310,7 @@ const Home = () => {
 
             <section className="our-speakers-section" id="our-speakers">
                 <div className="container our-speakers-content-container">
-                    <h1 className="section-title" style={{ whiteSpace: 'pre-line' }}>{config.speakersTitle || 'Our Speakers'}</h1>
+                    <h2 className="section-title" style={{ whiteSpace: 'pre-line' }}>{config.speakersTitle || 'Our Speakers'}</h2>
                     <div className="team-nav">
                         <button className={`team-btn ${speakerType === '1stgen' ? 'active' : ''}`} onClick={() => setSpeakerType('1stgen')}>1st Generation <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
                         <button className={`team-btn ${speakerType === '2ndgen' ? 'active' : ''}`} onClick={() => setSpeakerType('2ndgen')}>2nd Generation <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
@@ -322,7 +333,7 @@ const Home = () => {
             <section className="about-us" id="our-team">
                 <div className="container about-us-content-container">
                     <div className="about-us-content">
-                        <h1>Our Team</h1>
+                        <h2>Our Team</h2>
                         <div className="team-nav">
                             <button className={`team-btn ${teamType === 'coreteam' ? 'active' : ''}`} onClick={() => setTeamType('coreteam')}>Coreteam <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
                             <button className={`team-btn ${teamType === 'advisors' ? 'active' : ''}`} onClick={() => setTeamType('advisors')}>Advisors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
@@ -358,7 +369,7 @@ const Home = () => {
             <section className="about-us" id="testimonials">
                 <div className="container about-us-content-container">
                     <div className="about-us-content">
-                        <h1>{config.testimonialsHeading || 'What they say about us'}</h1>
+                        <h2>{config.testimonialsHeading || 'What they say about us'}</h2>
                     </div>
                 </div>
                 <div className="testimonials-carousel-wrapper">
@@ -406,6 +417,36 @@ const Home = () => {
                 <div className="gradient-overlay right"></div>
             </section>
 
+            <section className="latest-blog-section" id="latest-blog">
+                <div className="container">
+                    <h2 className="section-title" style={{ color: '#2D1B00' }}>Latest Articles</h2>
+                    <div className="blog-posts-grid">
+                        {KARTIKA_BLOG_POSTS
+                            .filter(post => post.status === 'synced')
+                            .slice(0, 3)
+                            .map((post) => (
+                                <div key={post.id} className="blog-card">
+                                    <div className="blog-card-image">
+                                        <img src={post.image} alt={post.title} />
+                                    </div>
+                                    <div className="blog-card-content">
+                                        <span className="blog-card-category">{post.category}</span>
+                                        <h3 className="blog-card-title">{post.title}</h3>
+                                        <p className="blog-card-excerpt">{post.excerpt}</p>
+                                        <Link to={`/blog/${post.slug}`} className="blog-card-link">
+                                            Read Article <i className="fas fa-arrow-right"></i>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div style={{ textAlign: 'center', marginTop: '40px' }}>
+                        <Link to="/blog" className="btn view-all-btn">View All Articles</Link>
+                    </div>
+                </div>
+            </section>
+
             <section className="join-us-section" style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container join-us-content-container">
                     <div className="join-us-image-wrapper">
@@ -418,6 +459,16 @@ const Home = () => {
             <footer style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container">
                     <div className="footer-content">
+                        <div className="footer-section" style={{ marginBottom: '30px' }}>
+                            <h3>Quick Links</h3>
+                            <div className="footer-links-row">
+                                <a href="#" onClick={(e) => { handleNavClick(e, '#'); }}>Home</a>
+                                <a href="#about-us" onClick={(e) => { handleNavClick(e, '#about-us'); }}>About Us</a>
+                                <a href="#our-programs" onClick={(e) => { handleNavClick(e, '#our-programs'); }}>Our Programs</a>
+                                <a href="#our-team" onClick={(e) => { handleNavClick(e, '#our-team'); }}>Our Team</a>
+                                <Link to="/blog">Blog</Link>
+                            </div>
+                        </div>
                         <div className="footer-section">
                             <h3>{config.footerConnectTitle || 'Connect With Us'}</h3>
                             <div className="footer-links-row">

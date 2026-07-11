@@ -276,7 +276,7 @@ body.kartika-home-active .whatsapp-container {
         font-size: 20px;
     } */
 
-    .kartika-home h1 {
+    .kartika-home h1, .kartika-home h2 {
         font-size: 2.4rem;
     }
 
@@ -372,4 +372,130 @@ body.kartika-home-active .whatsapp-container {
         display: flex !important;
     }
 
+}
+
+/* Latest Blog Section */
+.latest-blog-section {
+    background-color: #FEFAE4;
+    padding: 80px 0;
+}
+
+.blog-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.blog-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(208, 74, 2, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(208, 74, 2, 0.15);
+}
+
+.blog-card-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-card-image img {
+    transform: scale(1.05);
+}
+
+.blog-card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-card-category {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #D04A02;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.blog-card-title {
+    font-family: 'Gelasio', serif;
+    font-size: 1.35em;
+    color: #2D1B00;
+    margin: 8px 0 12px 0;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.blog-card-excerpt {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.95em;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.blog-card-link {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.95em;
+    color: #D04A02;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+    margin-top: auto;
+}
+
+.blog-card-link:hover {
+    color: #b03e02;
+}
+
+.blog-card-link i {
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+}
+
+.blog-card-link:hover i {
+    transform: translateX(4px);
+}
+
+.view-all-btn {
+    display: inline-block;
+    padding: 14px 30px;
+    font-size: 1.05em;
+    font-weight: 600;
+    background: #D04A02;
+    color: #FEFAE4 !important;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(208, 74, 2, 0.3);
+}
+
+.view-all-btn:hover {
+    background: #b03e02;
+    transform: translateY(-2px);
 }
