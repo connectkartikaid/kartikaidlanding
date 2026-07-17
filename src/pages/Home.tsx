@@ -160,7 +160,7 @@ const Home = () => {
 
     const schemaOrg = generateOrganizationStructuredData();
     const schemaWebPage = generateWebPageSchema({
-        title: 'Kartika.id - Kartini Teknik Berdaya',
+        title: 'Kartika.id - Komunitas Perempuan Teknik Indonesia',
         description: generateMetaDescription('home'),
         url: '/'
     });
@@ -170,7 +170,7 @@ const Home = () => {
         <div className="kartika-home">
             <Helmet>
                 <html lang={currentLanguage} />
-                <title>Kartika.id | Kartini Teknik Berdaya — Komunitas Perempuan Teknik Indonesia</title>
+                <title>Kartika.id | Komunitas Perempuan Teknik Indonesia</title>
                 <meta name="description" content={generateMetaDescription('home')} />
                 <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
                 <script type="application/ld+json">{JSON.stringify(schemaWebPage)}</script>
