@@ -195,7 +195,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="hero-image">
-                    <img src={config.heroImage} alt="Kartika Engineers" width="1200" height="600" fetchPriority="high" />
+                    <img src={config.heroImage} alt="Kartika Engineers" />
                 </div>
             </section>
 
