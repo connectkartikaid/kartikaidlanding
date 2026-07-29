@@ -119,11 +119,6 @@ const KartikaBlogPostPage: React.FC = () => {
         {/* Schema.org JSON-LD */}
         <script type="application/ld+json">{JSON.stringify(schemaBlogPost)}</script>
         <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&family=Josefin+Sans:wght@400;600&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </Helmet>
 
       {/* ── NAV (identical to Home.tsx) ──────────────────────────────── */}
@@ -133,7 +128,7 @@ const KartikaBlogPostPage: React.FC = () => {
       >
         <div className="header-inner">
           <Link to="/" className="logo-container">
-            <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
+            <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" width="180" height="40" />
             <p className="header-logo-text">Kartini Teknik Berdaya</p>
           </Link>
 

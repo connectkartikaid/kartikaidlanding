@@ -130,12 +130,16 @@ body.kartika-home-active::before {
 /* Engineers Section  */
 .hero-image {
     width: 100vw;  /* Sesuaikan lebar */
-    height: 82vw; /* Tentukan tinggi maksimal yang diinginkan */
-    /* overflow: hidden; */
+    height: auto; /* Allow image aspect ratio to determine height smoothly */
+    aspect-ratio: 1200 / 600;
+    contain-intrinsic-size: 100vw 50vw;
 }
 
-.hero-image img{
+.hero-image img {
     object-position: bottom !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 600;
 }
 
 /* Fix about-us section getting wrong container sizing */
@@ -146,7 +150,7 @@ body.kartika-home-active::before {
 
 /* Ensure hero section padding is from style.css not App.css */
 .kartika-home .hero {
-    padding: 0;
+    padding-top: 85px;
     height: auto;
     /* Override App.css 100vh */
     flex-direction: column !important;

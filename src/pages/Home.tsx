@@ -22,7 +22,6 @@ const Home = () => {
     const [activeProgram, setActiveProgram] = useState('kartishare');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [heroMarginTop, setHeroMarginTop] = useState('0px');
     const carouselRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef<number>(0);
     const scrollAmount = useRef(0);
@@ -63,7 +62,7 @@ const Home = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // Header scroll and margin adjustment
+    // Header scroll
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 50) {
@@ -73,21 +72,10 @@ const Home = () => {
             }
         };
 
-        const adjustHeroMargin = () => {
-            if (headerRef.current) {
-                setHeroMarginTop(`${headerRef.current.offsetHeight}px`);
-            }
-        };
-
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', adjustHeroMargin);
-
-        // Slight delay to ensure header has rendered and measured correctly
-        setTimeout(adjustHeroMargin, 50);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', adjustHeroMargin);
         };
     }, []);
 
@@ -175,14 +163,12 @@ const Home = () => {
                 <script type="application/ld+json">{JSON.stringify(schemaOrg)}</script>
                 <script type="application/ld+json">{JSON.stringify(schemaWebPage)}</script>
                 <script type="application/ld+json">{JSON.stringify(schemaBreadcrumb)}</script>
-                <link href="https://fonts.googleapis.com/css2?family=Gelasio:wght@600&amp;family=Josefin+Sans:wght@600&amp;display=swap" rel="stylesheet" />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
             </Helmet>
 
             <header ref={headerRef} className={`kartika-header ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
                 <div className="header-inner">
                     <div className="logo-container" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" />
+                        <img src="/images/Kartika-logo.png" alt="Kartika.id Logo" className="header-logo-img" width="180" height="40" />
                         <p className="header-logo-text">{config.navLogoText || 'Kartini Teknik Berdaya'}</p>
                     </div>
 
@@ -201,7 +187,7 @@ const Home = () => {
                 </div>
             </header>
 
-            <section className="hero" style={{ marginTop: heroMarginTop }}>
+            <section className="hero">
                 <div className="container hero-content-container">
                     <div className="hero-content">
                         <h1 style={{ whiteSpace: 'pre-line' }}>{config.heroTitle}</h1>
@@ -209,7 +195,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="hero-image">
-                    <img src={config.heroImage} alt="Kartika Engineers" />
+                    <img src={config.heroImage} alt="Kartika Engineers" width="1200" height="600" fetchPriority="high" />
                 </div>
             </section>
 
@@ -220,7 +206,7 @@ const Home = () => {
                         <p style={{ whiteSpace: 'pre-line' }}>{config.aboutText}</p>
                     </div>
                     <div className="about-us-image">
-                        <img src={config.aboutImage} alt="Kartika.id Team" />
+                        <img src={config.aboutImage} alt="Kartika.id Team" width="600" height="400" loading="lazy" />
                     </div>
                 </div>
             </section>
@@ -318,12 +304,12 @@ const Home = () => {
                     <div className="team-gallery-container">
                         <div id="speakers-1st-gallery" className={`team-gallery ${speakerType === '1stgen' ? 'active' : ''}`}>
                             <div className="team-member">
-                                <img src={config.speakersImage} alt="Kartika.id First Generation Speakers" className="speaker-image" />
+                                <img src={config.speakersImage} alt="Kartika.id First Generation Speakers" className="speaker-image" width="1200" height="424" loading="lazy" />
                             </div>
                         </div>
                         <div id="speakers-2nd-gallery" className={`team-gallery ${speakerType === '2ndgen' ? 'active' : ''}`}>
                             <div className="team-member">
-                                <img src={config.speakers2ndImage} alt="Kartika.id Second Generation Speakers" className="speaker-image" />
+                                <img src={config.speakers2ndImage} alt="Kartika.id Second Generation Speakers" className="speaker-image" width="1200" height="424" loading="lazy" />
                             </div>
                         </div>
                     </div>
@@ -335,30 +321,30 @@ const Home = () => {
                     <div className="about-us-content">
                         <h2>Our Team</h2>
                         <div className="team-nav">
-                            <button className={`team-btn ${teamType === 'coreteam' ? 'active' : ''}`} onClick={() => setTeamType('coreteam')}>Coreteam <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
-                            <button className={`team-btn ${teamType === 'advisors' ? 'active' : ''}`} onClick={() => setTeamType('advisors')}>Advisors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
-                            <button className={`team-btn ${teamType === 'mentors' ? 'active' : ''}`} onClick={() => setTeamType('mentors')}>Mentors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
-                            <button className={`team-btn ${teamType === 'members' ? 'active' : ''}`} onClick={() => setTeamType('members')}>Members <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" /></button>
+                            <button className={`team-btn ${teamType === 'coreteam' ? 'active' : ''}`} onClick={() => setTeamType('coreteam')}>Coreteam <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" width="20" height="20" loading="lazy" /></button>
+                            <button className={`team-btn ${teamType === 'advisors' ? 'active' : ''}`} onClick={() => setTeamType('advisors')}>Advisors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" width="20" height="20" loading="lazy" /></button>
+                            <button className={`team-btn ${teamType === 'mentors' ? 'active' : ''}`} onClick={() => setTeamType('mentors')}>Mentors <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" width="20" height="20" loading="lazy" /></button>
+                            <button className={`team-btn ${teamType === 'members' ? 'active' : ''}`} onClick={() => setTeamType('members')}>Members <img src="/images/Kartika-logo.png" alt="Logo" className="btn-logo" width="20" height="20" loading="lazy" /></button>
                         </div>
                         <div className="team-gallery-container">
                             <div id="coreteam-gallery" className={`team-gallery ${teamType === 'coreteam' ? 'active' : ''}`}>
                                 <div className="team-member">
-                                    <img src={config.coreteamImage} alt="Kartika.id Core Team" />
+                                    <img src={config.coreteamImage} alt="Kartika.id Core Team" width="1200" height="600" loading="lazy" />
                                 </div>
                             </div>
                             <div id="advisors-gallery" className={`team-gallery ${teamType === 'advisors' ? 'active' : ''}`}>
                                 <div className="team-member">
-                                    <img src={config.advisorsImage} alt="Kartika.id Advisors" />
+                                    <img src={config.advisorsImage} alt="Kartika.id Advisors" width="1200" height="600" loading="lazy" />
                                 </div>
                             </div>
                             <div id="mentors-gallery" className={`team-gallery ${teamType === 'mentors' ? 'active' : ''}`}>
                                 <div className="team-member">
-                                    <img src={config.mentorsImage} alt="Kartika.id Mentors" />
+                                    <img src={config.mentorsImage} alt="Kartika.id Mentors" width="1200" height="600" loading="lazy" />
                                 </div>
                             </div>
                             <div id="members-gallery" className={`team-gallery ${teamType === 'members' ? 'active' : ''}`}>
                                 <div className="team-member">
-                                    <img src={config.membersImage} alt="Kartika.id Members" />
+                                    <img src={config.membersImage} alt="Kartika.id Members" width="1200" height="600" loading="lazy" />
                                 </div>
                             </div>
                         </div>
@@ -450,7 +436,7 @@ const Home = () => {
             <section className="join-us-section" style={{ position: 'relative', zIndex: 1000 }}>
                 <div className="container join-us-content-container">
                     <div className="join-us-image-wrapper">
-                        <img src="/images/foto-coreteam-versi2.webp" alt="Join With Us" />
+                        <img src="/images/foto-coreteam-versi2.webp" alt="Join With Us" width="800" height="1413" loading="lazy" />
                         <a href={config.joinLink} target="_blank" rel="noreferrer" className="join-us-text" id="join-us" style={{ textDecoration: 'none' }}>{config.joinSectionTitle || 'Join With us'}</a>
                     </div>
                 </div>
